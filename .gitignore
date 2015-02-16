@@ -1,6 +1,7 @@
 node_modules/
 vendor/
 bower_components/
+css/
 logs/
 composer.lock
 .env.*.php

@@ -13,10 +13,10 @@ if (isset($_SERVER['HTTP_HOST'])) {
 	$host = preg_replace('/([^:]+):\\d+/', '$1', $_SERVER['HTTP_HOST']);
 	switch($host) {
 		case 'demo.app':
-			$fileroot = '/home/vagrant/Code/sites/PHP-Utils/demo';
+			$fileroot = '/home/vagrant/Code/sites/PHP-Utils-Demo';
 			break;
 		case 'localhost':
-			$fileroot = '/home/athill/Code/Homestead/sites/PHP-Utils/demo';
+			$fileroot = '/home/athill/Code/Homestead/sites/PHP-Utils-Demo';
 			break;			
 	}
 }
