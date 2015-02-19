@@ -17,6 +17,9 @@ if (isset($_SERVER['HTTP_HOST'])) {
 			break;
 		case 'localhost':
 			$fileroot = '/home/athill/Code/Homestead/sites/PHP-Utils-Demo';
+			break;	
+		case 'demo.andyhill.us':
+			$fileroot = '/home/andyhil/sites/PHP-Utils-Demo';
 			break;			
 	}
 }

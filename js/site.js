@@ -1,0 +1,10 @@
+$(function() {
+	$('#top-menu ul').addClass('sf-menu').superfish();
+	//// TODO: jquery plugin
+	// $('#breadcrumbs ul li:').css({
+	// 	display: 'inline'
+	// });	
+	$allbutlast = $('#breadcrumbs ul li:not(:last-child)');
+	console.log($allbutlast.length);
+	$allbutlast.after(' -&gt; ');
+});

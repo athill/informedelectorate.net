@@ -15,5 +15,9 @@ return array(
 			'/css/bootstrap.min.css',
 			'/css/bootstrap-theme.min.css'
 		)
+	),
+	'superfish'=>array(
+		'js'=>[$bower.'/superfish/dist/js/superfish.min.js'],
+		'css'=>[$bower.'/superfish/dist/css/superfish.css'],
 	)
 );
