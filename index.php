@@ -1,9 +1,25 @@
 <?php
 require_once('setup.inc.php');
+$titles = [
+	'Buy Stuff You Don\'t Need',
+	'Lose Money with This One Simple Trick',
+	'Your Doctor Doesn\'t Want You to Use This Trick, Because It\'s a Scam'
+];
+$rightsidebar = [];
+foreach ($titles as $title) {
+	$rightsidebar[] = [
+		'type'=>'content',
+		'content' => '<h5>'.$title.'</h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis ex dapibus, suscipit sem at, commodo magna. '
+	];
+};
+
+
+
+
 $local = [
 	'layout'=>[
 		'leftsidebar'=> [['type'=>'content', 'content'=>'left side bar']],
-		'rightsidebar'=> [['type'=>'content', 'content'=>'right side bar']],
+		'rightsidebar'=> $rightsidebar,
 	],
 ];
 
