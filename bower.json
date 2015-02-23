@@ -12,6 +12,7 @@
   ],
   "devDependencies": {
     "bootstrap": "~3.3.2",
-    "superfish": "~1.7.5"
+    "superfish": "~1.7.5",
+    "jquery.treeview": "~1.4.1"
   }
 }

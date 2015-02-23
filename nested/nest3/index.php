@@ -2,8 +2,9 @@
 require('../../setup.inc.php');
 $local = [
 	'layout'=>[
-		'leftsidebar'=> [['type'=>'content', 'content'=>'left side bar']],
+		'leftsidebar'=> [['type'=>'menu', 'start'=>'/nested/']],
 	],
+	'jsModules'=>['treemenu'=>true]
 ];
 
 $page = new \Athill\Utils\Page($local);

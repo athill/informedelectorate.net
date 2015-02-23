@@ -1,10 +1,6 @@
 <?php 
 require('../../../setup.inc.php');
-$local = [
-	'layout'=>[
-		'leftsidebar'=> [['type'=>'content', 'content'=>'left side bar']],
-	],
-];
+$local = [];
 
 $page = new \Athill\Utils\Page($local);
 
