@@ -13,7 +13,7 @@
 //// mixins
 .rounded {
 	border-radius: 2em;
-	padding: 1em;
+	padding: 0.5em;
 }
 
 .bordered {
@@ -28,11 +28,7 @@ body {
 	color: @text-color;
 }
 
-h1 {
-	font-size: 4em;
-	text-shadow: @text-color - #444 0.05em 0.05em;
-	text-align: center;
-}
+
 
 a {
 	color: @link-color;
@@ -43,21 +39,106 @@ a {
 	}
 }
 
-#top-nav {
+#container {
+	width: 1000px;
+	margin: 1em auto 0 auto;	
 	background: @content-background + #222;
 	.rounded;	
 }
 
-/* breadcrumbs */
-#breadcrumbs {
-	ul {
-		list-style: none;
-		padding: 0;
-		li {
-			display: inline;
+header {
+	.banner {
+		background: @content-background - #444;
+		margin-bottom: 1em;
+		.rounded;
+		h1 {
+			font-size: 4em;
+			text-shadow: @text-color - #444 0.05em 0.05em;
+			text-align: center;
+		}		
+	}		
+	.breadcrumbs {
+		background: @content-background - #222;
+		padding: 0.5em;
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			li {
+				display: inline;
+			}
+		}
+	}	
+	.top-menu {
+		background: @content-background - #777;
+	}	
+}
+
+
+/*superfish */
+.sf-menu {
+    margin-bottom: 0;
+    ul {
+    	box-shadow: 2px 2px 6px rgba(0,0,0,.2);	
+    	li {
+    		background: #000;
+    	}
+    	ul li {
+    		background: #000;
+    	}
+    }
+	a {
+		border-left: 1px solid #fff;
+		border-top: 1px solid #dFeEFF; /* fallback colour must use full shorthand */
+		border-top: 1px solid rgba(255,255,255,.5);
+		color: #FFF !important;
+	}
+	li {
+		background: #000;
+		&:hover, &.sfHover {
+			background: #999;
+		}
+		&.active {
+			background: #FFF;
+			& > a {
+				color: #000 !important;
+			}
+			&:hover {
+				background: #999;
+			}
 		}
 	}
+	.sf-arrows {
+		&.sf-with-ul:after {
+			/* order of following 3 rules important for fallbacks to work */
+			border: 5px solid transparent;
+			border-top-color: #dFeEFF; /* edit this to suit design (no rgba in IE8) */
+			border-top-color: rgba(255,255,255,.5);
+		}
+/* styling for both css and generated arrows */
+
+		& > li > .sf-with-ul:focus:after,
+		& > li:hover > .sf-with-ul:after,
+		& > .sfHover > .sf-with-ul:after {
+			border-top-color: white; /* IE8 fallback colour */
+		}		
+		/* styling for right-facing arrows */
+		& ul .sf-with-ul:after {
+			border-left-color: #dFeEFF; /* edit this to suit design (no rgba in IE8) */
+			border-left-color: rgba(255,255,255,.5);
+		}
+	}
+
 }
+
+#layout {
+	margin-top: 1em;
+}
+
+
+
+
+
 
 #content {
 	background: @content-background;

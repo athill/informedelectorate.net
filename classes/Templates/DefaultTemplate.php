@@ -24,15 +24,27 @@ class DefaultTemplate extends \Athill\Utils\Templates\DefaultTemplate {
 		parent::__construct();
 	}
 
+	protected function beginRender() {
+		global $h;
+		$h->odiv('id="container"');
+	}
+
+	protected function endRender() {
+		global $h;
+		$h->cdiv('/#container');
+	}	
+
 	protected function heading() {
 		global $h, $site;
-		$h->oheader();
+		$h->oheader('id="header"');
+		$h->odiv('class="banner"');
 		$h->h1($site['sitename']);
-		$h->odiv('id="top-nav"');
+		$h->cdiv('./banner');
+		$h->odiv('class="top-nav"');
 		$this->breadcrumbs();
 		$this->topMenu();
-		$h->cdiv('/#top-nav');
-		$h->cheader();
+		$h->cdiv('/.top-nav');
+		$h->cheader('/#header');
 	}	
 
 }
