@@ -6,23 +6,20 @@ date_default_timezone_set('America/New_York');
 
 //// need these
 $webroot = '';
-$fileroot = null;
-//// determine fileroot based on host.
+$fileroot = dirname(__FILE__);
+$instance = 'dev';
+
+//// determine instance based on host
 if (isset($_SERVER['HTTP_HOST'])) {
-	//// remove port, if applicable
+	//// remove port
 	$host = preg_replace('/([^:]+):\\d+/', '$1', $_SERVER['HTTP_HOST']);
-	switch($host) {
-		case 'demo.app':
-			$fileroot = '/home/vagrant/Code/sites/PHP-Utils-Demo';
-			break;
-		case 'localhost':
-			$fileroot = '/home/athill/Code/Homestead/sites/PHP-Utils-Demo';
-			break;	
+	switch ($host) {
 		case 'demo.andyhill.us':
-			$fileroot = '/home/andyhil/sites/PHP-Utils-Demo';
-			break;			
+			$instance = 'prd';
+			break;
 	}
 }
+
 $fileroot = $fileroot.$webroot;
 
 //// autoloader
@@ -35,6 +32,7 @@ $h = Athill\Utils\Html::singleton($webroot);
 $basesettings = array(
 	'webroot'=>$webroot,
 	'fileroot'=>$fileroot,
+	'instance'=>$instance
 );
 //// set the wheels in motion
 $setup = new Athill\Utils\Setup($basesettings);
