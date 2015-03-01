@@ -24,16 +24,6 @@ class DefaultTemplate extends \Athill\Utils\Templates\DefaultTemplate {
 		parent::__construct();
 	}
 
-	protected function beginRender() {
-		global $h;
-		$h->odiv('id="container"');
-	}
-
-	protected function endRender() {
-		global $h;
-		$h->cdiv('/#container');
-	}	
-
 	protected function heading() {
 		global $h, $site;
 		$h->oheader('id="header"');

@@ -11,12 +11,8 @@ return [
 			'js'=>array('/jquery.min.js')
 		),
 		'bootstrap'=>array(
-			'root'=>$bower.'/bootstrap/dist',
-			'js'=>array('/js/bootstrap.min.js'),
-			'css'=>array(
-				'/css/bootstrap.min.css',
-				'/css/bootstrap-theme.min.css'
-			)
+			'js'=>array('/bootstrap/dist/js/bootstrap.min.js'),
+			'css'=>array('/css/bootstrap.css')
 		),
 		'superfish'=>array(
 			'js'=>[$bower.'/superfish/dist/js/superfish.min.js'],
