@@ -72,9 +72,11 @@ header {
     	}
     }
 	a {
-		border-left: 1px solid #fff;
-		border-top: 1px solid #dFeEFF; /* fallback colour must use full shorthand */
-		border-top: 1px solid rgba(255,255,255,.5);
+		border-right: 1px solid #fff;
+		border-left: none;
+		border-top: none;	
+		// border-top: 1px solid #dFeEFF;  fallback colour must use full shorthand 
+		// border-top: 1px solid rgba(255,255,255,.5);
 		color: #FFF !important;
 	}
 	li {
@@ -94,7 +96,7 @@ header {
 	}
 	.sf-arrows {
 		&.sf-with-ul:after {
-			/* order of following 3 rules important for fallbacks to work */
+			 // order of following 3 rules important for fallbacks to work 
 			border: 5px solid transparent;
 			border-top-color: #dFeEFF; /* edit this to suit design (no rgba in IE8) */
 			border-top-color: rgba(255,255,255,.5);
