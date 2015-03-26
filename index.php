@@ -15,19 +15,5 @@ $h->p('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet tel
 $h->a('/', 'link');
 
 
-////// generate directory structure
-// $template = '<?php 
-// require(\'%ssetup.inc.php\');
-// $local = [
-// 	\'layout\'=>[
-// 		\'leftsidebar\'=> [[\'type\'=>\'content\', \'content\'=>\'left side bar\']],
-// 	],
-// ];
 
-// $page = new \Athill\Utils\Page($local);
-
-// $page->end();
-// ';
-
-// $menuUtils->generateFileStructure(['template'=>$template]);
 $page->end();
