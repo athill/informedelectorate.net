@@ -16,5 +16,8 @@
     "require": {
 	   "athill/php-utils": "dev-master"
     },
+    "autoload": {
+        "psr-4": {"Classes\\": "classes/"}
+    },    
     "minimum-stability": "dev"
 }

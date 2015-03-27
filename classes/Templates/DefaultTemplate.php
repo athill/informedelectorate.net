@@ -1,4 +1,4 @@
-<?php
+<?php namespace Classes\Templates;
 
 class DefaultTemplate extends \Athill\Utils\Templates\DefaultTemplate {
 	protected $jsModules = array('jquery', 'bootstrap', 'superfish');

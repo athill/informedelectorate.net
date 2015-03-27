@@ -11,7 +11,7 @@ return [
 			'js'=>array('/jquery.min.js')
 		),
 		'bootstrap'=>array(
-			'js'=>array('/bootstrap/dist/js/bootstrap.min.js'),
+			'js'=>array($bower.'/bootstrap/dist/js/bootstrap.min.js'),
 			'css'=>array('/css/bootstrap.css')
 		),
 		'superfish'=>array(
