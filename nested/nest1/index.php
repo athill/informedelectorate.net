@@ -9,4 +9,5 @@ $local = [
 
 $page = new \Athill\Utils\Page($local);
 
+
 $page->end();

@@ -9,6 +9,6 @@ $local = [
 
 $page = new \Athill\Utils\Page($local);
 
-echo $site['view'];
+$site['utils']['menu']->ls();
 
 $page->end();

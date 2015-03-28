@@ -26,11 +26,11 @@ class DefaultTemplate extends \Athill\Utils\Templates\DefaultTemplate {
 
 	protected function heading() {
 		global $h, $site;
-		$h->oheader('id="header"');
-		$h->odiv('class="banner"');
+		$h->oheader(['id'=>'header']);
+		$h->odiv(['class'=>'banner']);
 		$h->h1($site['sitename']);
 		$h->cdiv('./banner');
-		$h->odiv('class="top-nav"');
+		$h->odiv(['class'=>'top-nav']);
 		$this->breadcrumbs();
 		$this->topMenu();
 		$h->cdiv('/.top-nav');
