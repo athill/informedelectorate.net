@@ -1,10 +1,13 @@
 <?php
 $bower = '/bower_components';
-$localjs = '/js';
-$localcss = '/css';
+//// TODO - create dist folder. preprocessing goes to dist folder, /js, /css get copied to /dist/...
+$js = '/dist/js';
+$css = '/dist/css';
 
 return [
-	'sequence'=>['jquery', 'bootstrap', 'superfish', 'treemenu'],
+	//// TODO: 	- Fill in anything not in sequence, so only i.e., jquery, need to be in list
+	////		- Convert string to array if passed into js or css
+	'sequence'=>['jquery', 'fontawesome', 'bootstrap', 'superfish', 'treemenu', 'metisMenu'],
 	'modules'=>[
 		'jquery' => array(
 			'root'=>$bower.'/jquery/dist',
@@ -22,6 +25,13 @@ return [
 			'root'=>$bower.'/jquery.treeview',
 			'js'=>['/jquery.treeview.js', '/demo/jquery.cookie.js'],
 			'css'=>['/jquery.treeview.css']
-		)
+		),
+		'fontawesome'=>[
+			'css'=>[$bower.'/fontawesome/css/font-awesome.min.css']
+		],
+		'metisMenu'=>[
+			'js'=>[$bower.'/metisMenu/dist/metisMenu.js'],
+			'css'=>[$bower.'/metisMenu/dist/metisMenu.min.css', '/css/metisMenuStyles.css']
+		]
 	]
 ];
