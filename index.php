@@ -14,17 +14,16 @@ $h->p('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet tel
 
 $h->a('/', 'link');
 
-$h->onav(['id'=>'accordion', 'class'=>'sidebar-nav']);
-$site['utils']['menu']->renderMenu([
-	'depth'=>2,
-]);
-$h->cnav('#/accordion');
-$h->script("\$(function () {
-    \$('#accordion').metisMenu();
-    \$('#accordion a').click(function(e) {
-    	e.preventDefault();
-    })
-});");
+// $h->onav(['id'=>'mobile-menu', 'class'=>'accordion-menu']);
+// $site['utils']['menu']->renderMenu([
+// 	'depth'=>2,
+// ]);
+// $h->cnav('#/mobile-menu');
+// $h->script("\$(function () {
+//     \$('#mobile-menu').metisMenu({  
+//     	 doubleTapToGo: true
+//     });
+// });");
 
 $t = '\Classes\Templates\DefaultTemplate';
 $test = new $t();

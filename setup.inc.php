@@ -41,3 +41,5 @@ $basesettings = array(
 $setup = new Athill\Utils\Setup($basesettings);
 //// $site is reserved as well. It determines various settings.
 $site = $setup->getDefaults();
+//// these depend on $site being set
+$site['utils'] = $setup->getUtils();

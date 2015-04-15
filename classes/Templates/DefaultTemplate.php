@@ -28,13 +28,34 @@ class DefaultTemplate extends \Athill\Utils\Templates\DefaultTemplate {
 		global $h, $site;
 		$h->oheader(['id'=>'header']);
 		$h->odiv(['class'=>'banner']);
+		//// mobile menu toggle
+		$h->a('', '<i class="fa fa-bars"></i>', [
+				'id'=>'menu-toggle',
+				'class'=>'hidden-md hidden-lg'
+			]
+		);
+		//// content
+		$h->odiv(['id'=>'banner-content']);
 		$h->h1($site['sitename']);
+		$h->cdiv('#banner-content');
 		$h->cdiv('./banner');
 		$h->odiv(['class'=>'top-nav']);
-		$this->breadcrumbs();
-		$this->topMenu();
+		//// breadcrumbs
+		$this->breadcrumbs([ 
+			'navatts'=>['class'=>'breadcrumbs'] 
+		]);
+		//// top menu
+		$this->menu([
+			'navatts'=>['class'=>'top-menu clearfix hidden-xs hidden-sm']
+		]);
 		$h->cdiv('/.top-nav');
 		$h->cheader('/#header');
+		//// mobile menu
+		$this->menu([
+			'navatts'=>['id'=>'mobile-menu', 'class'=>'accordion-menu hidden-md hidden-lg'],
+			'depth'=>2
+		]);
+
 	}	
 
 }
