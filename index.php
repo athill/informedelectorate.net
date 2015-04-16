@@ -2,9 +2,6 @@
 require_once('setup.inc.php');
 
 
-$local = [
-	'jsModules'=>['fontawesome'=>true, 'metisMenu'=>true]
-];
 $_SESSION['flash']['info'][] = 'test';
 
 $page = new \Athill\Utils\Page($local);

@@ -1,7 +1,7 @@
 <?php namespace Classes\Templates;
 
 class DefaultTemplate extends \Athill\Utils\Templates\DefaultTemplate {
-	protected $jsModules = array('jquery', 'bootstrap', 'superfish');
+	protected $jsModules = array('jquery', 'bootstrap', 'superfish', 'metisMenu', 'fontawesome');
 	protected $css = ['/css/default.css'];
 	protected $js = ['/js/site.js'];
 
