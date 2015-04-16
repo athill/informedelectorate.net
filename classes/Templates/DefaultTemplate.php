@@ -27,17 +27,20 @@ class DefaultTemplate extends \Athill\Utils\Templates\DefaultTemplate {
 	protected function heading() {
 		global $h, $site;
 		$h->oheader(['id'=>'header']);
-		$h->odiv(['class'=>'banner']);
+		$h->odiv(['class'=>'banner container']);
+		$h->odiv(['class'=>'row']);
 		//// mobile menu toggle
+		$h->odiv(['class'=>'hidden-md hidden-lg col-xs-1']);
 		$h->a('', '<i class="fa fa-bars"></i>', [
-				'id'=>'menu-toggle',
-				'class'=>'hidden-md hidden-lg'
+				'id'=>'menu-toggle'
 			]
 		);
+		$h->cdiv();
 		//// content
-		$h->odiv(['id'=>'banner-content']);
+		$h->odiv(['id'=>'banner-content', 'class'=>'col-xs-11 col-md-12']);
 		$h->h1($site['sitename']);
 		$h->cdiv('#banner-content');
+		$h->cdiv('/.row');
 		$h->cdiv('./banner');
 		$h->odiv(['class'=>'top-nav']);
 		//// breadcrumbs

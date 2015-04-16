@@ -14,7 +14,6 @@
 .rounded {
 	border-radius: 2em;
 	padding: 0.5em;
-	// margin: 0.5em;
 }
 
 
@@ -64,17 +63,23 @@ header {
 }
 
 #banner-content {
-	display: inline-block;
+	// display: inline-block;
 	text-align: center;
+
 }
 
 #menu-toggle {
-	// position: absolute;
-	// bottom: 0.5em;
-	// left: 0.5em;
 	display: inline-block;
 	font-size: 3em;
-	padding: 0.3em;
+	width: 100%;
+	// padding: 0.3em;
+	text-align: center;
+}
+
+@media (max-width: 400px) {
+	#banner-content {
+		font-size: 0.6em;
+	}
 }
 
 /*superfish */
