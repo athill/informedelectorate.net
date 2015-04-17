@@ -59,7 +59,7 @@ header {
 
 //// placing manually for now
 .banner {
-	position: relative;
+	// position: relative;
 }
 
 #banner-content {
@@ -69,16 +69,37 @@ header {
 }
 
 #menu-toggle {
-	display: inline-block;
 	font-size: 3em;
-	width: 100%;
-	// padding: 0.3em;
+	padding-top: 0.4em;
 	text-align: center;
+	a {
+		outline: none;
+	}
 }
+
+#mobile-menu {
+	display: none;
+}
+
+
+
 
 @media (max-width: 400px) {
 	#banner-content {
-		font-size: 0.6em;
+		font-size: 0.7em;
+	}
+	#menu-toggle {
+		padding-top: 0.2em;
+	}
+}
+
+@media (max-width: 280px) {
+	#banner-content {
+		font-size: 0.4em;
+	}
+	#menu-toggle {
+		padding-top: 0.2em;
+		font-size: 2.6em;
 	}
 }
 

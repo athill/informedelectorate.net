@@ -17,7 +17,7 @@ class DefaultTemplate extends \Athill\Utils\Templates\DefaultTemplate {
 		foreach ($titles as $title) {
 			$rightsidebar[] = [
 				'type'=>'content',
-				'content' => '<h5>'.$title.'</h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis ex dapibus, suscipit sem at, commodo magna. '
+				'content' => '<h5>'.$title.'</h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis ex dapibus, suscipit sem at, commodo magna. '
 			];
 		};
 		$site['layout']['rightsidebar'] = $rightsidebar;
@@ -27,17 +27,17 @@ class DefaultTemplate extends \Athill\Utils\Templates\DefaultTemplate {
 	protected function heading() {
 		global $h, $site;
 		$h->oheader(['id'=>'header']);
-		$h->odiv(['class'=>'banner container']);
+		$h->odiv(['class'=>'banner']);
 		$h->odiv(['class'=>'row']);
 		//// mobile menu toggle
-		$h->odiv(['class'=>'hidden-md hidden-lg col-xs-1']);
+		$h->odiv(['class'=>'hidden-md hidden-lg col-xs-2', 'id'=>'menu-toggle']);
 		$h->a('', '<i class="fa fa-bars"></i>', [
-				'id'=>'menu-toggle'
+				
 			]
 		);
 		$h->cdiv();
 		//// content
-		$h->odiv(['id'=>'banner-content', 'class'=>'col-xs-11 col-md-12']);
+		$h->odiv(['id'=>'banner-content', 'class'=>'col-xs-10 col-md-12']);
 		$h->h1($site['sitename']);
 		$h->cdiv('#banner-content');
 		$h->cdiv('/.row');
