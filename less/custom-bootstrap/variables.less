@@ -1,17 +1,49 @@
+@import '../../bower_components/bootstrap/less/variables.less';
+
+
+///////////////////////
+//// My variables
+//////////////////////
+@dark-base: #000;
+@light-base: #fff;
+@dark-red: #900;
+@page-background: @dark-base;
+@content-background: @page-background + #777;
+@border-color: @page-background + #555;
+@min-height: 5em;
+
+.rounded {
+	border-radius: 2em;
+	padding: 0.5em;
+}
+
+.bordered {
+	border: medium solid @border-color;
+}
+
+// .inverse(@color) when (@color >= #888) {
+// 	color: #fff - @color;
+// }
+
+// .inverse(@color) when (@color < #888) {
+// 	color: #000 + @color;
+// }
+
+//////////////////////////////
+//// Override bootstrap variables
+//////////////////////////////
 //== Scaffolding
 //
 //## Settings for some of the most global styles.
 @body-bg: #000;
 
-@text-color: #fff;
-
-@link-color: #900;
-
+@text-color: @dark-base;
+@link-color: @dark-red;
 @link-hover-color: @link-color;
 
 
 
-@screen-md:                  992px;
+@screen-md:                  994px;
 @screen-md-min:   			  @screen-md;
 @screen-lg:                  @screen-md;
 @screen-lg-min: @screen-md-min;
@@ -21,3 +53,11 @@
 
 // Large screen / wide desktop
 @container-large-desktop:      (@screen-md + @grid-gutter-width);
+
+
+
+
+
+
+
+

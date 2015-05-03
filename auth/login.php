@@ -33,7 +33,7 @@ Class FormHorizontal {
 	function __construct($defs, $layout) {
 		$this->defs = $defs;
 		$this->layout = $layout;
-		$this->fh = new \Athill\Utils\FieldHandler($defs);
+		$this->fh = new \Athill\Utils\Uft\FieldHandler($defs);
 	}
 
 	public function render($options=[]) {

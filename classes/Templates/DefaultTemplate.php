@@ -43,14 +43,14 @@ class DefaultTemplate extends \Athill\Utils\Templates\DefaultTemplate {
 		$h->cdiv('/.row');
 		$h->cdiv('./banner');
 		$h->odiv(['class'=>'top-nav']);
-		//// breadcrumbs
-		$this->breadcrumbs([ 
-			'navatts'=>['class'=>'breadcrumbs'] 
-		]);
 		//// top menu
 		$this->menu([
 			'navatts'=>['class'=>'top-menu clearfix hidden-xs hidden-sm']
 		]);
+		//// breadcrumbs
+		$this->breadcrumbs([ 
+			'navatts'=>['class'=>'breadcrumbs'] 
+		]);		
 		$h->cdiv('/.top-nav');
 		$h->cheader('/#header');
 		//// mobile menu

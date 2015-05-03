@@ -1,31 +1,12 @@
-@black: #000;
-@white: #fff;
-@dark-red: #900;
-
-
-@page-background: @black;
-@content-background: @page-background + #777;
-@border-color: @page-background + #555;
-@text-color: @white;
-@link-color: @dark-red;
-@min-height: 10em;
+@import 'custom-bootstrap/variables.less';
 
 //// mixins
-.rounded {
-	border-radius: 2em;
-	padding: 0.5em;
+body {
+	color: @text-color;
 }
-
-
-
-.bordered {
-	border: medium solid @border-color;
-}
-
-
 
 #container {
-	background: @content-background + #222;
+	background: @page-background + #ddd;
 	.rounded;	
 }
 
@@ -36,12 +17,14 @@ header {
 		.rounded;
 		h1 {
 			font-size: 4em;
+			// .inverse(@text-color);
+			color: white;
 			text-shadow: @text-color - #444 0.05em 0.05em;
 			text-align: center;
 		}		
 	}		
 	.breadcrumbs {
-		background: @content-background - #222;
+		background: @page-background + #999;
 		padding: 0.5em;
 		ul {
 			list-style: none;
@@ -53,7 +36,7 @@ header {
 		}
 	}	
 	.top-menu {
-		background: @content-background - #777;
+		background: @page-background;
 	}	
 }
 
@@ -165,8 +148,6 @@ header {
 }
 
 #content {
-	background: @content-background;
-	.rounded;
 	min-height: @min-height;
 }
 

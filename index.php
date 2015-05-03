@@ -3,7 +3,9 @@ require_once('setup.inc.php');
 
 
 $_SESSION['flash']['info'][] = 'test';
-$local = [];
+$local = [
+	'layout'=>['rightsidebar'=>[]]
+];
 
 $page = new \Athill\Utils\Page($local);
 //// content
@@ -22,8 +24,8 @@ $h->a('/', 'link');
 //     });
 // });");
 
-$t = '\Classes\Templates\DefaultTemplate';
-$test = new $t();
+// $t = '\Classes\Templates\DefaultTemplate';
+// $test = new $t();
 
 
 
