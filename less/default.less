@@ -8,13 +8,17 @@ body {
 #container {
 	background: @page-background + #ddd;
 	margin-top: 2em;
-	.rounded;	
+	.rounded;
+	padding: 0;
+	&.container {
+		padding: 0;
+	}		
 }
 
 header {
 	.banner {
 		background: @content-background - #444;
-		margin-bottom: 1em;
+		margin: 1em;
 		.rounded;
 		h1 {
 			font-size: 4em;
