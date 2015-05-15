@@ -1,36 +1,34 @@
 <?php
 require_once('setup.inc.php');
-
-
-$_SESSION['flash']['info'][] = 'test';
-$local = [
-	'layout'=>['rightsidebar'=>[]]
-];
-
 $page = new \Athill\Utils\Page($local);
 //// content
-$h->p('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet tellus ultricies, malesuada ex non, porta odio. Nunc elementum bibendum vestibulum. Cras commodo tincidunt libero at suscipit. Vestibulum suscipit justo in pellentesque blandit. Vivamus hendrerit est lobortis eros aliquet bibendum. Ut sodales diam nibh, et tempor magna posuere ac. In tristique efficitur ornare. Phasellus pretium, sapien eu placerat vehicula, felis ex placerat sapien, vel venenatis felis felis non leo. Vivamus lorem lacus, consequat id euismod interdum, mollis a augue. ');
+$h->p('Welcome to '.$site['sitename'].'! The idea of this site is to use technology to enable a more politically 
+		informed populace. The data is currently all from from <a href="http://sunlightfoundation.com/api/" target="_blank">the 
+	Sunlight Foundation</a>. I\'m hoping to expand on the current offerings, especially drilling down locally and acquiring up-to-the-minute ballot information, so hopefully that will work out.  The current offerings are:');
 
-$h->a('/', 'link');
 
-$menu = $site['utils']['utils']->readJson('menu.json');
-//$h->pa($menu);
-$template = '<?php 
-require(\'%ssetup.inc.php\');
-$local = [];
+$pages = array(
+	array('href'=>'/reps/', 
+			'header'=>'Find Your Federal and State Congressional Representatives', 
+			'descr'=>'Type in you address, and via <a href="https://developers.google.com/maps/" target="_blank">Google Maps API</a>, find your local and state representatives. Includes links to websites, twitter, facebook, etc.'),
+	array('href'=>'/words/', 
+			'header'=>'See What Federal Congressional Representives Are Using Key Words and How Often', 
+			'descr'=>'Type in a term and see which representatives are using the term and how often. Bubble Graph generated with <a href="http://d3js.org/" target="_blank">D3.js</a>.'),
+	array('href'=>'/floor_updates/', 
+			'header'=>'The Federal Congressional Record', 
+			'descr'=>'Find out what the House and Senate recorded recently. Includes links to <a href="http://www.opencongress.org/" target="_blank">Open Congress</a> for related bills.'),
+	array('href'=>'/state_bills/', 
+			'header'=>'Current State Bills', 
+			'descr'=>'Current bills in selected state. Includes links to <a href="http://openstates.org/" target="_blank">Open States</a>'),
+	array('href'=>'/statetax/', 
+			'header'=>'Comparison of State Tax Revenues ', 
+			'descr'=>'State tax revenue per capita by instrument. Interactive map.'),
+);
 
-$page = new \Athill\Utils\Page($local);
 
-$page->end();
-';
-$site['utils']['menu']->generateFileStructure(['template'=>$template]);
-
-// foreach ($menu as $entry) {
-// 	$href = $entry['href'];
-// 	if ($href == '/') {
-// 		continue;
-// 	}
-// 	$h->div($site['fileroot'].$href);
-// }
+foreach ($pages as $item) {
+	$h->h3($h->rtn('a', array('href'=>$item['href'], 'display'=>$item['header'])));
+	$h->p($item['descr']);
+}
 
 $page->end();
