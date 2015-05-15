@@ -13,20 +13,24 @@ $h->p('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet tel
 
 $h->a('/', 'link');
 
-// $h->onav(['id'=>'mobile-menu', 'class'=>'accordion-menu']);
-// $site['utils']['menu']->renderMenu([
-// 	'depth'=>2,
-// ]);
-// $h->cnav('#/mobile-menu');
-// $h->script("\$(function () {
-//     \$('#mobile-menu').metisMenu({  
-//     	 doubleTapToGo: true
-//     });
-// });");
+$menu = $site['utils']['utils']->readJson('menu.json');
+//$h->pa($menu);
+$template = '<?php 
+require(\'%ssetup.inc.php\');
+$local = [];
 
-// $t = '\Classes\Templates\DefaultTemplate';
-// $test = new $t();
+$page = new \Athill\Utils\Page($local);
 
+$page->end();
+';
+$site['utils']['menu']->generateFileStructure(['template'=>$template]);
 
+// foreach ($menu as $entry) {
+// 	$href = $entry['href'];
+// 	if ($href == '/') {
+// 		continue;
+// 	}
+// 	$h->div($site['fileroot'].$href);
+// }
 
 $page->end();

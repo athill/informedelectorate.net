@@ -33,6 +33,7 @@ $basesettings = array(
 	'webroot'=>$webroot,
 	'fileroot'=>$fileroot,
 	'instance'=>$instance,
+	'sitename'=>'InformedElectorate.net',
 	'objects'=>[
 		'template'=>'\Classes\Templates\DefaultTemplate'
 	]
