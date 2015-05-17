@@ -7,7 +7,8 @@ $css = '/dist/css';
 return [
 	//// TODO: 	- Fill in anything not in sequence, so only i.e., jquery, need to be in list
 	////		- Convert string to array if passed into js or css
-	'sequence'=>['jquery', 'fontawesome', 'bootstrap', 'superfish', 'treemenu', 'metisMenu'],
+	'sequence'=>['jquery', 'fontawesome', 'bootstrap', 'superfish', 'treemenu', 'metisMenu', 
+		'jquery-equal-width-children'],
 	'modules'=>[
 		'jquery' => array(
 			'root'=>$bower.'/jquery/dist',
@@ -32,6 +33,9 @@ return [
 		'metisMenu'=>[
 			'js'=>[$bower.'/metisMenu/dist/metisMenu.js'],
 			'css'=>[$bower.'/metisMenu/dist/metisMenu.min.css', '/css/metisMenuStyles.css']
-		]
+		],
+		'jquery-equal-width-children'=>[
+			'js'=>[$bower.'/jquery-equal-width-children/dist/jquery.equal-width-children.min.js'],
+		]		
 	]
 ];

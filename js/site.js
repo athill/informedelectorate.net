@@ -2,6 +2,7 @@ $(function() {
 	var $mobilemenu = $('#mobile-menu');
 	//// topmenu
 	$('#header .top-menu ul').addClass('sf-menu').superfish();
+	$('#header .top-menu ul').equalWidthChildren();
 	//// mobile menu
 	$('#menu-toggle').click(function(e) {
 		e.preventDefault();
