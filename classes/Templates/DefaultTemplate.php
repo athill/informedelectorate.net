@@ -46,6 +46,11 @@ class DefaultTemplate extends \Athill\Utils\Templates\DefaultTemplate {
 			'depth'=>2
 		]);
 
-	}	
+	}
+
+	protected function beginContent() {
+		global $site, $h;
+		$this->messages();
+	}		
 
 }
