@@ -6,7 +6,7 @@ body {
 }
 
 #container {
-	background: @page-background + #ddd;
+	background: #fff; 
 	margin-top: 2em;
 	.rounded;
 	padding: 0;
@@ -16,20 +16,43 @@ body {
 }
 
 header {
-	.banner {
-		background: @content-background - #444;
-		margin: 1em;
-		.rounded;
-		h1 {
-			font-size: 4em;
-			// .inverse(@text-color);
-			color: white;
-			text-shadow: @text-color - #444 0.05em 0.05em;
-			text-align: center;
-		}		
+	.row {
+		margin: 0;
+		padding-top: 2px;
+		.banner-content {
+			background: url('../img/informedelectorate-header-short.png') repeat-x 1em 1em;
+			position: relative;
+			overflow: auto;
+			// margin: 1em 0;
+			height: 120px;
+			// .rounded;
+			h1 {
+			  font-family: 'UnifrakturMaguntia', cursive;
+			  position: absolute;
+			  left: 20px;
+			  top: 12px;
+			  color: white;
+			  margin: 0;
+			  font-size: 4em;
+			  text-shadow: 2px 2px #004;
+			}
+			.citation {
+				position: absolute;
+				left: 300px;
+				top: 60px;
+				color: black; 
+				background: #B6966D;
+				padding: 2px;
+				border-radius: 10px;
+				opacity: 0.9;
+				cite {
+				  display: block;
+				}
+			}				
+		}
 	}		
 	.breadcrumbs {
-		background: @page-background + #999;
+		background: #999;
 		padding: 0.5em;
 		ul {
 			list-style: none;
@@ -45,16 +68,9 @@ header {
 	}	
 }
 
-//// placing manually for now
-.banner {
-	// position: relative;
-}
 
-#banner-content {
-	// display: inline-block;
-	text-align: center;
 
-}
+
 
 #menu-toggle {
 	font-size: 3em;
@@ -97,10 +113,10 @@ header {
     ul {
     	box-shadow: 2px 2px 6px rgba(0,0,0,.2);	
     	li {
-    		background: #000;
+    		background: @dark-red;
     	}
     	ul li {
-    		background: #000;
+    		background: @dark-red;
     	}
     }
 	a {
@@ -112,17 +128,17 @@ header {
 		color: #FFF !important;
 	}
 	li {
-		background: #000;
+		background: @dark-red;
 		&:hover, &.sfHover {
 			background: #999;
 		}
 		&.active {
-			background: #FFF;
+			background: @page-background;
 			& > a {
-				color: #000 !important;
+				color: #fff !important;
 			}
 			&:hover {
-				background: #999;
+				background: @page-background;
 			}
 		}
 	}

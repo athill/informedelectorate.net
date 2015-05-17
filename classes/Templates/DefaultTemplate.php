@@ -1,26 +1,13 @@
 <?php namespace Classes\Templates;
 
 class DefaultTemplate extends \Athill\Utils\Templates\DefaultTemplate {
-	protected $jsModules = array('jquery', 'bootstrap', 'superfish', 'metisMenu', 'fontawesome');
-	protected $css = ['/css/default.css'];
+	protected $jsModules = array('jquery', 'bootstrap', 'superfish', 'metisMenu', 'fontawesome',
+		'jquery-equal-width-children');
+	protected $css = ['http://fonts.googleapis.com/css?family=UnifrakturMaguntia', '/css/default.css'];
 	protected $js = ['/js/site.js'];
 
 	function __construct() {
 		global $site;
-		
-		$titles = [
-			'Buy Stuff You Don\'t Need',
-			'Lose Money with This One Simple Trick',
-			'Your Doctor Doesn\'t Want You to Use This Trick, Because It\'s a Scam'
-		];
-		$rightsidebar = [];
-		foreach ($titles as $title) {
-			$rightsidebar[] = [
-				'type'=>'content',
-				'content' => '<h5>'.$title.'</h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis ex dapibus, suscipit sem at, commodo magna. '
-			];
-		};
-		$site['layout']['rightsidebar'] = $rightsidebar;
 		parent::__construct();
 	}
 
@@ -31,15 +18,15 @@ class DefaultTemplate extends \Athill\Utils\Templates\DefaultTemplate {
 		$h->odiv(['class'=>'row']);
 		//// mobile menu toggle
 		$h->odiv(['class'=>'hidden-md hidden-lg col-xs-2', 'id'=>'menu-toggle']);
-		$h->a('', '<i class="fa fa-bars"></i>', [
-				
-			]
-		);
+		$h->a('', '<i class="fa fa-bars"></i>', []);
 		$h->cdiv();
 		//// content
-		$h->odiv(['id'=>'banner-content', 'class'=>'col-xs-10 col-md-12']);
-		$h->h1($site['sitename']);
-		$h->cdiv('#banner-content');
+		$h->odiv(['class'=>'banner-content col-xs-10 col-md-12']);
+		// $h->h1($site['sitename']);
+		$h->h1($site['sitename'], 'class="page-title"');
+		$h->div('<q>Whenever the people are well-informed, they can be trusted with their own government</q> &ndash;<cite>Thomas Jefferson, Letter to Richard Price (8 January 1789)</cite>', 
+				['class'=>'citation']);		
+		$h->cdiv('/.banner-content');
 		$h->cdiv('/.row');
 		$h->cdiv('./banner');
 		$h->odiv(['class'=>'top-nav']);
