@@ -1,0 +1,352 @@
+{
+  "Alabama": {
+    "corporate": "63",
+    "income": "583",
+    "sales": "454",
+    "property": "66",
+    "total": "1801"
+  },
+  "Alaska": {
+    "corporate": "1003",
+    "income": "0",
+    "sales": "0",
+    "property": "255",
+    "total": "7708"
+  },
+  "Arizona": {
+    "corporate": "87",
+    "income": "444",
+    "sales": "692",
+    "property": "117",
+    "total": "1682"
+  },
+  "Arkansas": {
+    "corporate": "129",
+    "income": "775",
+    "sales": "934",
+    "property": "327",
+    "total": "2722"
+  },
+  "California": {
+    "corporate": "256",
+    "income": "1346",
+    "sales": "826",
+    "property": "85",
+    "total": "3111"
+  },
+  "Colorado": {
+    "corporate": "75",
+    "income": "893",
+    "sales": "428",
+    "property": "0",
+    "total": "1863"
+  },
+  "Connecticut": {
+    "corporate": "188",
+    "income": "1808",
+    "sales": "909",
+    "property": "0",
+    "total": "3754"
+  },
+  "Delaware": {
+    "corporate": "357",
+    "income": "1065",
+    "sales": "0",
+    "property": "0",
+    "total": "3340"
+  },
+  "Florida": {
+    "corporate": "99",
+    "income": "0",
+    "sales": "1021",
+    "property": "0",
+    "total": "1718"
+  },
+  "Georgia": {
+    "corporate": "69",
+    "income": "784",
+    "sales": "520",
+    "property": "7",
+    "total": "1639"
+  },
+  "Hawaii": {
+    "corporate": "50",
+    "income": "911",
+    "sales": "1823",
+    "property": "0",
+    "total": "3548"
+  },
+  "Idaho": {
+    "corporate": "108",
+    "income": "741",
+    "sales": "752",
+    "property": "0",
+    "total": "2067"
+  },
+  "Illinois": {
+    "corporate": "144",
+    "income": "873",
+    "sales": "577",
+    "property": "5",
+    "total": "2290"
+  },
+  "Indiana": {
+    "corporate": "110",
+    "income": "705",
+    "sales": "964",
+    "property": "0",
+    "total": "2292"
+  },
+  "Iowa": {
+    "corporate": "82",
+    "income": "933",
+    "sales": "730",
+    "property": "0",
+    "total": "2368"
+  },
+  "Kansas": {
+    "corporate": "86",
+    "income": "950",
+    "sales": "868",
+    "property": "25",
+    "total": "2383"
+  },
+  "Kentucky": {
+    "corporate": "119",
+    "income": "784",
+    "sales": "665",
+    "property": "118",
+    "total": "2341"
+  },
+  "Louisiana": {
+    "corporate": "43",
+    "income": "527",
+    "sales": "617",
+    "property": "11",
+    "total": "1944"
+  },
+  "Maine": {
+    "corporate": "157",
+    "income": "1070",
+    "sales": "761",
+    "property": "34",
+    "total": "2768"
+  },
+  "Maryland": {
+    "corporate": "134",
+    "income": "1144",
+    "sales": "671",
+    "property": "136",
+    "total": "2756"
+  },
+  "Massachusetts": {
+    "corporate": "294",
+    "income": "1765",
+    "sales": "749",
+    "property": "1",
+    "total": "3361"
+  },
+  "Michigan": {
+    "corporate": "73",
+    "income": "647",
+    "sales": "960",
+    "property": "192",
+    "total": "2383"
+  },
+  "Minnesota": {
+    "corporate": "188",
+    "income": "1404",
+    "sales": "874",
+    "property": "145",
+    "total": "3557"
+  },
+  "Mississippi": {
+    "corporate": "119",
+    "income": "487",
+    "sales": "986",
+    "property": "8",
+    "total": "2257"
+  },
+  "Missouri": {
+    "corporate": "54",
+    "income": "755",
+    "sales": "495",
+    "property": "5",
+    "total": "1684"
+  },
+  "Montana": {
+    "corporate": "125",
+    "income": "817",
+    "sales": "0",
+    "property": "244",
+    "total": "2316"
+  },
+  "Nebraska": {
+    "corporate": "84",
+    "income": "937",
+    "sales": "754",
+    "property": "0",
+    "total": "2262"
+  },
+  "Nevada": {
+    "corporate": "0",
+    "income": "0",
+    "sales": "1080",
+    "property": "118",
+    "total": "2333"
+  },
+  "New Hampshire": {
+    "corporate": "443",
+    "income": "63",
+    "sales": "0",
+    "property": "299",
+    "total": "1761"
+  },
+  "New Jersey": {
+    "corporate": "252",
+    "income": "1205",
+    "sales": "924",
+    "property": "0",
+    "total": "3085"
+  },
+  "New Mexico": {
+    "corporate": "111",
+    "income": "514",
+    "sales": "907",
+    "property": "32",
+    "total": "2401"
+  },
+  "New York": {
+    "corporate": "207",
+    "income": "1864",
+    "sales": "596",
+    "property": "0",
+    "total": "3497"
+  },
+  "North Carolina": {
+    "corporate": "114",
+    "income": "1027",
+    "sales": "644",
+    "property": "0",
+    "total": "2332"
+  },
+  "North Dakota": {
+    "corporate": "236",
+    "income": "638",
+    "sales": "1143",
+    "property": "3",
+    "total": "5627"
+  },
+  "Ohio": {
+    "corporate": "21",
+    "income": "764",
+    "sales": "673",
+    "property": "0",
+    "total": "2181"
+  },
+  "Oklahoma": {
+    "corporate": "94",
+    "income": "632",
+    "sales": "577",
+    "property": "0",
+    "total": "2057"
+  },
+  "Oregon": {
+    "corporate": "122",
+    "income": "1425",
+    "sales": "0",
+    "property": "5",
+    "total": "2104"
+  },
+  "Pennsylvania": {
+    "corporate": "155",
+    "income": "772",
+    "sales": "703",
+    "property": "4",
+    "total": "2541"
+  },
+  "Rhode Island": {
+    "corporate": "141",
+    "income": "966",
+    "sales": "784",
+    "property": "2",
+    "total": "2603"
+  },
+  "South Carolina": {
+    "corporate": "46",
+    "income": "624",
+    "sales": "600",
+    "property": "2",
+    "total": "1650"
+  },
+  "South Dakota": {
+    "corporate": "19",
+    "income": "0",
+    "sales": "985",
+    "property": "0",
+    "total": "1682"
+  },
+  "Tennessee": {
+    "corporate": "167",
+    "income": "30",
+    "sales": "970",
+    "property": "0",
+    "total": "1761"
+  },
+  "Texas": {
+    "corporate": "0",
+    "income": "0",
+    "sales": "856",
+    "property": "0",
+    "total": "1696"
+  },
+  "Utah": {
+    "corporate": "89",
+    "income": "822",
+    "sales": "659",
+    "property": "0",
+    "total": "1958"
+  },
+  "Vermont": {
+    "corporate": "168",
+    "income": "888",
+    "sales": "520",
+    "property": "1525",
+    "total": "4293"
+  },
+  "Virginia": {
+    "corporate": "99",
+    "income": "1182",
+    "sales": "429",
+    "property": "5",
+    "total": "2160"
+  },
+  "Washington": {
+    "corporate": "0",
+    "income": "0",
+    "sales": "1559",
+    "property": "272",
+    "total": "2566"
+  },
+  "West Virginia": {
+    "corporate": "166",
+    "income": "898",
+    "sales": "652",
+    "property": "3",
+    "total": "2773"
+  },
+  "Wisconsin": {
+    "corporate": "149",
+    "income": "1128",
+    "sales": "721",
+    "property": "26",
+    "total": "2692"
+  },
+  "Wyoming": {
+    "corporate": "0",
+    "income": "0",
+    "sales": "1523",
+    "property": "500",
+    "total": "434"
+  }
+}
