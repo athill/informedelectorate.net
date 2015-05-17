@@ -46,8 +46,8 @@ class Api {
 		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		// // curl_setopt($ch, CURLOPT_VERBOSE, true);
 		// $content = curl_exec($ch);
+		// echo $url;
 		$content = file_get_contents($url);
-		echo $url;
 		return $content;		
 	}
 

@@ -8,7 +8,7 @@ return [
 	//// TODO: 	- Fill in anything not in sequence, so only i.e., jquery, need to be in list
 	////		- Convert string to array if passed into js or css
 	'sequence'=>['jquery', 'fontawesome', 'bootstrap', 'superfish', 'treemenu', 'metisMenu', 
-		'jquery-equal-width-children'],
+		'jquery-equal-width-children', 'd3'],
 	'modules'=>[
 		'jquery' => array(
 			'root'=>$bower.'/jquery/dist',
@@ -36,6 +36,9 @@ return [
 		],
 		'jquery-equal-width-children'=>[
 			'js'=>[$bower.'/jquery-equal-width-children/dist/jquery.equal-width-children.min.js'],
-		]		
+		],
+		'd3'=>[
+			'js'=>['http://d3js.org/d3.v3.min.js']
+		]
 	]
 ];

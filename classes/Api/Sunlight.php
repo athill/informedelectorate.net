@@ -2,7 +2,6 @@
 class Sunlight extends Api {
 
 	public function getData($collection, $method, $params=array()) {
-		echo 'api: '.$this->api;
 		switch ($collection) {
 			//// deprecated
 			case 'congress':
