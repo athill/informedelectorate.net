@@ -1,5 +1,5 @@
 <?php
-require_once('../setup.inc.php');
+require_once('../conf/setup.php');
 $data = '{}';
 $sun = new \Classes\Api\Sunlight($_ENV['api']['sunlight']['key']);
 if (isset($_GET['words'])) {

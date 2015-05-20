@@ -1,5 +1,5 @@
 <?php
-require_once('setup.inc.php');
+require_once('conf/setup.php');
 $page = new \Athill\Utils\Page($local);
 //// content
 $h->p('Welcome to '.$site['sitename'].'! The idea of this site is to use technology to enable a more politically 

@@ -1,5 +1,5 @@
 <?php
-require_once('../inc/setup.inc.php');
+require_once('../inc/conf/setup.php');
 
 $page = new Page(array(
 	'jsModules'=>array('ui'=>true),

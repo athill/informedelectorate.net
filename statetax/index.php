@@ -1,5 +1,5 @@
 <?php
-require_once('../setup.inc.php');
+require_once('../conf/setup.php');
 
 $page = new \Athill\Utils\Page(array(
 	'jsModules'=>array('d3'=>true, 
