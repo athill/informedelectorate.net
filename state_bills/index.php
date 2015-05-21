@@ -44,7 +44,7 @@ if (array_key_exists('state', $_GET)) {
 	$h->simpleTable(array(
 		'headers'=>array('Bill', 'Created', 'Updated', 'Type', 'Subjects'),
 		'data'=>$tdata,
-		'atts'=>'class="data-table"'
+		'atts'=>'class="table"'
 	));
 }
 

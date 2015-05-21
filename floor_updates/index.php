@@ -39,7 +39,7 @@ foreach ($data['results'] as $update) {
 $h->simpleTable(array(
 	'headers'=>array('Date', 'Chamber', 'Event', 'Bills'),
 	'data'=>$tdata,
-	'atts'=>'class="data-table"'
+	'atts'=>'class="table data-table"'
 ));
 
 
