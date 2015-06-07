@@ -1,6 +1,5 @@
 $(function() {
   $('#chart').html('<div id="loading"><h2>Loading</h2><i class="fa fa-cog fa-spin fa-2x"></i></div>');
-  console.log('getting json');
   $.getJSON('../api/'+window.location.search, function(data) {
     var legislators = [];
     var ids = [];
@@ -11,9 +10,8 @@ $(function() {
       app.counts[id] = data.results[i].count;
       ids.push(id);
     }
-    params.legislators = ids;
+    params.legislators = ids.join(',');
     $.getJSON('../api/', $.param(params), function (data) {
-        console.log(data);
         var graph = {
           name: 'words',
           children: []
@@ -33,7 +31,6 @@ $(function() {
           }
         });
         $('#chart').html('');
-        // console.log(graph);
         app.render(graph);
     });
   });

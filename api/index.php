@@ -9,7 +9,8 @@ if (isset($_GET['words'])) {
 	$data = $sun->getData('congress3', '/legislators', array('bioguide_id'=>$_GET['legislator']));
 } else if (isset($_GET['legislators'])) {
 	// $data = $sun->getData('congress3', '/legislators', array('bioguide_id'=>$_GET['legislator']));
-	$data = $sun->getLegislatorData($_GET['legislators']);
+	$legislators = explode(',', $_GET['legislators']);
+	$data = $sun->getLegislatorData($legislators);
 }
 
 header('Content-Type: application/json');
