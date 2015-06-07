@@ -17,6 +17,11 @@ class Sunlight extends Api {
 		return $data;
 	}
 
+	public function getCurrentFederalFloorUpdates() {
+		$data = $this->getData('congress3', '/floor_updates', array());
+		return $data;
+	}
+
 	protected function setBaseUrl($collection) {
 		switch ($collection) {
 			//// deprecated

@@ -6,20 +6,13 @@ $page = new \Athill\Utils\Page($local);
 
 
 $sun = new \Classes\Api\Sunlight($_ENV['api']['sunlight']['key']);
+//// get the floor updates
+$data = $sun->getCurrentFederalFloorUpdates();
 
 
-
-
-$data = $sun->getData('congress3', '/floor_updates', array());
-// $h->pa($data['floor_updates']);
-
-// $h->pa($data);
-
-
+//// build results table
 $tdata = array();
 foreach ($data['results'] as $update) {
-	// $h->cotr();
-	// $date = formatDate($update['legislative_day']);
 	$bills = array();
 	foreach ($update['bill_ids'] as $bill) {
 		$bills[] = array('href'=>'http://www.opencongress.org/bill/'.$bill.'/show', 
@@ -36,6 +29,7 @@ foreach ($data['results'] as $update) {
 	);
 }	
 
+//// display results
 $h->simpleTable(array(
 	'headers'=>array('Date', 'Chamber', 'Event', 'Bills'),
 	'data'=>$tdata,
