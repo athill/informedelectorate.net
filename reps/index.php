@@ -17,6 +17,7 @@ $h->input('submit', 's', 'Search');
 $h->cform();
 
 if (array_key_exists('addr', $_GET)) {
+	//// get latitude and longitude
 	$url = 'http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($_GET['addr']).'&sensor=false';
 	$json = $curl->get($url);
 	$data = json_decode($json, true);
@@ -33,15 +34,31 @@ if (array_key_exists('addr', $_GET)) {
 		$sun = new \Classes\Api\Sunlight($_ENV['api']['sunlight']['key']);
 		$data = $sun->getFederalLegislatorsByLatLong($lat, $lng);
 		$h->div('<strong>Your federal representatives:</strong>');
+		$fieldsCallback = function($item) {
+			global $sun;
+			$fields = array(
+				'Name' => $sun->getFullName($item),
+				'Chamber' => ucfirst($item['chamber']),
+				'District' => $item['district'],
+				'Party' => $item['party'],
+				'Address' => $item['office'],
+				'Website' => $item['website'],
+				'Phone' => $item['phone'],
+				'YouTube' => 'https://www.youtube.com/user/'.$item['youtube_id'],
+				'OpenCongress' => 'http://www.opencongress.org/people/show/'.$item['govtrack_id'],
+				'Twitter' => strlen($item['twitter_id']) ? 'https://twitter.com/'.$item['twitter_id'] : '',
+				'Facebook' => (strlen($item['facebook_id'])) ? 'https://www.facebook.com/'.$item['facebook_id'] : ''
+			);
+			return $fields;
+		};
 		foreach ($data['results'] as $leg) {
-			render($leg);
+			renderLegislator($leg, $fieldsCallback);
 			$h->hr();
 		}		
 
 		$data = $sun->getStateLegislatorsByLatLong($lat, $lng);
-		// $h->pa($data);
 		$h->div('<strong>Your state representatives:</strong>');
-		foreach ($data as $leg) {
+		$fieldsCallback = function($leg) {
 			$committees = array();
 			foreach ($leg['roles'] as $role) {
 				if (array_key_exists('committee', $role)) {
@@ -56,27 +73,34 @@ if (array_key_exists('addr', $_GET)) {
 				'Chamber'=>ucfirst($leg['chamber']),
 				'Phone'=>$leg['offices'][0]['phone'],
 				'Committees'=>implode(',', $committees)
-			);
-			$count = 0;
-			$h->otable();
-			foreach ($fields as $label => $value) {
-				if ($count > 0) $h->cotr();
-				$h->th($label.': ', 'align="left"');
-				if (preg_match('/^https?:/', $value)) {
-					$h->startBuffer();
-					$h->a($value, $value, 'target=_blank');
-					$value = $h->endBuffer();
-				}
-				$h->td($value);
-				$count++;
-			}
-			$h->ctable();			
+			);			
+			return $fields;
+		};
+		foreach ($data as $leg) {
+			renderLegislator($leg, $fieldsCallback);
+			$h>hr();
 		}
-
-		// $h->pa($data);
-		// echo 'here';
 	}
 
+}
+
+function renderLegislator($item, $fieldsCallback) {
+	global $h, $sun;
+	$fields = $fieldsCallback($item);
+	$count = 0;
+	$h->otable();
+	foreach ($fields as $label => $value) {
+		if ($count > 0) $h->cotr();
+		$h->th($label.': ', 'align="left"');
+		if (preg_match('/^https?:/', $value)) {
+			$h->startBuffer();
+			$h->a($value, $value, 'target=_blank');
+			$value = $h->endBuffer();
+		}
+		$h->td($value);
+		$count++;
+	}
+	$h->ctable();	
 }
 
 function render($item) {
