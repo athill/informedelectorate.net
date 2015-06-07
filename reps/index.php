@@ -2,6 +2,8 @@
 require_once('../conf/setup.php');
 $page = new \Athill\Utils\Page();
 
+$curl = new \Classes\Curl();
+
 $h->h1('Find Your Representatives');
 $h->p('I use <a href="https://developers.google.com/maps/" target="_blank">Google Maps API</a> to translate the address to 
 	latitude and longitude and then use data from <a href="http://sunlightfoundation.com/api/" target="_blank">the 
@@ -16,8 +18,9 @@ $h->cform();
 
 if (array_key_exists('addr', $_GET)) {
 	$url = 'http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($_GET['addr']).'&sensor=false';
-	$json = file_get_contents($url);
+	$json = $curl->get($url);
 	$data = json_decode($json, true);
+
 	if (count($data['results']) == 0) {
 		$h->div('Invalid Address. Please try again.', 'class="alert"');
 

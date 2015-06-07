@@ -4,9 +4,11 @@ class Api {
 	protected $key = '';
 	public $separator = '.json';
 	protected $debug = false;
+	protected $curl = null;
 
 	function __construct($key='') {
 		if ($key !== '') $this->key = $key;
+		$this->curl = new \Classes\Curl();
 	}
 
 	protected function getUrl($method, $params=array()) {
@@ -46,10 +48,9 @@ class Api {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		// curl_setopt($ch, CURLOPT_VERBOSE, true);
 		$content = curl_exec($ch);
+		curl_close($ch);
 		// echo $url;
 		// $content = file_get_contents($url);?
 		return $content;		
 	}
-
 }
-?>

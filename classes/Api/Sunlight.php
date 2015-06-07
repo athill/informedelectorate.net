@@ -2,6 +2,22 @@
 class Sunlight extends Api {
 
 	public function getData($collection, $method, $params=array()) {
+
+		$this->setBaseUrl($collection);
+		return parent::get($method, $params);
+
+	}
+
+	public function getFederalLegislatorsByLatLong($lat, $long) {
+		$data = $this->getData('congress3', '/legislators/locate', array('latitude'=>$lat,'longitude'=>$long));
+		return $data;
+	}
+	public function getStateLegislatorsByLatLong($lat, $long) {
+		$data = $this->getData('openstates', '/legislators/geo', array('lat'=>$lat,'long'=>$long));
+		return $data;
+	}
+
+	protected function setBaseUrl($collection) {
 		switch ($collection) {
 			//// deprecated
 			case 'congress':
@@ -31,17 +47,6 @@ class Sunlight extends Api {
 				$this->url = 'https://api.realtimecongress.org/api/v1/';
 				break;
 		}
-		return parent::get($method, $params);
-
-	}
-
-	public function getFederalLegislatorsByLatLong($lat, $long) {
-		$data = $this->getData('congress3', '/legislators/locate', array('latitude'=>$lat,'longitude'=>$long));
-		return $data;
-	}
-	public function getStateLegislatorsByLatLong($lat, $long) {
-		$data = $this->getData('openstates', '/legislators/geo', array('lat'=>$lat,'long'=>$long));
-		return $data;
 	}
 
 	function getFullName($d) {
