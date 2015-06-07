@@ -21,6 +21,15 @@ class Sunlight extends Api {
 		$data = $this->getData('congress3', '/floor_updates', array());
 		return $data;
 	}
+	public function getStateMetadata() {
+		$data = $this->getData('openstates', '/metadata', array());		
+		return $data;
+	}
+
+	public function getBillsByState($stateabbrev) {
+		$data = $this->getData('openstates', '/bills', array('state'=>$stateabbrev));
+		return $data;
+	}
 
 	protected function setBaseUrl($collection) {
 		switch ($collection) {

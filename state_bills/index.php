@@ -8,24 +8,29 @@ $page = new \Athill\Utils\Page($local);
 
 $sun = new \Classes\Api\Sunlight($_ENV['api']['sunlight']['key']);
 
-$meta = $sun->getData('openstates', '/metadata', array());
+// $meta = $sun->getData('openstates', '/metadata', array());
+if (!isset($_SESSION['stateoptions'])) {
 
-$options = array();
-foreach ($meta as $item) {
-	$options[] = $item['abbreviation'].'|'.$item['name'];
+	$meta = $sun->getStateMetadata();
+
+	$options = array();
+	foreach ($meta as $item) {
+		$options[] = $item['abbreviation'].'|'.$item['name'];
+	}
+	$_SESSION['stateoptions'] = $options;
+} else {
+	$options = $_SESSION['stateoptions'];
 }
-
 $h->oform('', 'get');
 $h->label('state', 'Select a state:');
 $h->select('state', $options, $h->getVal('state'), '', true);
 $h->submit('s', 'View Bills');
 $h->cform();
 
-// $h->pa($meta);
-
 if (array_key_exists('state', $_GET)) {
 	$dateformat = 'm/d/Y G:ia';
-	$data = $sun->getData('openstates', '/bills', array('state'=>$_GET['state']));
+	$data = $sun->getBillsByState($_GET['state']);
+	// $data = $sun->getData('openstates', '/bills', array('state'=>$_GET['state']));
 	// $h->pa($data);
 	$tdata = array();
 	foreach ($data as $item) {
