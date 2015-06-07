@@ -31,6 +31,28 @@ class Sunlight extends Api {
 		return $data;
 	}
 
+	public function getLegislatorData($legislators) {
+		$this->setBaseUrl('congress3');
+		$urls = [];
+		foreach ($legislators as $legislator) {
+			$urls[] = $this->getUrl('/legislators', ['bioguide_id'=>$legislator]);
+		}
+		$data = $this->getMulti($urls);
+
+		$response = [];
+		foreach ($data as $datum) {
+			foreach ($datum['results'] as $legdata) {
+				$id = $legdata['bioguide_id'];
+				$response[$id] = $legdata;
+			}			
+		}
+
+		// echo $data;
+		return $response;
+
+		// $data = $sun->getData('congress3', '/legislators', array('bioguide_id'=>$_GET['legislator']));
+	}
+
 	protected function setBaseUrl($collection) {
 		switch ($collection) {
 			//// deprecated

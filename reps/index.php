@@ -78,7 +78,7 @@ if (array_key_exists('addr', $_GET)) {
 		};
 		foreach ($data as $leg) {
 			renderLegislator($leg, $fieldsCallback);
-			$h>hr();
+			$h->hr();
 		}
 	}
 

@@ -29,7 +29,6 @@ class Curl {
 	 
 	  // multi handle
 	  $mh = curl_multi_init();
-	 
 	  // loop through $data and create curl handles
 	  // then add them to the multi-handle
 	  foreach ($data as $id => $d) {
@@ -69,7 +68,6 @@ class Curl {
 	    $result[$id] = curl_multi_getcontent($c);
 	    curl_multi_remove_handle($mh, $c);
 	  }
-	 
 	  // all done
 	  curl_multi_close($mh);
 	 

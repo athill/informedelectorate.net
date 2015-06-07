@@ -2,40 +2,35 @@ $(function() {
   $('#chart').html('<div id="loading"><i class="fa fa-cog fa-spin"></i><h2>Loading</h2></div>');
   console.log('getting json');
   $.getJSON('../api/'+window.location.search, function(data) {
-    var deferreds = [];
     var legislators = [];
+    var ids = [];
+    var params = {};
     for (var i = 0; i < data.results.length; i++) {
       var id = data.results[i].legislator;
       legislators.push(id);
       app.counts[id] = data.results[i].count;
-      deferreds.push(app.async.getLegislatorData(id));
+      ids.push(id);
     }
-    $.when.apply(null, deferreds).done(function() {
-        // var data = {};
+    params.legislators = ids;
+    $.getJSON('../api/', $.param(params), function (data) {
+        console.log(data);
         var graph = {
           name: 'words',
           children: []
         };
-        for (var id in app.data) {
-          if (app.data[id].length > 0) {
-            var datum = app.data[id][0]; 
+        for (var id in data) {
+          if (data[id]) {
+            var datum = data[id]; 
             graph.children.push({
               name: id,
               children: [{
                 name: datum.last_name+' ('+datum.party+' '+datum.chamber+' '+datum.state+')',
                 size: app.counts[id]                
               }]
-            });            
-              // data[id] = datum;
-              // data[id].count = app.counts[id];
+            });
           } else {
             app.fail.push(id);
           }
-
-          // for (var id in data) {
-          //   var datum = data[id];
- 
-          // }
         }
         $('#chart').html('');
         // console.log(graph);
@@ -48,19 +43,6 @@ var app = {
   counts: {},
   data: {},
   fail: [],
-  async: {
-    getLegislatorData: function(id) {
-      return $.getJSON('../api/?legislator='+id, function(data) {
-        app.data[id] = {};
-        if (data.results) {
-          app.data[id] = data.results;
-        } else {
-          app.fail.push(id);
-        }
-        app.data[id].count = app.counts[id];
-      });
-    }
-  },
   render: function(json) {
     var r = 960,
         format = d3.format(",d"),
