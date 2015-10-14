@@ -6,7 +6,7 @@ $page = new \Athill\Utils\Page(array(
 						// 'd3.geo'=>true,
 						'd3.tip'=>true
 	),
-	'stylesheets'=>array('styles.css')
+	'css'=>array('styles.css')
 ));
 
 $h->h1('State Taxes');
@@ -15,31 +15,36 @@ $h->h1('State Taxes');
 //// Intro
 $h->p('Use the radio buttons on the right to view the various combinations of per capita state and local tax burdens. Lighter shades indicate lower taxes. Hover over a state to see its per capita tax burden for the selected combination. Except for Total, I\'ve offered all combinations of the other fields to see how various tax types accumulate when combined.');
 //// Build possible combinations
-$combos = array();
-$areas = array('Income', 'Sales', 'Property', 'Corporate');
-$builds = array();
-foreach ($areas as $area) {
-	$combos[] = array($area=>1);
-	foreach ($areas as $area2) {
-		if ($area == $area2) continue;
-		$check = array(
-			$area => 1,
-			$area2 => 1,
-		);
-		if (!in_array($check, $combos)) {
-			$combos[] = $check;
-		}
-		if (!in_array($check, $builds)) {
-			$builds[] = $check;
-		}		
-		// $h->pa($builds);
-		foreach ($builds as $build) {
-			$check = array_merge($build, array($area2=>1));
+if (!isset($_SESSION['statetaxcombos'])) {
+	$combos = array();
+	$areas = array('Income', 'Sales', 'Property', 'Corporate');
+	$builds = array();
+	foreach ($areas as $area) {
+		$combos[] = array($area=>1);
+		foreach ($areas as $area2) {
+			if ($area == $area2) continue;
+			$check = array(
+				$area => 1,
+				$area2 => 1,
+			);
 			if (!in_array($check, $combos)) {
 				$combos[] = $check;
 			}
+			if (!in_array($check, $builds)) {
+				$builds[] = $check;
+			}		
+			// $h->pa($builds);
+			foreach ($builds as $build) {
+				$check = array_merge($build, array($area2=>1));
+				if (!in_array($check, $combos)) {
+					$combos[] = $check;
+				}
+			}
 		}
 	}
+	$_SESSION['statetaxcombos'] = $combos;
+} else {
+	$combos = $_SESSION['statetaxcombos'];
 }
 //// Generate categories from combos
 $categories = array();
