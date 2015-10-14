@@ -10,7 +10,9 @@ class Curl {
 		curl_setopt($ch, CURLOPT_HEADER, false);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_VERBOSE, true);
-		curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, 'TLSv1');
+		// curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, 'TLSv1');
+		curl_setopt($ch, CURLOPT_SSLVERSION, 4);
+		//CURLOPT_SSLVERSION 4, 5, 6
 		// CURLOPT_SSL_CIPHER_LIST => 'TLSv1' 
 		$site['logger']->info('getting: '.$url);
 		$content = curl_exec($ch);
