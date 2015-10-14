@@ -10,17 +10,14 @@ class Curl {
 		curl_setopt($ch, CURLOPT_HEADER, false);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_VERBOSE, true);
+		curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, 'TLSv1');
+		// CURLOPT_SSL_CIPHER_LIST => 'TLSv1' 
 		$site['logger']->info('getting: '.$url);
 		$content = curl_exec($ch);
 		if ($content === false) {
 			$site['logger']->info('fail: '.$url.': '.curl_error($ch));
 		}
 		curl_close($ch);
-
-		
-
-		// echo $url;
-		// $content = file_get_contents($url);?
 		return $content;
 	}
 
@@ -47,6 +44,8 @@ class Curl {
 	    curl_setopt($curly[$id], CURLOPT_URL,            $url);
 	    curl_setopt($curly[$id], CURLOPT_HEADER,         0);
 	    curl_setopt($curly[$id], CURLOPT_RETURNTRANSFER, 1);
+
+	    //CURLOPT_SSL_CIPHER_LIST => 'TLSv1' 
 	 
 	    // post?
 	    if (is_array($d)) {
