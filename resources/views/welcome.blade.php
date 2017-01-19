@@ -1,95 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
+<head>
+<title>InformedElectorate.net</title>
+<meta charset="uft-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<meta name="keywords" content="informed,electorate,elections,U.S.,politics"/>
+<meta name="description" content="Informed Electorate"/>
+<meta name="author" content="Andy Hill"/>
+<meta name="copyright" content="2017, informedelectorate.net"/>
+<meta name="viewport" content="width=device-width"/>
+<link rel="stylesheet" type="text/css" href="/js/superfish/css/superfish.css" />
+<link rel="stylesheet" type="text/css" href="/css/app.css" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=UnifrakturMaguntia" />
+</head>
+<body id="default" class="default">
+<div id="skip" class="hide">
+    <p>Skip to:</p>
+    <ul>
+        <li><a href="#content">Content</a></li>
+        <li><a href="#search">Search</a></li>
+        <li><a href="#primary-navigation">Primary Navigation</a></li>
+    </ul>
+</div>
+<div id="page">
+    <header id="header">
+    <div id="page-title">InformedElectorate.net</div>
+    <div id="citation"><q>Whenever the people are well-informed, they can be trusted with their own government</q> &ndash;<cite>Thomas Jefferson, Letter to Richard Price (8 January 1789)</cite></div>
+    </header>
+    <nav id="global-nav">
+    <h3 id="primary-navigation" class="hide">Primary Navigation</h3>
+    <ul class="sf-menu" id="global-nav-menu">
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="/reps/">Representatives</a></li>
+        <li><a href="/words/">Words</a></li>
+        <li><a href="/floor_updates/">Floor Updates</a></li>
+        <li><a href="/state_bills/">State Bills</a></li>
+        <li><a href="/statetax/">State Taxes</a></li>
+    </ul>
+    </nav>
+    <div id="top-divider">
+        <nav id="path">
+        <nav id="breadcrumb">
+            <ul>
+            <li>Home</li>
+            </ul>
+        </nav>
+        </nav>
+        <div id="search">
+            <form action="http://google.com/search" method="get">
+            Search 
+            <select id="sitesearch" name="sitesearch">
+                <option value="">Web</option>
+                <option value="informedelectorate.net" selected="selected">Site</option>
+            </select>
+            <input id="q" type="text" name="q" size="10" maxlength="255"/>
+            by Google
+            </form>
         </div>
-    </body>
-</html>
+    </div>
+    <div id="layout" class="row">
+        <div id="content-wrapper" class="col-md-12">
+            <main id="content">
+<p>CONTENT!!!</p>
+        </main> <!-- /#content -->
+        </div> <!-- /#content-wrapper -->
+    </div> <!-- ./row -->
+    <footer>
+    &copy;InformedElectorate.net  2017
+    </footer>
+</div>
+<script src="/js/jquery-1.10.1.min.js"></script>
+<script src="/js/superfish/js/superfish.js"></script>
+<script src="/js/superfish/js/hoverIntent.js"></script>
+<script src="/js/site.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+var webroot = "";
+//]]>
+</script>
+</body>
+
+
+
