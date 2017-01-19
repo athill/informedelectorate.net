@@ -1,8 +1,0 @@
-[
-	{ "href": "/", "display": "Home" },
-	{ "href": "/reps/", "display": "Representatives" },
-	{ "href": "/words/", "display": "Words"},
-	{ "href": "/floor_updates/", "display": "Floor Updates"},
-	{ "href": "/state_bills/", "display": "State Bills"},
-	{ "href": "/statetax/", "display": "State Taxes"}
-]
