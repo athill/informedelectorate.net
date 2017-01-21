@@ -31,27 +31,3 @@ if (page === '/') {
 }
 
 require('./pages/'+page);
-
-// console.log(page);
-
-// switch (location.pathname) {
-// 	case '/':
-
-// 		break;
-// 	case '/reps':
-
-// 		break;
-// 	case '/words':
-
-// 		break;
-// 	case '/floorupdates':
-
-// 		break;
-// 	case '/statebills':
-
-// 		break;
-
-// 	case '/statetaxes':
-
-// 		break;
-// }

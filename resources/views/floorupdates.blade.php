@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-<table class="data-table">
+<table class="data-table" id="results">
 	<thead>
 	<tr>
 		<th>Date</th>

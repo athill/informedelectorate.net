@@ -3,8 +3,6 @@ import { getParameterByName } from '../utils';
 $(() => {
 	const $results = $('#results');
 
-
-
 	$('#address-form').submit(e => {
 		e.preventDefault();
 		var value = $('#addr').val();

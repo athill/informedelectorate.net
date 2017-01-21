@@ -15,5 +15,7 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => 'api'], function () {
 	Route::resource('reps', 'RepsController', ['only' => ['index']]);
+
+	Route::resource('floorupdates', 'FloorupdatesController', ['only' => ['index']]);
 });
 
