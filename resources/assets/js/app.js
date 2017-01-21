@@ -24,3 +24,34 @@ $items = $('li', $menu);
 var $itemWidth = ($menu.width() / $items.length) - 20;
 
 $items.width($itemWidth);
+
+var page = location.pathname.replace(/\/([^\/]+)(\/|$)/, '$1');
+if (page === '/') {
+	page = 'home';
+}
+
+require('./pages/'+page);
+
+// console.log(page);
+
+// switch (location.pathname) {
+// 	case '/':
+
+// 		break;
+// 	case '/reps':
+
+// 		break;
+// 	case '/words':
+
+// 		break;
+// 	case '/floorupdates':
+
+// 		break;
+// 	case '/statebills':
+
+// 		break;
+
+// 	case '/statetaxes':
+
+// 		break;
+// }
