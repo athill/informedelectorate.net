@@ -17,5 +17,8 @@ Route::group(['middleware' => 'api'], function () {
 	Route::resource('reps', 'RepsController', ['only' => ['index']]);
 
 	Route::resource('floorupdates', 'FloorupdatesController', ['only' => ['index']]);
+
+	Route::resource('statebills', 'StatebillsController', ['only' => ['index', 'show']]);
+	
 });
 
