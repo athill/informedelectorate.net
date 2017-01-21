@@ -21,12 +21,6 @@ require('./bootstrap');
 var $menu = $('#global-nav-menu');
 $items = $('li', $menu);
 
-console.log('menu width', $menu.width());
-console.log('num items', $items.length);
-
 var $itemWidth = ($menu.width() / $items.length) - 20;
 
 $items.width($itemWidth);
-// $items.each(function(elem) {
-
-// });

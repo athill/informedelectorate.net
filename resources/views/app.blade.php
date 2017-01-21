@@ -30,9 +30,9 @@
     <h3 id="primary-navigation" class="hide">Primary Navigation</h3>
     <ul class="sf-menu" id="global-nav-menu">
         @foreach ($tabs as $tab)
-            <li class="{{ strpos($tab['href'], '/'.Request::path()) !== false ? 'active' : ''  }}">
-                <a href="{{ $tab['href'] }}">{{ $tab['display'] }}</a>
-            </li>
+        <li class="{{ strpos($tab['href'], '/'.Request::path()) !== false ? 'active' : ''  }}">
+            <a href="{{ $tab['href'] }}">{{ $tab['display'] }}</a>
+        </li>
         @endforeach
     </ul>
     </nav>
@@ -44,7 +44,7 @@
         </div> <!-- /#content-wrapper -->
     </div> <!-- ./row -->
     <footer>
-    &copy;InformedElectorate.net  2017
+    &copy;InformedElectorate.net  {{ date('Y') }}
     </footer>
 </div>
 <script src="{{ asset('/js/app.js') }}"></script>
