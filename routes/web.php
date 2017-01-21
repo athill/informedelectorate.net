@@ -11,6 +11,12 @@
 |
 */
 
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+});
+
+//// any route that matches view
+Route::get('/{view}', function ($view) {
+    return view($view);
 });

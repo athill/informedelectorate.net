@@ -9,8 +9,7 @@
 <meta name="author" content="Andy Hill"/>
 <meta name="copyright" content="2017, informedelectorate.net"/>
 <meta name="viewport" content="width=device-width"/>
-<link rel="stylesheet" type="text/css" href="/js/superfish/css/superfish.css" />
-<link rel="stylesheet" type="text/css" href="/css/app.css" />
+<link rel="stylesheet" type="text/css" href="{{ asset('/css/app.css') }}" />
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=UnifrakturMaguntia" />
 </head>
 <body id="default" class="default">
@@ -30,38 +29,17 @@
     <nav id="global-nav">
     <h3 id="primary-navigation" class="hide">Primary Navigation</h3>
     <ul class="sf-menu" id="global-nav-menu">
-        <li class="active"><a href="/">Home</a></li>
-        <li><a href="/reps/">Representatives</a></li>
-        <li><a href="/words/">Words</a></li>
-        <li><a href="/floor_updates/">Floor Updates</a></li>
-        <li><a href="/state_bills/">State Bills</a></li>
-        <li><a href="/statetax/">State Taxes</a></li>
+        @foreach ($tabs as $tab)
+            <li class="{{ strpos($tab['href'], '/'.Request::path()) !== false ? 'active' : ''  }}">
+                <a href="{{ $tab['href'] }}">{{ $tab['display'] }}</a>
+            </li>
+        @endforeach
     </ul>
     </nav>
-    <div id="top-divider">
-        <nav id="path">
-        <nav id="breadcrumb">
-            <ul>
-            <li>Home</li>
-            </ul>
-        </nav>
-        </nav>
-        <div id="search">
-            <form action="http://google.com/search" method="get">
-            Search 
-            <select id="sitesearch" name="sitesearch">
-                <option value="">Web</option>
-                <option value="informedelectorate.net" selected="selected">Site</option>
-            </select>
-            <input id="q" type="text" name="q" size="10" maxlength="255"/>
-            by Google
-            </form>
-        </div>
-    </div>
     <div id="layout" class="row">
         <div id="content-wrapper" class="col-md-12">
             <main id="content">
-<p>CONTENT!!!</p>
+            @yield('content')
         </main> <!-- /#content -->
         </div> <!-- /#content-wrapper -->
     </div> <!-- ./row -->
@@ -69,16 +47,6 @@
     &copy;InformedElectorate.net  2017
     </footer>
 </div>
-<script src="/js/jquery-1.10.1.min.js"></script>
-<script src="/js/superfish/js/superfish.js"></script>
-<script src="/js/superfish/js/hoverIntent.js"></script>
-<script src="/js/site.js"></script>
-<script type="text/javascript">
-//<![CDATA[
-var webroot = "";
-//]]>
-</script>
+<script src="{{ asset('/js/app.js') }}"></script>
 </body>
-
-
-
+</html>

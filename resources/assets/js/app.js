@@ -13,8 +13,20 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+// Vue.component('example', require('./components/Example.vue'));
 
-const app = new Vue({
-    el: '#app'
-});
+// const app = new Vue({
+//     el: '#app'
+// });
+var $menu = $('#global-nav-menu');
+$items = $('li', $menu);
+
+console.log('menu width', $menu.width());
+console.log('num items', $items.length);
+
+var $itemWidth = ($menu.width() / $items.length) - 20;
+
+$items.width($itemWidth);
+// $items.each(function(elem) {
+
+// });
