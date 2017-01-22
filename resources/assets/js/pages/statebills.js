@@ -1,3 +1,5 @@
+import { formatDate } from '../utils';
+
 $(() => {
 	const $results = $('#results');
 	const $form = $('#statebills-form');
@@ -16,14 +18,38 @@ $(() => {
 
 	$form.submit(e => {
 		e.preventDefault();
-		const value = $stateDropdown.val();
-		if (value === '') {
+		const state = $stateDropdown.val();
+		if (state === '') {
 			return;
 		}
-		fetch(`/api/statebills/${value}`)
+		fetch(`/api/statebills/${state}`)
 			.then(response => response.json())
 			.then(json => {
-				console.log(json);
+				const headers = ['Bill', 'Created', 'Updated', 'Type', 'Subjects'];
+				const $table = $('<table class="data-table" />');
+				const $tHeader = $table.append($('<thead><tr /></thead>'));
+				headers.forEach(header => {
+					$tHeader.append($(`<th scope="col">${header}</th>`));
+				});
+				$table.append($tHeader);
+				const $tBody = $('<tbody />');
+				json.forEach(bill => {
+					const url = `http://openstates.org/${state}/bills/${bill.session}/${bill.bill_id.replace(' ', '')}`;
+					const title = bill.title.replace('"', '&quot;');
+					const cells = [
+						`<a href="${url}" target="_blank" title="${title}" class="bill-link">${bill.bill_id}</a>`,
+						formatDate(bill.created_at),
+						formatDate(bill.updated_at),
+						title,
+						bill.type.join(', '),
+
+					];
+					const $tr = $('<tr />');
+					cells.forEach(cell => $tr.append(`<td>${cell}</td>`));
+					$tBody.append($tr);
+				});
+				$table.append($tBody);
+				$results.html($table);
 			})
 			.catch(error => console.error('Error in floorupdates', error));			
 	});
@@ -31,28 +57,4 @@ $(() => {
 	$stateDropdown.change(e => {
 		$form.submit();
 	});
-
-	// fetch('/api/floorupdates')
-	// 	.then(response => response.json())
-	// 	.then(json => {
-	// 		json.forEach(update => {
-	// 			const $tr = $('<tr />');
-	// 			$tr.append('<td>'+moment(update.timestamp).format("MMMM Do YYYY, h:mm:ss a")+'</td>');
-	// 			$tr.append('<td>'+ucFirst(update.chamber)+'</td>');
-	// 			$tr.append('<td>'+update.update+'</td>');
-	// 			let $bills = '';
-	// 			if (update.bill_ids.length) {
-	// 				$bills = $('<ul />');
-	// 				update.bill_ids.forEach(bill_id => {
-	// 					$bills.append($(`<li><a href="http://www.opencongress.org/bill/${bill_id}/show" target="_blank">${bill_id}</li>`));
-	// 				});
-	// 			}
-	// 			const $td = $('<td />');
-	// 			$td.append($bills);
-	// 			$tr.append($td);
-	// 			$results.append($tr);
-
-	// 		});
-	// 	})
-	// 	.catch(error => console.error('Error in floorupdates', error));
 });

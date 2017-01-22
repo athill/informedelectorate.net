@@ -30,7 +30,7 @@ class Sunlight extends Api {
 	}
 
 	public function getBillsByState($stateabbrev) {
-		$data = $this->getData('openstates', '/bills', array('state'=>$stateabbrev));
+		$data = $this->getData('openstates', '/bills', array('state'=>$stateabbrev, 'search_window'=>'term'));
 		return $data;
 	}
 

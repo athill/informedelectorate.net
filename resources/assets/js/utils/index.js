@@ -1,4 +1,8 @@
+import moment from 'moment';
 
+export const formatDate = date => {
+	return moment(date).format("MMMM Do YYYY, h:mm:ss a");
+}
 
 export function getParameterByName(name, url) {
     if (!url) {
