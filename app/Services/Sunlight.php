@@ -73,7 +73,7 @@ class Sunlight extends Api {
 				////http://openstates.org/api/v1/bills/?{SEARCH-PARAMS}&apikey={YOUR_API_KEY}
 				break;
 			case 'capitolwords':
-				$this->url = 'http://capitolwords.org/api/';
+				$this->url = 'https://capitolwords.org/api/';
 				////http://capitolwords.org/api/dates.json?apikey=<YOUR_KEY>
 				break;
 			case 'transparencydata':

@@ -9,6 +9,7 @@
     "change-case": "^3.0.1",
     "gulp": "^3.9.1",
     "jquery": "^3.1.0",
+    "jquery-param": "^0.2.0",
     "laravel-elixir": "^6.0.0-14",
     "laravel-elixir-vue-2": "^0.2.0",
     "laravel-elixir-webpack-official": "^1.0.2",
