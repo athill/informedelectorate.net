@@ -7,6 +7,9 @@
   "devDependencies": {
     "bootstrap-sass": "^3.3.7",
     "change-case": "^3.0.1",
+    "d3": "^4.4.4",
+    "d3-geo": "^1.4.0",
+    "d3-tip": "^0.7.1",
     "gulp": "^3.9.1",
     "jquery": "^3.1.0",
     "jquery-param": "^0.2.0",
