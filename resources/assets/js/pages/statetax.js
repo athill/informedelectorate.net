@@ -1,7 +1,11 @@
 import * as d3 from "d3";
-import d3tip from "d3-tip";
+import tip  from "d3-tip";
 import { geoAlbersUsa, geoPath } from "d3-geo";
-import { parse } from 'd3-request';
+import { json } from 'd3-request';
+import { format } from 'd3-format';
+import { select } from 'd3-selection';
+import { scaleLinear } from 'd3-scale';
+
 
 //// retrieve data files asynchronously
 const promises = [
@@ -37,9 +41,10 @@ const app = (data, states) => {
 		g: 1,
 		b: 0.1
 	};
-	const dollars = d3.format('00');		//// format function for dollars
+	const dollars = format('00');		//// format function for dollars
 	const width = 400;
 	const height = 250;
+	console.log('here');
 	//// build max map
 	Object.keys(data).forEach(state => {
 		Object.keys(data[state]).forEach(type => {
@@ -49,15 +54,15 @@ const app = (data, states) => {
 		});
 	});
 
-
 	//// Build basic scaling functions
 	Object.keys(max).forEach(type => {
-		scales[type] = d3.scale.linear()
+		scales[type] = scaleLinear()
 			.domain([0, max[type]])
 			.range([255, 0])
 	});
+
 	//// set up tooltip
-	const tip = d3tip()
+	const tooltip = tip()
 	  .attr('class', 'd3-tip')
 	  .offset([0, -10])
 	  .html(function(d) {
@@ -75,35 +80,35 @@ const app = (data, states) => {
 	const path = geoPath()
 		.projection(projection);
 
-	//// area
+	// //// area
 	const area = $('input[name=option]:checked').val();
 	
 	//Create SVG element
-	const svg = d3.select("#state_map")
+	const svg = select("#state_map")
 				.append("svg")
 				.attr("width", w)
 				.attr("height", h);
-	//// Initialize tooltip
-	svg.call(tip);
+
+	// //// Initialize tooltip
+	// svg.call(tooltip);
 
 	//Load in GeoJSON data
-	parse(states, function(json) {
-		
+	// d3.parse(states, function(json) {	
 		//Bind data and create one path per GeoJSON feature
-		svg.selectAll("path")
-		   .data(json.features)
-		   .enter()
-		   .append("path")
-		   .attr("d", path)
-		   .attr('class', 'state')
-		   .attr('id', function(d) { return d.properties.NAME; })
-		   .style("fill", function(d) {
-		   		var name = d.properties.NAME;
-		   		return getRgb(name, area)
-		   	})
-		   .on('mouseover', tip.show)
-		   .on('mouseout', tip.hide)
-	});
+		// svg.selectAll("path")
+		//    .data(json.features)
+		//    .enter()
+		//    .append("path")
+		//    .attr("d", path)
+		//    .attr('class', 'state')
+		//    .attr('id', function(d) { return d.properties.NAME; })
+		//    .style("fill", function(d) {
+		//    		var name = d.properties.NAME;
+		//    		return getRgb(name, area)
+		//    	})
+		//    .on('mouseover', tooltip.show)
+		//    .on('mouseout', tooltip.hide)
+	// });
 
 	//// Change option
 	$('#interface-container').on('click', 'input[name=option]', function(e)  {
@@ -125,7 +130,7 @@ const getRgb = (name, area) => {
 		var mx = areas.reduce(function(p, c) { 
 			return p + parseInt(max[c]); 
 		}, 0);
-		scales[area] = d3.scale.linear()	
+		scales[area] = scaleLinear()	
 							.domain([0, mx])
 							.range([255, 0]);
 	}
