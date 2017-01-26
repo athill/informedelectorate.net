@@ -3,7 +3,7 @@ import tip  from "d3-tip";
 import { geoAlbersUsa, geoPath } from "d3-geo";
 import { json } from 'd3-request';
 import { format } from 'd3-format';
-import { select } from 'd3-selection';
+import { select, selectAll } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 
 
@@ -13,19 +13,15 @@ const promises = [
 	fetch('/data/statetax/states.json'),
 ];
 
-Promise.all(promises).then(
-	(data, geoData) => {
+fetch('/data/statetax/states.json')
+	.then(response => response.json())
+	.then(data => {
 		$(() => {
-			app(data, geoData);
+			app(data);
 		});
-	    // returned data is in arguments[0], arguments[1], ... arguments[n]
-	    // you can process it here
-	}, 
-	err => {
-    	// error occurred
-    	console.err('oops', err);
-	}
-);
+	})
+	.catch(error => console.error('oops', error));
+
 
 var w = 400;
 var h = 250;
@@ -33,7 +29,7 @@ var h = 250;
 //// props
 // https://derekswingley.com/2016/08/01/using-and-bundling-individual-d3-modules/
 
-const app = (data, states) => {
+const app = (data) => {
 	const max = {};		//// maximum values for primary areas
 	const scales = {};	//// scaling functions by area
 	const colorcode = {	//// color multipliers
@@ -68,7 +64,7 @@ const app = (data, states) => {
 	  .html(function(d) {
 	  	const area = $('input[name=option]:checked').val();
 	  	const name = d.properties.NAME;
-	    return getTooltip(name, area);
+	    return getTooltip(data, name, area);
 	});
 
 	//Define map projection
@@ -93,22 +89,22 @@ const app = (data, states) => {
 	// svg.call(tooltip);
 
 	//Load in GeoJSON data
-	// d3.parse(states, function(json) {	
-		//Bind data and create one path per GeoJSON feature
-		// svg.selectAll("path")
-		//    .data(json.features)
-		//    .enter()
-		//    .append("path")
-		//    .attr("d", path)
-		//    .attr('class', 'state')
-		//    .attr('id', function(d) { return d.properties.NAME; })
-		//    .style("fill", function(d) {
-		//    		var name = d.properties.NAME;
-		//    		return getRgb(name, area)
-		//    	})
-		//    .on('mouseover', tooltip.show)
-		//    .on('mouseout', tooltip.hide)
-	// });
+	json('/data/statetax/states.json', function(json) {	
+	// 	Bind data and create one path per GeoJSON feature
+		svg.selectAll("path")
+		   .data(json.features)
+		   .enter()
+		   .append("path")
+		   .attr("d", path)
+		   .attr('class', 'state')
+		   .attr('id', function(d) { return d.properties.NAME; })
+		   .style("fill", function(d) {
+		   		var name = d.properties.NAME;
+		   		return getRgb(data, name, area)
+		   	  })
+		   // .on('mouseover', tooltip.show)
+		   // .on('mouseout', tooltip.hide)
+	});
 
 	//// Change option
 	$('#interface-container').on('click', 'input[name=option]', function(e)  {
@@ -116,12 +112,12 @@ const app = (data, states) => {
 		var $states = $states || $('.state');
 		$states.each(function(i, elem) {
 			var name = $(this).attr('id');
-			$(this).css('fill', getRgb(name, area));
+			$(this).css('fill', getRgb(data, name, area));
 		});
 	});		
 }
 
-const getRgb = (name, area) => {
+const getRgb = (data, name, area) => {
 	if (!(name in data)) return {};
 	var rgb = {};
 	var areas = area.split('+');
@@ -142,10 +138,11 @@ const getRgb = (name, area) => {
 		rgb[color] = Math.floor(scales[area](value)*colorcode[color]);
 	}
 	var rgbstr = 'rgb('+rgb.r+','+rgb.g+','+rgb.b+')';
+	console.log(rgbstr);
 	return rgbstr;
 }
 
-const getTooltip = (name, area) => {
+const getTooltip = (data, name, area) => {
 	var value = name;
 	if (name in data) {
 		var areas = area.split('+');
