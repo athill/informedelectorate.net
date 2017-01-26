@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Response;
+use Illuminate\Support\Facades\Cache;
 
 class StatebillsController extends Controller {
+
+	private const CACHE_PREFIX = 'statebills:';
+	private const CACHE_TIMEOUT = 3600;
 
 	protected $sunlight;
 
@@ -15,11 +18,18 @@ class StatebillsController extends Controller {
 	}
 
 	public function index(Request $request) {
-		$response = $this->sunlight->getStateMetadata();
-		return $response;
+		$cachekey = self::CACHE_PREFIX.'metadata';
+		if (!Cache::get($cachekey)) {
+			Cache::put($cachekey, $this->sunlight->getStateMetadata(), self::CACHE_TIMEOUT);
+		}
+		return Cache::get($cachekey);
 	}
 
 	public function show(Request $request, $id) {
-		return $this->sunlight->getBillsByState($id);
+		$cachekey = self::CACHE_PREFIX.$id;
+		if (!Cache::get($cachekey)) {	
+			Cache::put($cachekey, $this->sunlight->getBillsByState($id), self::CACHE_TIMEOUT);
+		}	
+		return Cache::get($cachekey);	
 	}
 }

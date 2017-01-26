@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Response;
+use Illuminate\Support\Facades\Cache;
 
 class RepsController extends Controller {
 
 	protected $sunlight;
+
+	private const CACHE_PREFIX = 'reps:';
+	private const CACHE_TIMEOUT = 3600;	
 
 	public function __construct() {
 		$this->sunlight = new \App\Services\Sunlight(env('SUNLIGHT_KEY'));
@@ -17,10 +20,20 @@ class RepsController extends Controller {
 	public function index(Request $request) {
 		$lat = $request->get('lat');
 		$long = $request->get('long');
+
 		if (is_null($lat) || is_null($long)) {
 			return ['error' => 'lat and long arguments are required'];
 		}
+		$cachekey = self::CACHE_PREFIX.$lat.'x'.$long;
 
+		if (!Cache::get($cachekey)) {
+			Cache::put($cachekey, $this->getRepresentatives($lat, $long), self::CACHE_TIMEOUT);
+		}
+		return Cache::get($cachekey);
+
+	}
+
+	protected function getRepresentatives($lat, $long) {
 		$fedResponse = $this->sunlight->getFederalLegislatorsByLatLong($lat, $long);
 		// dd($fedResponse);
 
@@ -35,9 +48,7 @@ class RepsController extends Controller {
 			return $this->getStateLegislator($item);
 		});
 
-		
-
-		return ['fed' => $fed, 'state' => $state];
+		return ['fed' => $fed, 'state' => $state];		
 	}
 
 	protected function getFederalLegislator($item) {

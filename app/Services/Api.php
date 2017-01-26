@@ -16,7 +16,7 @@ class Api {
 
 	protected function getUrl($method, $params=array()) {
 		$url = $this->url.$method.$this->separator.'?apikey='.$this->key;
-		dd($url);
+		// dd($url);
 
 		foreach ($params as $k => $v) {
 			if (!is_array($v)) {

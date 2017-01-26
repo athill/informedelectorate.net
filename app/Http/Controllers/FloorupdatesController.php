@@ -4,18 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Response;
+use Illuminate\Support\Facades\Cache;
 
 class FloorupdatesController extends Controller {
 
 	protected $sunlight;
+
+	private const CACHE_KEY = 'floorupdates';
+	private const CACHE_TIMEOUT = 3600;
 
 	public function __construct() {
 		$this->sunlight = new \App\Services\Sunlight(env('SUNLIGHT_KEY'));
 	}
 
 	public function index(Request $request) {
-		$response = $this->sunlight->getCurrentFederalFloorUpdates();
-		return $response['results'];
+		if (!Cache::get(self::CACHE_KEY)) {
+			Cache::put(self::CACHE_KEY, $this->sunlight->getCurrentFederalFloorUpdates()['results'], self::CACHE_TIMEOUT);
+		}
+		return Cache::get(self::CACHE_KEY);
 	}
 }
