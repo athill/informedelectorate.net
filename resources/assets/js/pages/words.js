@@ -6,6 +6,8 @@ $(() => {
 
   $wordsForm.submit(function(e) {
     e.preventDefault();
+    alert('This form does not work, as the Capitol Words API is not functional.');
+    return;
     const value = $input.val();
     if (value.trim() === '') {
       return;
