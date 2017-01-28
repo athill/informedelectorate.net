@@ -13,7 +13,7 @@ const promises = [
 	fetch('/data/statetax/states.json'),
 ];
 
-fetch('/data/statetax/states.json')
+fetch('/data/statetax/data.json')
 	.then(response => response.json())
 	.then(data => {
 		$(() => {
@@ -40,7 +40,6 @@ const app = (data) => {
 	const dollars = format('00');		//// format function for dollars
 	const width = 400;
 	const height = 250;
-	console.log('here');
 	//// build max map
 	Object.keys(data).forEach(state => {
 		Object.keys(data[state]).forEach(type => {
@@ -62,9 +61,11 @@ const app = (data) => {
 	  .attr('class', 'd3-tip')
 	  .offset([0, -10])
 	  .html(function(d) {
-	  	const area = $('input[name=option]:checked').val();
-	  	const name = d.properties.NAME;
-	    return getTooltip(data, name, area);
+	  	console.log('???');
+	  	return 5;
+	  	// const area = $('input[name=option]:checked').val();
+	  	// const name = d.properties.NAME;
+	   //  return getTooltip(name, area);
 	});
 
 	//Define map projection
@@ -86,7 +87,7 @@ const app = (data) => {
 				.attr("height", h);
 
 	// //// Initialize tooltip
-	// svg.call(tooltip);
+	svg.call(tooltip);
 
 	//Load in GeoJSON data
 	json('/data/statetax/states.json', function(json) {	
@@ -98,12 +99,11 @@ const app = (data) => {
 		   .attr("d", path)
 		   .attr('class', 'state')
 		   .attr('id', function(d) { return d.properties.NAME; })
-		   .style("fill", function(d) {
-		   		var name = d.properties.NAME;
-		   		return getRgb(data, name, area)
-		   	  })
-		   // .on('mouseover', tooltip.show)
-		   // .on('mouseout', tooltip.hide)
+		   .style('fill', datum => {
+		   		return getRgb(datum.properties.NAME, area);
+		   })
+		   .on('mouseover', tooltip.show)
+		   .on('mouseout', tooltip.hide)
 	});
 
 	//// Change option
@@ -112,44 +112,47 @@ const app = (data) => {
 		var $states = $states || $('.state');
 		$states.each(function(i, elem) {
 			var name = $(this).attr('id');
-			$(this).css('fill', getRgb(data, name, area));
+			$(this).css('fill', getRgb(name, area));
 		});
-	});		
-}
+	});	
 
-const getRgb = (data, name, area) => {
-	if (!(name in data)) return {};
-	var rgb = {};
-	var areas = area.split('+');
-	//// create area in scales if it doesn't exist
-	if (!(area in scales)) {
-		var mx = areas.reduce(function(p, c) { 
-			return p + parseInt(max[c]); 
-		}, 0);
-		scales[area] = scaleLinear()	
-							.domain([0, mx])
-							.range([255, 0]);
-	}
-	//// build rgb
-	var value = areas.reduce(function(p, c) {
-		return p + parseInt(data[name][c]);
-	}, 0);
-	for (var color in colorcode) {
-		rgb[color] = Math.floor(scales[area](value)*colorcode[color]);
-	}
-	var rgbstr = 'rgb('+rgb.r+','+rgb.g+','+rgb.b+')';
-	console.log(rgbstr);
-	return rgbstr;
-}
-
-const getTooltip = (data, name, area) => {
-	var value = name;
-	if (name in data) {
+	const getRgb = (name, area) => {
+		if (!(name in data)) return {};
+		var rgb = {};
 		var areas = area.split('+');
-		var total = areas.reduce(function(p, c) {
+		//// create area in scales if it doesn't exist
+		if (!(area in scales)) {
+			var mx = areas.reduce(function(p, c) { 
+				return p + parseInt(max[c]); 
+			}, 0);
+			scales[area] = scaleLinear()	
+								.domain([0, mx])
+								.range([255, 0]);
+		}
+		//// build rgb
+		var value = areas.reduce(function(p, c) {
 			return p + parseInt(data[name][c]);
 		}, 0);
-		value += ' - ' + dollars(total);
-	} 
-	return value;	
+		for (var color in colorcode) {
+			rgb[color] = Math.floor(scales[area](value)*colorcode[color]);
+		}
+		var rgbstr = 'rgb('+rgb.r+','+rgb.g+','+rgb.b+')';
+		return rgbstr;
+	};
+
+	const getTooltip = (name, area) => {
+		var value = name;
+		if (name in data) {
+			var areas = area.split('+');
+			var total = areas.reduce(function(p, c) {
+				return p + parseInt(data[name][c]);
+			}, 0);
+			value += ' - ' + dollars(total);
+		} 
+		return value;	
+	};
+
 }
+
+
+
