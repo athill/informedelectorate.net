@@ -7,6 +7,8 @@ import { select, selectAll } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 
 
+
+
 //// retrieve data files asynchronously
 const promises = [
 	fetch('/data/statetax/data.json'),
@@ -59,14 +61,16 @@ const app = (data) => {
 	//// set up tooltip
 	const tooltip = tip()
 	  .attr('class', 'd3-tip')
-	  .offset([0, -10])
+	  // .offset([0, -10])
 	  .html(function(d) {
 	  	console.log('???');
-	  	return 5;
-	  	// const area = $('input[name=option]:checked').val();
-	  	// const name = d.properties.NAME;
-	   //  return getTooltip(name, area);
+	  	// return 5;
+	  	const area = $('input[name=option]:checked').val();
+	  	const name = d.properties.NAME;
+	    return getTooltip(name, area);
 	});
+
+
 
 	//Define map projection
 	const projection = geoAlbersUsa()
@@ -102,8 +106,8 @@ const app = (data) => {
 		   .style('fill', datum => {
 		   		return getRgb(datum.properties.NAME, area);
 		   })
-		   .on('mouseover', tooltip.show)
-		   .on('mouseout', tooltip.hide)
+		   // .on('mouseover', tooltip.show)
+		   // .on('mouseout', tooltip.hide)
 	});
 
 	//// Change option
