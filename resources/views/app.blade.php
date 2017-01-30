@@ -10,7 +10,7 @@
 <meta name="copyright" content="2017, informedelectorate.net"/>
 <meta name="viewport" content="width=device-width"/>
 <link rel="stylesheet" type="text/css" href="{{ asset('/css/app.css') }}" />
-<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=UnifrakturMaguntia" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=UnifrakturMaguntia" />
 </head>
 <body id="default" class="default">
 <div id="skip" class="hide">
