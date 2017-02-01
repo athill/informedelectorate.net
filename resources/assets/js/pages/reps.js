@@ -7,7 +7,7 @@ $(() => {
 		e.preventDefault();
 		var value = $('#addr').val();
 		if (value.trim() !== '') {
-			const url = 'http://maps.googleapis.com/maps/api/geocode/json?address='+encodeURIComponent(value)+'&sensor=false';
+			const url = '//maps.googleapis.com/maps/api/geocode/json?address='+encodeURIComponent(value)+'&sensor=false';
 			fetch(url)
 				.then(response => response.json())
 				.then(response => {
