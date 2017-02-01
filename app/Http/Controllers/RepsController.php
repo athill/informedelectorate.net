@@ -10,8 +10,8 @@ class RepsController extends Controller {
 
 	protected $sunlight;
 
-	private const CACHE_PREFIX = 'reps:';
-	private const CACHE_TIMEOUT = 3600;	
+	const CACHE_PREFIX = 'reps:';
+	const CACHE_TIMEOUT = 3600;	
 
 	public function __construct() {
 		$this->sunlight = new \App\Services\Sunlight(env('SUNLIGHT_KEY'));

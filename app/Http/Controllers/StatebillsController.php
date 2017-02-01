@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Cache;
 
 class StatebillsController extends Controller {
 
-	private const CACHE_PREFIX = 'statebills:';
-	private const CACHE_TIMEOUT = 3600;
+	const CACHE_PREFIX = 'statebills:';
+	const CACHE_TIMEOUT = 3600;
 
 	protected $sunlight;
 

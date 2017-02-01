@@ -10,8 +10,8 @@ class FloorupdatesController extends Controller {
 
 	protected $sunlight;
 
-	private const CACHE_KEY = 'floorupdates';
-	private const CACHE_TIMEOUT = 3600;
+	const CACHE_KEY = 'floorupdates';
+	const CACHE_TIMEOUT = 3600;
 
 	public function __construct() {
 		$this->sunlight = new \App\Services\Sunlight(env('SUNLIGHT_KEY'));
