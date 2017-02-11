@@ -7,17 +7,20 @@ $(() => {
 		e.preventDefault();
 		var value = $('#addr').val();
 		if (value.trim() !== '') {
-			const url = '//maps.googleapis.com/maps/api/geocode/json?address='+encodeURIComponent(value)+'&sensor=false';
-			fetch(url)
+			
+			fetch('/api/reps?addr='+encodeURIComponent(value))
 				.then(response => response.json())
-				.then(response => {
-					if (response.results.length) {
-						getReps(response.results[0]);
+				.then(json => {
+					if (json.error) {
+						$results.html(json.error);
 					} else {
-						$results.html(`No results found for [${value}]`);
+						renderReps(json);
 					}
 				})
-				.catch(error => console.log('error', error));
+				.catch(error => {
+					console.log('error', error);
+					$results.html('Something went wrong, please try again later.');
+				});
 		}
 	});
 
