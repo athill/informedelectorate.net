@@ -1,16 +1,5 @@
 @extends('app')
 
 @section('content')
-<table class="data-table" id="results">
-	<thead>
-	<tr>
-		<th>Date</th>
-		<th>Chamber</th>
-		<th>Event</th>
-		<th>Bills</th>
-	</tr>
-	</thead>
-	<tbody>
-	</tbody>
-</table>
+<div id="results" class="table-responsive"></div>
 @endsection
