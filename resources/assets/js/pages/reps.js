@@ -7,19 +7,20 @@ $(() => {
 		e.preventDefault();
 		var value = $('#addr').val();
 		if (value.trim() !== '') {
-			
+			$results.html(`Loading results for ${value} <i class="fa fa-cog fa-spin fa-2x fa-fw"></i>`);
 			fetch('/api/reps?addr='+encodeURIComponent(value))
 				.then(response => response.json())
 				.then(json => {
+					$results.html(`<p>Displaying results for ${value}</p>`);
 					if (json.error) {
-						$results.html(json.error);
+						$results.append(`<div class="alert alert-warning" role="alert">${json.error}</div>`);
 					} else {
-						renderReps(json);
+						$results.append(renderReps(json));
 					}
 				})
 				.catch(error => {
 					console.log('error', error);
-					$results.html('Something went wrong, please try again later.');
+					$results.append('<div class="alert alert-dnager" role="alert">Something went wrong, please try again later.</div>');
 				});
 		}
 	});
@@ -62,6 +63,6 @@ $(() => {
 			}
 			$response.append('<hr />');
 		});		
-		$results.html($response);
+		return $response;
 	}
 });
