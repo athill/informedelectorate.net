@@ -17,20 +17,6 @@ $(() => {
 			$tablewrap.append($table);
 			$results.html($tablewrap);
 			json.forEach(update => {
-// <table class="data-table" id="results">
-// 	<thead>
-// 	<tr>
-// 		<th>Date</th>
-// 		<th>Chamber</th>
-// 		<th>Event</th>
-// 		<th>Bills</th>
-// 	</tr>
-// 	</thead>
-// 	<tbody>
-// 	</tbody>
-// </table>
-				
-
 				const $tr = $('<tr />');
 				$tr.append('<td>'+moment(update.timestamp).format("MMMM Do YYYY, h:mm:ss a")+'</td>');
 				$tr.append('<td>'+ucFirst(update.chamber)+'</td>');
