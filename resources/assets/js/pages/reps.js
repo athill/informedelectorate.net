@@ -1,4 +1,4 @@
-import { getParameterByName } from '../utils';
+import { NETWORK_FAILURE_ALERT, LOADING_ICON, getParameterByName } from '../utils';
 
 $(() => {
 	const $results = $('#results');
@@ -7,7 +7,7 @@ $(() => {
 		e.preventDefault();
 		var value = $('#addr').val();
 		if (value.trim() !== '') {
-			$results.html(`Loading results for ${value} <i class="fa fa-cog fa-spin fa-2x fa-fw"></i>`);
+			$results.html(`Loading results for ${value} ${LOADING_ICON}`);
 			fetch('/api/reps?addr='+encodeURIComponent(value))
 				.then(response => response.json())
 				.then(json => {
@@ -20,7 +20,7 @@ $(() => {
 				})
 				.catch(error => {
 					console.log('error', error);
-					$results.append('<div class="alert alert-dnager" role="alert">Something went wrong, please try again later.</div>');
+					$results.append(NETWORK_FAILURE_ALERT);
 				});
 		}
 	});
