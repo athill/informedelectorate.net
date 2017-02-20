@@ -13,10 +13,14 @@
 
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
+$red : darkred;
+$white: white;
+$blue: #004;
+
  body {
   margin: 0;
   padding: 0;
-  background: #000044;
+  background: $blue;
   font-family: Verdana, Ariel, sans;
   font-size: 10pt; }
 
@@ -32,13 +36,12 @@ header, footer, nav, section, article {
   display: block; }
 
 #page {
-  width: 1000px;
-  margin: 0 auto;
   background: white;
   color: black;
   -moz-border-radius: 15px;
   -webkit-border-radius: 15px;
-  border-radius: 15px; }
+  border-radius: 15px; 
+}
 
 /*******************
  * Header 
@@ -47,45 +50,29 @@ header, footer, nav, section, article {
   background: url('../img/informedelectorate-header-short.png') repeat-x 1em 1em;
   position: relative;
   overflow: auto;
-  margin-top: 2em;
-  padding: 1em;
-  height: 110px; }
-/*
-#header-img {
-  padding: 2em;
-  margin: 2em;
-  background: url('../img/informedelectorate-header.png') no-repeat;
-}*/
+  padding: 0;
+  height: 110px; 
+}
 
-/************ Images at top of page */
-/*#img-container {
-  height: 90px;
-  position: relative;
-  background: darkred;
-  -moz-border-radius: 15px;
-  -webkit-border-radius: 15px;
-  border-radius: 15px;
-  padding: 15px; }*/
+
 
 /************ Page title */
-.page-title-base {
-  font: bold 22pt monospace;
-  padding: 5px; }
-
 #page-title {
-  /*font-family: 'UnifrakturCook', cursive;*/
   font-family: 'UnifrakturMaguntia', cursive;
   position: absolute;
   left: 20px;
   top: 12px;
   color: white;
   font-size: 3em;
-  text-shadow: 2px 2px #004; }
+  text-shadow: 2px 2px #004; 
+}
 
 #citation {
   position: absolute;
-  left: 300px;
-  top: 60px;
+  // left: 300px;
+  // top: 60px;
+  right: 1em;
+  bottom: 1em;
   color: black; 
   background: #B6966D;
   padding: 2px;
@@ -93,198 +80,13 @@ header, footer, nav, section, article {
   -webkit-border-radius: 10px;
   border-radius: 10px;
   opacity: 0.9;
+  font-size: 1em;
+  cite {
+
+    display: block;
+    line-height: 1;    
+  }
 }
-
-#citation cite {
-  display: block;
-  line-height: 1;
-}
-
-
-#headerTitle {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  color: #700;
-  font: italic bold 20pt arial;
-  padding: 5px; }
-
-/************ Global Navigation */
-#global-nav-menu {
-	padding: 0;
-	clear: both;
-	background: #999;
-}
-
-#global-nav-menu li {
-	display: inline-block;
-	padding: 0.5em;
-}
-
-/*superfish */
-.sf-menu {
-  margin-bottom: 0; }
-
-.sf-menu ul {
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2); }
-
-.sf-menu a {
-  border-left: 1px solid #fff;
-  border-top: 1px solid #dFeEFF;
-  /* fallback colour must use full shorthand */
-  border-top: 1px solid rgba(255, 255, 255, 0.5);
-  color: #FFF !important; }
-
-.sf-menu li {
-  background: darkred; }
-
-.sf-menu ul li {
-  background: darkred; }
-
-.sf-menu ul ul li {
-  background: darkred; }
-
-.sf-menu li:hover,
-.sf-menu li.sfHover {
-  background: #000044; }
-
-.sf-menu li.active {
-  background: #000044; }
-
-.sf-menu li.active > a {
-  color: white !important; }
-
-.sf-menu li.active:hover {
-  background: #000044; }
-
-.sf-menu li.active > a {
-  color: white !important; }
-
-/* styling for both css and generated arrows */
-.sf-arrows .sf-with-ul:after {
-  /* order of following 3 rules important for fallbacks to work */
-  border: 5px solid transparent;
-  border-top-color: #dFeEFF;
-  /* edit this to suit design (no rgba in IE8) */
-  border-top-color: rgba(255, 255, 255, 0.5); }
-
-.sf-arrows > li > .sf-with-ul:focus:after,
-.sf-arrows > li:hover > .sf-with-ul:after,
-.sf-arrows > .sfHover > .sf-with-ul:after {
-  border-top-color: white;
-  /* IE8 fallback colour */ }
-
-/* styling for right-facing arrows */
-.sf-arrows ul .sf-with-ul:after {
-  border-left-color: #dFeEFF;
-  /* edit this to suit design (no rgba in IE8) */
-  border-left-color: rgba(255, 255, 255, 0.5); }
-
-/************ Path, search */
-#top-divider {
-  position: relative;
-  overflow: auto;
-  background: #999;
-  padding: 2px;
-  clear: both; }
-
-#breadcrumb {
-  float: left;
-  height: 100%; }
-
-#breadcrumb ul {
-  padding: 0.5em;
-  margin: 0; }
-
-#breadcrumb ul li {
-  list-style: none;
-  display: inline; }
-
-#breadcrumb ul li:not(:last-child):after {
-  content: ' > '; }
-
-#search {
-  /*
-  position: absolute;
-  top: 0;
-  right: 0;
-  */
-  float: right;
-  height: 100%; }
-
-/**********************
- * Content area layout. Sidebars, etc.
- ****************************/
-#layout {
-  overflow: auto;
-  clear: both;
-  /* background: yellow; */ }
-
-#column1, .column2, #column3, .column23, .column12 {
-  float: left; }
-
-#column1 {
-  /*	background: red; */ }
-
-#column2 {
-  /* 	background: orange; */
-  /*	padding: 1em; */ }
-
-#content-wrapper {
-  min-height: 300px; }
-
-#content {
-  padding: 1em; }
-
-#column3 {
-  /*	background: purple; */ }
-
-#column1, #column3 {
-  width: 150px;
-  padding: 4px;
-  margin: 4px;
-  border: solid black medium;
-  background: white;
-  height: 100;
-  -moz-border-radius: 15px;
-  -webkit-border-radius: 15px;
-  border-radius: 15px; }
-
-.column2 {
-  width: 650px; }
-
-.column23, .column12 {
-  width: 825px; }
-
-.column123 {
-  width: 1000px; }
-
-/***********************> 
- * content
- ***********************/
-#geek-out {
-  padding-bottom: 1em; }
-
-#geek-out-button, .geek-out-button {
-  background: green;
-  border: medium solid white;
-  color: white;
-  cursor: pointer; }
-
-#geek-out-content {
-  background-color: #AAA;
-  padding: 1em; }
-
-.hide {
-  display: none; }
-
-.data-table {
-  border: 2px solid black;
-  border-collapse: collapse; }
-
-.data-table td {
-  vertical-align: top;
-  border: 2px solid black; }
 
 #loading {
   font-size: 2em;
@@ -295,16 +97,93 @@ header, footer, nav, section, article {
   font-size: 4em;
 }
 
+
+/// http://stackoverflow.com/questions/18529274/change-navbar-color-in-twitter-bootstrap-3
+$bgDefault      : $red;
+$bgHighlight    : $blue;
+$colDefault     : $white;
+$colHighlight       : $blue;
+.navbar-default {
+  background-color: $bgDefault;
+  border-color: $bgHighlight;
+  .navbar-brand {
+    color: $colDefault;
+    &:hover, &:focus { 
+      color: $colHighlight; }}
+  .navbar-text {
+    color: $colDefault; }
+  .navbar-nav {
+    > li {
+      > a {
+        color: $colDefault;
+        &:hover,  &:focus {
+          color: $colHighlight; }}}
+    > .active {
+      > a, > a:hover, > a:focus {
+        color: $colHighlight;
+        background-color: $bgHighlight; }}
+    > .open {
+      > a, > a:hover, > a:focus {
+        color: $colHighlight;
+        background-color: $bgHighlight; }}}
+  .navbar-toggle {
+    border-color: $bgHighlight;
+    &:hover, &:focus {
+      background-color: $bgHighlight; }
+    .icon-bar {
+      background-color: $colDefault; }}
+  .navbar-collapse,
+  .navbar-form {
+    border-color: $colDefault; }
+  .navbar-link {
+    color: $colDefault;
+    &:hover {
+      color: $colHighlight; }}}
+
+
+
 /***********************
  * Footer
  **********************/
 footer {
-  background: darkred;
+  background: $red;
   color: white;
   text-align: center;
   padding: 0.5em;
-  /* copied from #page */
+  margin: 0 -15px;
   -moz-border-radius: 0 0 15px 15px;
   -webkit-border-radius: 0 0 15px 15px;
-  border-radius: 0 0 15px 15px; }
+  border-radius: 0 0 15px 15px; }      
+
+
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu {
+    > li > a {
+      color: $colDefault;
+      &:hover, &:focus {
+        color: $colHighlight; }}
+    > .active {
+      > a, > a:hover, > a:focus, {
+        color: $colHighlight;
+        background-color: $bgHighlight; 
+      }
+    }
+  }
+
+  #header {
+    height: 55px;
+  }
+
+  #page-title {
+    left: 10px;
+    top: 6px;
+    font-size: 2.25em;
+  }
+  #citation {
+    display: none;
+  }
+}  
+
+
 

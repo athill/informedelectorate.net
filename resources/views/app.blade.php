@@ -21,12 +21,34 @@
         <li><a href="#primary-navigation">Primary Navigation</a></li>
     </ul>
 </div>
-<div id="page">
+<div id="page" class="container">
     <header id="header">
     <div id="page-title">InformedElectorate.net</div>
     <div id="citation"><q>Whenever the people are well-informed, they can be trusted with their own government</q> &ndash;<cite>Thomas Jefferson, Letter to Richard Price (8 January 1789)</cite></div>
     </header>
-    <nav id="global-nav">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <!-- <a class="navbar-brand" href="#">Brand</a> -->
+            </div>        
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    @foreach ($tabs as $tab)
+                    <li class="{{ strpos($tab['href'], '/'.Request::path()) !== false ? 'active' : ''  }}">
+                        <a href="{{ $tab['href'] }}">{{ $tab['display'] }}</a>
+                    </li>
+                    @endforeach                
+                </ul>
+            </div>
+        </div>
+    </nav>
+<!--     <nav id="global-nav">
     <h3 id="primary-navigation" class="hide">Primary Navigation</h3>
     <ul class="sf-menu" id="global-nav-menu">
         @foreach ($tabs as $tab)
@@ -35,7 +57,7 @@
         </li>
         @endforeach
     </ul>
-    </nav>
+    </nav> -->
     <div id="layout" class="row">
         <div id="content-wrapper" class="col-md-12">
             <main id="content">
