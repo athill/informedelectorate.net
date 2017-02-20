@@ -48,16 +48,6 @@
             </div>
         </div>
     </nav>
-<!--     <nav id="global-nav">
-    <h3 id="primary-navigation" class="hide">Primary Navigation</h3>
-    <ul class="sf-menu" id="global-nav-menu">
-        @foreach ($tabs as $tab)
-        <li class="{{ strpos($tab['href'], '/'.Request::path()) !== false ? 'active' : ''  }}">
-            <a href="{{ $tab['href'] }}">{{ $tab['display'] }}</a>
-        </li>
-        @endforeach
-    </ul>
-    </nav> -->
     <div id="layout" class="row">
         <div id="content-wrapper" class="col-md-12">
             <main id="content">
