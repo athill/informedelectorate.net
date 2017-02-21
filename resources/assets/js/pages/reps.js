@@ -56,7 +56,7 @@ $(() => {
 		state.forEach(items => {
 			for (let item in items) {
 				const $row = $('<div class="row" />');
-				$row.append('<div class="col-md-2">'+item+'</div>');
+				$row.append('<div class="col-md-2"><strong>'+item+'</strong></div>');
 				const value = /^https?:\/\/.*/.test(items[item]) ? `<a href="${items[item]}" target="_blank">${items[item]}<a>` : items[item];
 				$row.append('<div class="col-md-10">'+value+'</div>');
 				$response.append($row);

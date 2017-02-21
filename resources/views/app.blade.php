@@ -26,7 +26,7 @@
     <div id="page-title">InformedElectorate.net</div>
     <div id="citation"><q>Whenever the people are well-informed, they can be trusted with their own government</q> &ndash;<cite>Thomas Jefferson, Letter to Richard Price (8 January 1789)</cite></div>
     </header>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default"  id="primary-navigation">
         <div class="container-fluid">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
