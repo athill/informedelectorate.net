@@ -1,37 +1,32 @@
 import * as d3 from "d3";
-import tip  from "d3-tip";
 import { geoAlbersUsa, geoPath } from "d3-geo";
 import { json } from 'd3-request';
 import { format } from 'd3-format';
-import { select, selectAll } from 'd3-selection';
+import { select, selectAll, event as currentEvent } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 
+import { NETWORK_FAILURE_ALERT, LOADING_ICON, getParameterByName } from '../utils';
 
-
-
-//// retrieve data files asynchronously
-const promises = [
-	fetch('/data/statetax/data.json'),
-	fetch('/data/statetax/states.json'),
-];
+console.log('umm');
 
 fetch('/data/statetax/data.json')
 	.then(response => response.json())
 	.then(data => {
-		$(() => {
+		$(() => {			
 			app(data);
 		});
 	})
 	.catch(error => console.error('oops', error));
 
 
-var w = 400;
-var h = 250;
+const dollars = format('$00');		//// format function for dollars
 
 //// props
 // https://derekswingley.com/2016/08/01/using-and-bundling-individual-d3-modules/
 
 const app = (data) => {
+
+	const $stateMap = $('#state_map');
 	const max = {};		//// maximum values for primary areas
 	const scales = {};	//// scaling functions by area
 	const colorcode = {	//// color multipliers
@@ -39,9 +34,21 @@ const app = (data) => {
 		g: 1,
 		b: 0.1
 	};
-	const dollars = format('00');		//// format function for dollars
-	const width = 400;
-	const height = 250;
+
+	var w = 400;
+	const windowWidth = $(window).width();
+	if (windowWidth < w) {
+		w = windowWidth * 0.9;
+	}
+	var h = w * 0.625;	
+	console.log(w, h);
+	
+
+
+	renderOptions();
+
+	$stateMap.html('<strong>Loading state map '+LOADING_ICON+'</strong>');
+
 	//// build max map
 	Object.keys(data).forEach(state => {
 		Object.keys(data[state]).forEach(type => {
@@ -58,19 +65,33 @@ const app = (data) => {
 			.range([255, 0])
 	});
 
+	const getArea = () => $('input[name=option]:checked').val();
+
+	const area = getArea();
+
 	//// set up tooltip
-	const tooltip = tip()
-	  .attr('class', 'd3-tip')
-	  // .offset([0, -10])
-	  .html(function(d) {
-	  	console.log('???');
-	  	// return 5;
-	  	const area = $('input[name=option]:checked').val();
-	  	const name = d.properties.NAME;
-	    return getTooltip(name, area);
-	});
+	const tooltip = d3.select("body").append("div")
+	    .attr("class", "tooltip")
+	    .style("opacity", 0);	
 
+	const showTooltip = d => {
+       tooltip.transition()
+         .duration(100)
+         .style("opacity", .9);
+       tooltip.html(function() {
+	  		const area = getArea();
+	  		const name = d.properties.NAME;
+	    	return getTooltip(name, area);
+		})
+        .style("left", (currentEvent.pageX) + "px")
+        .style("top", (currentEvent.pageY - 28) + "px");
+	};  
 
+	const hideTooltip = d => {
+		tooltip.transition()
+         .duration(500)
+         .style("opacity", 0);
+	}
 
 	//Define map projection
 	const projection = geoAlbersUsa()
@@ -79,23 +100,19 @@ const app = (data) => {
 
 	//Define path generator
 	const path = geoPath()
-		.projection(projection);
-
-	// //// area
-	const area = $('input[name=option]:checked').val();
+		.projection(projection);	
 	
-	//Create SVG element
-	const svg = select("#state_map")
-				.append("svg")
-				.attr("width", w)
-				.attr("height", h);
-
-	// //// Initialize tooltip
-	svg.call(tooltip);
 
 	//Load in GeoJSON data
 	json('/data/statetax/states.json', function(json) {	
-	// 	Bind data and create one path per GeoJSON feature
+		$stateMap.html('');
+
+	//Create SVG element
+		const svg = select("#state_map")
+					.append("svg")
+					.attr("width", w)
+					.attr("height", h);		
+		// 	Bind data and create one path per GeoJSON feature
 		svg.selectAll("path")
 		   .data(json.features)
 		   .enter()
@@ -106,8 +123,12 @@ const app = (data) => {
 		   .style('fill', datum => {
 		   		return getRgb(datum.properties.NAME, area);
 		   })
-		   // .on('mouseover', tooltip.show)
-		   // .on('mouseout', tooltip.hide)
+		   .on('click', function(data, i) {
+		   		const key = data.properties.NAME;
+		   		showTooltip(data);
+		   })		   
+		   .on('mouseover', showTooltip)
+		   .on('mouseout', hideTooltip)
 	});
 
 	//// Change option
@@ -120,10 +141,10 @@ const app = (data) => {
 		});
 	});	
 
-	const getRgb = (name, area) => {
+	const getRgb = (name, area)  => {
 		if (!(name in data)) return {};
-		var rgb = {};
-		var areas = area.split('+');
+		const rgb = {};
+		const areas = area.toLowerCase().split('+');
 		//// create area in scales if it doesn't exist
 		if (!(area in scales)) {
 			var mx = areas.reduce(function(p, c) { 
@@ -147,7 +168,7 @@ const app = (data) => {
 	const getTooltip = (name, area) => {
 		var value = name;
 		if (name in data) {
-			var areas = area.split('+');
+			var areas = area.toLowerCase().split('+');
 			var total = areas.reduce(function(p, c) {
 				return p + parseInt(data[name][c]);
 			}, 0);
@@ -155,7 +176,54 @@ const app = (data) => {
 		} 
 		return value;	
 	};
+}
 
+const renderOptions = () => {
+	//// radio buttons
+	const areas = ['Corporate', 'Income', 'Property', 'Sales'];
+	const combos = [];
+	for (let i = 0; i < areas.length; i++) {
+		const area1 = areas[i];
+		combos.push(area1);
+		for (let j = i+1; j < areas.length; j++) {
+			combos.push(area1+'+'+areas[j]);
+			if (j < areas.length) {
+				for (let k = j+1; k < areas.length; k++) {
+					combos.push(area1+'+'+areas[j]+'+'+areas[k]);
+					if (k < areas.length) {
+						for (let m = k+1; m < areas.length; m++) {
+							combos.push(area1+'+'+areas[j]+'+'+areas[k]+'+'+areas[m]);
+						}
+					}
+				}
+
+			}
+		}
+	}
+	combos.push('Total');
+
+	const $container = $('#options-container');
+	const middle = Math.ceil(combos.length / 2);
+	const left = combos.slice(0, middle);
+	const right = combos.slice(middle, combos.length);
+	
+
+	[left, right].forEach(function(column) {
+		const $column = $('<div class="col-md-6 col-xs-12" />');
+		column.forEach(function(combo) {
+			const $row = $('<div class="row" />');
+			const id = 'option_'+combo.replace(/\+/g, '-');
+			// const display = combo.replace(/\+/g, '+\u200B');
+			const display = combo;
+			$row.append('<div class="col-xs-1"><input type="radio" name="option" value="'+combo+'" id="'+id+'" /></div>');
+			$row.append('<div class="col-xs-10"><label for="'+id+'">'+display+'</label></div>');
+			$column.append($row);
+		});
+		$container.append($column);
+	});
+	//// default selection
+	const $selected = $('#option_'+areas.join('-'));
+	$selected.prop('checked', true);		
 }
 
 
