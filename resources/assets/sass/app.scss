@@ -107,9 +107,10 @@ $bgDefault      : $red;
 $bgHighlight    : $blue;
 $colDefault     : $white;
 $colHighlight       : $white;
-.navbar-default {
+.navbar {
   background-color: $bgDefault;
   border-color: $bgHighlight;
+  margin-bottom: 0;
   .navbar-brand {
     color: $colDefault;
     &:hover, &:focus { 

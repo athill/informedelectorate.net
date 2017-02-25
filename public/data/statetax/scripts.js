@@ -1,11 +1,51 @@
 $(function() {
-	///// fix global navigation
-	var $menu = $('#global-nav-menu');
-	$items = $('li', $menu);
 
-	var $itemWidth = ($menu.width() / $items.length) - 20;
+	//// radio buttons
+	const areas = ['Corporate', 'Income', 'Property', 'Sales'];
+	const combos = [];
+	for (let i = 0; i < areas.length; i++) {
+		const area1 = areas[i];
+		combos.push(area1);
+		for (let j = i+1; j < areas.length; j++) {
+			combos.push(area1+'+'+areas[j]);
+			if (j < areas.length) {
+				for (let k = j+1; k < areas.length; k++) {
+					combos.push(area1+'+'+areas[j]+'+'+areas[k]);
+					if (k < areas.length) {
+						for (let m = k+1; m < areas.length; m++) {
+							combos.push(area1+'+'+areas[j]+'+'+areas[k]+'+'+areas[m]);
+						}
+					}
+				}
 
-	$items.width($itemWidth);
+			}
+		}
+	}
+	combos.push('Total');
+
+	const $container = $('#options-container');
+	const middle = Math.ceil(combos.length / 2);
+	const left = combos.slice(0, middle);
+	const right = combos.slice(middle, combos.length);
+	
+
+	[left, right].forEach(function(column) {
+		const $column = $('<div class="col-md-6 col-xs-12" />');
+		column.forEach(function(combo) {
+			const $row = $('<div class="row" />');
+			const id = 'option_'+combo.replace(/\+/g, '-');
+			// const display = combo.replace(/\+/g, '+\u200B');
+			const display = combo;
+			$row.append('<div class="col-xs-1"><input type="radio" name="option" value="'+combo+'" id="'+id+'" /></div>');
+			$row.append('<div class="col-xs-10"><label for="'+id+'">'+display+'</label></div>');
+			$column.append($row);
+		});
+		$container.append($column);
+	});
+	//// default selection
+	const $selected = $('#option_'+areas.join('-'));
+	$selected.prop('checked', true);
+
 
 	$.getJSON('/data/statetax/data.json', function(data) {
 		var max = {};		//// maximum values for primary areas
@@ -16,8 +56,14 @@ $(function() {
 			b: 0.1
 		};
 		var dollars = d3.format('$0,0');
+
+
 		var w = 400;
-		var h = 250;
+		const windowWidth = $(window).width();
+		if (windowWidth < w) {
+			w = windowWidth * 0.9;
+		}
+		var h = w * 0.625;
 
 		//// set up tooltip
 		var tip = d3.tip()
@@ -32,7 +78,7 @@ $(function() {
 		//Define map projection
 		var projection = d3.geo.albersUsa()
 							   .translate([w/2, h/2])
-							   .scale([500]);
+							   .scale([w * 1.25]);
 
 		//Define path generator
 		var path = d3.geo.path()
@@ -47,13 +93,14 @@ $(function() {
 			}
 		}
 
+
+
 		//// Build basic scaling functions
 		for (var type in max) {
 			scales[type] = d3.scale.linear()
 									.domain([0, max[type]])
 									.range([255, 0])
 		}
-
 		//// area
 		var area = $('input[name=option]:checked').val();
 
@@ -95,9 +142,10 @@ $(function() {
 		});	
 
 		function getRgb(name, area) {
+
 			if (!(name in data)) return {};
-			var rgb = {};
-			var areas = area.split('+');
+			const rgb = {};
+			const areas = area.toLowerCase().split('+');
 			//// create area in scales if it doesn't exist
 			if (!(area in scales)) {
 				var mx = areas.reduce(function(p, c) { 

@@ -20,6 +20,7 @@ $(() => {
 		.catch(error => console.error('Error in floorupdates', error));	
 
 	const getAndDisplayState = state => {
+		$results.html(`Loading results for ${statemap[state]} ${LOADING_ICON}`);
 		fetch(`/api/statebills/${state}`)
 			.then(response => response.json())
 			.then(json => {

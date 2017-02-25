@@ -51,104 +51,18 @@
     <div id="layout" class="row">
         <div id="content-wrapper" class="col-md-12">
             <main id="content">
-<h1>State Taxes</h1>
+<h2>State Taxes</h2>
 <p>Use the radio buttons on the right to view the various combinations of per capita state and local tax burdens. Lighter shades indicate lower taxes. Hover over a state to see its per capita tax burden for the selected combination. Except for Total, I've offered all combinations of the other fields to see how various tax types accumulate when combined.</p>
-<table id="interface-container">
-<tbody>
-<tr>
-	<td id="state_map"></td>
-	<td>
+<div class="row" id="interface-container">
+
+	<div class="col-md-6 col-xs-12" id="state_map"></div>
+
+	<div class="col-md-6 col-xs-12">
 	<h5>Category</h5>
-	<table 1>
-	<tbody>
-	<tr>
-		<td>
-		<input type="radio" name="option" value="corporate" id="option_corporate"/>
-		<label for="option_corporate">Corporate</label>
-		</td>
-		<td>
-		<input type="radio" name="option" value="income+property" id="option_income+property"/>
-		<label for="option_income+property">Income+Property</label>
-		</td>
-	</tr>
-	<tr>
-		<td>
-		<input type="radio" name="option" value="corporate+income" id="option_corporate+income"/>
-		<label for="option_corporate+income">Corporate+Income</label>
-		</td>
-		<td>
-		<input type="radio" name="option" value="income+property+sales" id="option_income+property+sales"/>
-		<label for="option_income+property+sales">Income+Property+Sales</label>
-		</td>
-	</tr>
-	<tr>
-		<td>
-		<input type="radio" name="option" value="corporate+income+property" id="option_corporate+income+property"/>
-		<label for="option_corporate+income+property">Corporate+Income+Property</label>
-		</td>
-		<td>
-		<input type="radio" name="option" value="income+sales" id="option_income+sales"/>
-		<label for="option_income+sales">Income+Sales</label>
-		</td>
-	</tr>
-	<tr>
-		<td>
-		<input type="radio" name="option" value="corporate+income+sales" id="option_corporate+income+sales"/>
-		<label for="option_corporate+income+sales">Corporate+Income+Sales</label>
-		</td>
-		<td>
-		<input type="radio" name="option" value="income+sales+property+corporate" checked="checked" id="option_income+sales+property+corporate"/>
-		<label for="option_income+sales+property+corporate">Income+Sales+Property+Corporate</label>
-		</td>
-	</tr>
-	<tr>
-		<td>
-		<input type="radio" name="option" value="corporate+property" id="option_corporate+property"/>
-		<label for="option_corporate+property">Corporate+Property</label>
-		</td>
-		<td>
-		<input type="radio" name="option" value="property" id="option_property"/>
-		<label for="option_property">Property</label>
-		</td>
-	</tr>
-	<tr>
-		<td>
-		<input type="radio" name="option" value="corporate+property+sales" id="option_corporate+property+sales"/>
-		<label for="option_corporate+property+sales">Corporate+Property+Sales</label>
-		</td>
-		<td>
-		<input type="radio" name="option" value="property+sales" id="option_property+sales"/>
-		<label for="option_property+sales">Property+Sales</label>
-		</td>
-	</tr>
-	<tr>
-		<td>
-		<input type="radio" name="option" value="corporate+sales" id="option_corporate+sales"/>
-		<label for="option_corporate+sales">Corporate+Sales</label>
-		</td>
-		<td>
-		<input type="radio" name="option" value="sales" id="option_sales"/>
-		<label for="option_sales">Sales</label>
-		</td>
-	</tr>
-	<tr>
-		<td>
-		<input type="radio" name="option" value="income" id="option_income"/>
-		<label for="option_income">Income</label>
-		</td>
-		<td>
-		<input type="radio" name="option" value="total" id="option_total"/>
-		<label for="option_total">Total</label>
-		</td>
-	</tr>
-	<tr>
-	</tr>
-	</tbody>
-	</table>
-	</td>
-</tr>
-</tbody>
-</table>
+	<div id="options-container" class="row"></div>
+	</div>
+
+</div>
 <p>
 <small>Source: US Census Bureau, 2011 reports.<br />
 * The US Census Bureau does not classify revenue from Texas's margin tax as corporate income tax revenue.<br />
@@ -171,7 +85,7 @@ State Tax Collections per Capita by Category, 2011</small>
 <script src="{{ asset('/data/statetax/d3-3.4.3.min.js') }}"></script>
 <script src="{{ asset('/data/statetax/d3.geo.projection.v0.min.js') }}"></script>
 <script src="{{ asset('/data/statetax/d3-tip/index.js') }}"></script>
-
+<script src="{{ asset('/data/statetax/bootstrap.min.js') }}"></script>
 
 <script src="{{ asset('/data/statetax/scripts.js') }}"></script>
 </body>

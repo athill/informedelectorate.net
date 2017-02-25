@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-		<h1>Find Your Representatives</h1>
+		<h2>Find Your Representatives</h2>
 			<p>
 			I use <a href="https://developers.google.com/maps/" target="_blank">Google Maps API</a> to translate the address to 
 	latitude and longitude and then use data from <a href="http://sunlightfoundation.com/api/" target="_blank">the 

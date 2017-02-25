@@ -18,12 +18,6 @@ require('./bootstrap');
 // const app = new Vue({
 //     el: '#app'
 // });
-var $menu = $('#global-nav-menu');
-$items = $('li', $menu);
-
-var $itemWidth = ($menu.width() / $items.length) - 20;
-
-$items.width($itemWidth);
 
 var page = location.pathname.replace(/\/([^\/]+)(\/|$)/, '$1');
 if (page === '/') {
