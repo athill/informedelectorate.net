@@ -52,7 +52,7 @@ $(function() {
 
 
 
-	$.getJSON('/data/statetax/data.json', function(data) {
+	$.getJSON('/data/statetax/data.min.json', function(data) {
 		var max = {};		//// maximum values for primary areas
 		var scales = {};	//// scaling functions by area
 		var colorcode = {	//// color multipliers
@@ -110,7 +110,7 @@ $(function() {
 		var area = $('input[name=option]:checked').val();
 
 		//Load in GeoJSON data
-		d3.json("/data/statetax/states.json", function(json) {
+		d3.json("/data/statetax/states.min.json", function(json) {
 			$stateMap.html('');
 			//Create SVG element
 			var svg = d3.select("#state_map")
