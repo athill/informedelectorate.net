@@ -1,5 +1,8 @@
 $(function() {
 
+	const $stateMap = $('#state_map');
+	$stateMap.html('<strong>Loading state map ...</strong>');
+
 	//// radio buttons
 	const areas = ['Corporate', 'Income', 'Property', 'Sales'];
 	const combos = [];
@@ -45,6 +48,8 @@ $(function() {
 	//// default selection
 	const $selected = $('#option_'+areas.join('-'));
 	$selected.prop('checked', true);
+
+
 
 
 	$.getJSON('/data/statetax/data.json', function(data) {
@@ -104,17 +109,17 @@ $(function() {
 		//// area
 		var area = $('input[name=option]:checked').val();
 
-		//Create SVG element
-		var svg = d3.select("#state_map")
-					.append("svg")
-					.attr("width", w)
-					.attr("height", h);
-		//// Initialize tooltip
-		svg.call(tip);
-
 		//Load in GeoJSON data
 		d3.json("/data/statetax/states.json", function(json) {
-			
+			$stateMap.html('');
+			//Create SVG element
+			var svg = d3.select("#state_map")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+			//// Initialize tooltip
+			svg.call(tip);
+
 			//Bind data and create one path per GeoJSON feature
 			svg.selectAll("path")
 			   .data(json.features)
