@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
 <title>InformedElectorate.net</title>
 <meta charset="uft-8"/>
@@ -9,6 +9,11 @@
 <meta name="author" content="Andy Hill"/>
 <meta name="copyright" content="2017, informedelectorate.net"/>
 <meta name="viewport" content="width=device-width"/>
+
+<meta property="og:image" content="https://informedelectorate.net/img/informedelectorate-header-short.png" />
+<meta property="og:title" content="InformedElectorate.net" />
+<meta property="og:description" content="The idea of this site is to use technology to enable a more politically informed populace. " />
+
 <link rel="stylesheet" type="text/css" href="{{ asset('/css/app.css') }}" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=UnifrakturMaguntia" />
 </head>
