@@ -25,11 +25,14 @@ node('tst.wimf.space') {
     //     }
     // }
     stage('Deploy') {
+
         if (env.BRANCH_NAME == 'develop') {
+            sh 'echo develop'
             sshagent(['1d637c77-7dd7-4ac6-9c28-7d1c5be3dce6']) {
                 sh '/home/athill/bin/deploy_informed'
             }
         } else if (env.BRANCH_NAME == 'master') {
+            sh 'echo master'
             sshagent(['3a4ff721-3273-48fd-8493-b6e3b157afb1']) {
                 sh '/home/athill/bin/deploy_informed'
             }            

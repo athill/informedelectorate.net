@@ -7,8 +7,6 @@ import { scaleLinear } from 'd3-scale';
 
 import { NETWORK_FAILURE_ALERT, LOADING_ICON, getParameterByName } from '../utils';
 
-console.log('umm');
-
 fetch('/data/statetax/data.json')
 	.then(response => response.json())
 	.then(data => {
@@ -25,7 +23,7 @@ const dollars = format('$00');		//// format function for dollars
 // https://derekswingley.com/2016/08/01/using-and-bundling-individual-d3-modules/
 
 const app = (data) => {
-
+	const $link = $('#link');
 	const $stateMap = $('#state_map');
 	const max = {};		//// maximum values for primary areas
 	const scales = {};	//// scaling functions by area
@@ -40,10 +38,7 @@ const app = (data) => {
 	if (windowWidth < w) {
 		w = windowWidth * 0.9;
 	}
-	var h = w * 0.625;	
-	console.log(w, h);
-	
-
+	var h = w * 0.625;
 
 	renderOptions();
 
@@ -102,12 +97,13 @@ const app = (data) => {
 	const path = geoPath()
 		.projection(projection);	
 	
+	const updateLink = area => $link.html(`Showing results for <a href="/statetax?option=${area}">${area}</a>`);
 
 	//Load in GeoJSON data
 	json('/data/statetax/states.json', function(json) {	
 		$stateMap.html('');
-
-	//Create SVG element
+		updateLink(area);
+		//Create SVG element
 		const svg = select("#state_map")
 					.append("svg")
 					.attr("width", w)
@@ -133,10 +129,11 @@ const app = (data) => {
 
 	//// Change option
 	$('#interface-container').on('click', 'input[name=option]', function(e)  {
-		var area = $('input[name=option]:checked').val();
-		var $states = $states || $('.state');
+		const area = $('input[name=option]:checked').val();
+		updateLink(area);
+		const $states = $states || $('.state');
 		$states.each(function(i, elem) {
-			var name = $(this).attr('id');
+			const name = $(this).attr('id');
 			$(this).css('fill', getRgb(name, area));
 		});
 	});	
@@ -221,8 +218,14 @@ const renderOptions = () => {
 		});
 		$container.append($column);
 	});
-	//// default selection
-	const $selected = $('#option_'+areas.join('-'));
+	const option = getParameterByName('option');
+	let $selected;
+	if (option) {
+
+		$selected = $(`input[value="${option.replace(/ /g, '+')}"]`);
+	} else {
+		$selected = $('#option_'+areas.join('-'));
+	}
 	$selected.prop('checked', true);		
 }
 
