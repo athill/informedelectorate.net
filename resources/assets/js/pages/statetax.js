@@ -7,7 +7,7 @@ import { scaleLinear } from 'd3-scale';
 
 import { NETWORK_FAILURE_ALERT, LOADING_ICON, getParameterByName } from '../utils';
 
-fetch('/data/statetax/data.json')
+fetch('/data/statetax/data.min.json')
 	.then(response => response.json())
 	.then(data => {
 		$(() => {			
@@ -100,7 +100,7 @@ const app = (data) => {
 	const updateLink = area => $link.html(`Showing results for <a href="/statetax?option=${area}">${area}</a>`);
 
 	//Load in GeoJSON data
-	json('/data/statetax/states.json', function(json) {	
+	json('/data/statetax/states.min.json', function(json) {	
 		$stateMap.html('');
 		updateLink(area);
 		//Create SVG element
