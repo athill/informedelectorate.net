@@ -21,6 +21,10 @@ Route::group(['middleware' => 'api'], function () {
 	Route::resource('statebills', 'StatebillsController', ['only' => ['index', 'show']]);
 
 	Route::resource('words', 'WordsController', ['only' => ['index']]);
+
+	Route::resource('regulations', 'RegulationsController', ['only' => ['index']]);
+
+	Route::resource('regulationoptions', 'RegulationOptionsController', ['only' => ['index']]);
 	
 });
 

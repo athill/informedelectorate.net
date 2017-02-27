@@ -8,6 +8,7 @@ class Api {
 	public $separator = '.json';
 	protected $debug = false;
 	protected $curl = null;
+	protected $api_key_param = 'apikey';
 
 	function __construct($key='') {
 		if ($key !== '') $this->key = $key;
@@ -15,7 +16,7 @@ class Api {
 	}
 
 	protected function getUrl($method, $params=array()) {
-		$url = $this->url.$method.$this->separator.'?apikey='.$this->key;
+		$url = $this->url.$method.$this->separator.'?'.$this->api_key_param.'='.$this->key;
 		// dd($url);
 
 		foreach ($params as $k => $v) {
@@ -32,7 +33,7 @@ class Api {
 
 	public function get($method, $params=array()) {
 		$url = $this->getUrl($method, $params);
-		// print($url);
+		// dd($url);
 		$content = $this->curl->get($url);
 		// $content = file_get_contents($url);
 		if ($this->debug) {
