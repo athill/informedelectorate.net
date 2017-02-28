@@ -12,7 +12,11 @@ class DataGov extends Api {
 		// $this->url = 
 	}
 
-	function documents() {
-		return parent::get('documents');
+	function documents($params=[]) {
+		if (!isset($params['all']) || !$params['all']) {
+			//?daysSinceModified=1
+			$params = ['daysSinceModified' => 3];
+		}
+		return parent::get('documents', $params);
 	}
 }

@@ -37,3 +37,21 @@ export function getTableObject(headers) {
     };
 }
 
+export const getTableRowObject = (tds, rowAtts={})  => {
+    const $row = $(`<tr ${$.param(rowAtts)} />`);
+    tds.forEach(td => {
+        if (typeof td === 'string') {
+            $row.append(`<td>${td}</td>`);
+        } else {
+            if (!td.content) {
+                console.error('error with td: ', td);
+                $row.append('<td />');
+            } else {
+                const atts = td.atts || {};
+                $row.append(`<td ${$.param(atts)}>${td.content}</td>`);                
+            }
+        }
+    });
+    return $row;
+}
+
