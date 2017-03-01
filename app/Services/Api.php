@@ -15,20 +15,23 @@ class Api {
 		$this->curl = new Curl();
 	}
 
-	protected function getUrl($method, $params=array()) {
-		$url = $this->url.$method.$this->separator.'?'.$this->api_key_param.'='.$this->key;
-		// dd($url);
+	protected function getUrl($method, $params=[]) {
+		$url = $this->url.$method.$this->separator.'?'.$this->getQueryString($params);
+		return $url;
+	}
 
+	public function getQueryString($params=[]) {
+		$qs = $this->api_key_param.'='.$this->key;
 		foreach ($params as $k => $v) {
 			if (!is_array($v)) {
-				$url .= '&'.urlencode($k).'='.urlencode($v);
+				$qs .= '&'.urlencode($k).'='.urlencode($v);
 			} else {
 				foreach ($v as $value) {
-					$url .= '&'.urlencode($k).'='.urlencode($value);
+					$qs .= '&'.urlencode($k).'='.urlencode($value);
 				}
 			}
 		}
-		return $url;
+		return $qs;
 	}
 
 	public function get($method, $params=array()) {
