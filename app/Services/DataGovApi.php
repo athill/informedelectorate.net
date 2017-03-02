@@ -67,14 +67,22 @@ class DataGovApi extends Api {
 
 	public function dockets() {
 		//// get documents
-		$documents = $this->documents();
+		$documents = $this->documents(['rpp' => 100]);
 
 		//// get docket ids
+		// $docketIdKeys = [];
+		// for ($docketIds as $id) {
+		// 	$docketIdKeys[$id] = null;
+		// }
+		// $docketIds = array_keys($docketIdKeys);
 		
-		$docketIds = array_map(function($doc) {
-			return $doc['docketId'];
-		}, $documents['documents']);
-
+		$docketIds = array_unique(
+			array_map(
+				function($doc) { return $doc['docketId']; }, 
+				$documents['documents']
+			)
+		);
+		dd($docketIds);
 		return $documents;
 
 		// if (!isset($params['all']) || !$params['all']) {
