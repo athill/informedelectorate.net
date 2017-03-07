@@ -15,7 +15,7 @@ class Api {
 		$this->curl = new Curl();
 	}
 
-	protected function getUrl($method, $params=[]) {
+	public function getUrl($method, $params=[]) {
 		$url = $this->url.$method.$this->separator.'?'.$this->getQueryString($params);
 		return $url;
 	}
