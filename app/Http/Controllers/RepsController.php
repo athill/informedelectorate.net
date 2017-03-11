@@ -14,7 +14,7 @@ class RepsController extends Controller {
 	const CACHE_TIMEOUT = 3600;	
 
 	public function __construct() {
-		$this->sunlight = new \App\Services\Sunlight(env('SUNLIGHT_KEY'));
+		$this->sunlight = new \App\Services\Sunlight();
 	}
 
 	public function index(Request $request) {

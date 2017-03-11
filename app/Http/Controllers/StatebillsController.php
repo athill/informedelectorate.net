@@ -14,7 +14,7 @@ class StatebillsController extends Controller {
 	protected $sunlight;
 
 	public function __construct() {
-		$this->sunlight = new \App\Services\Sunlight(env('SUNLIGHT_KEY'));
+		$this->sunlight = new \App\Services\Sunlight();
 	}
 
 	public function index(Request $request) {

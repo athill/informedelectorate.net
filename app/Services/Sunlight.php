@@ -4,6 +4,10 @@ namespace App\Services;
 
 class Sunlight extends Api {
 
+	public function __construct() {
+		parent::__construct(config('api.sunlight'));
+	}
+
 	public function getData($collection, $method, $params=array()) {
 
 		$this->setBaseUrl($collection);
