@@ -8,6 +8,8 @@ class DataGovApi extends Api {
 
 	protected $url = 'https://api.data.gov/regulations/v3/';
 	protected $api_key_param = 'api_key';
+
+	private $count = 0;
 	
 	const DOCKET = 'docket';
 	const DOCKETS = 'dockets';
@@ -58,14 +60,21 @@ class DataGovApi extends Api {
 		$params = ['rpp' => 100];
 		$documents = $this->documents($params);
 
+		$this->count += count($documents);
+
 		$cache = $this->cache(
 			[ self::DOCKETS, json_encode($params) ], 
 			function() use ($documents) { 
 				return $this->getDocketData($documents); 
 			}
-		);		
-		$cache['totalNumRecords'] = $documents['totalNumRecords'];
-		return $this->associateDocumentsWithDockets($cache['documents'], $cache['dockets']);
+		);	
+		$data = [
+			'totalNumRecords' => $documents['totalNumRecords'],
+			'dockets' => $this->associateDocumentsWithDockets($cache['documents'], $cache['dockets']),
+			'count' => $this->count
+		];	
+
+		return $data;
 	}	
 
 	protected function mergeDocuments($documents, $documentDetails) {
@@ -109,8 +118,10 @@ class DataGovApi extends Api {
 		///// maybe break these two getMulti's into their own cached methods
 		//// dockets
 		$dockets = $this->getMulti($docketUrls);
+		$this->count += count($dockets);
 		//// document details
 		$documentDetails = $this->getMulti($documentDetailUrls);
+		$this->count += count($documentDetailUrls);
 
 		//// merge documents and document details
 		$fullDocuments = $this->mergeDocuments($documents['documents'], $documentDetails);
