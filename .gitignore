@@ -1,8 +1,10 @@
 /node_modules
 /public/css
 /public/fonts
+/public/images
 /public/js
 /public/storage
+/public/
 /storage/*.key
 /vendor
 /.idea

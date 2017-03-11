@@ -10,7 +10,7 @@
 <meta name="copyright" content="2017, informedelectorate.net"/>
 <meta name="viewport" content="width=device-width"/>
 
-<meta property="og:image" content="https://informedelectorate.net/img/informedelectorate-header-short.png" />
+<meta property="og:image" content="https://informedelectorate.net/images/informedelectorate-header-short.png" />
 <meta property="og:title" content="InformedElectorate.net" />
 <meta property="og:description" content="The idea of this site is to use technology to enable a more politically informed populace. " />
 
