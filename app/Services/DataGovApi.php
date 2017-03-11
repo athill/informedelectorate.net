@@ -22,8 +22,8 @@ class DataGovApi extends Api {
 	const CACHE_TIMEOUT = 60 * 24 * 1;
 
 
-	public function __construct($api_key, $cachekey = '') {
-		parent::__construct($api_key);
+	public function __construct($cachekey = 'datagov') {
+		parent::__construct(config('api.datagov'));
 		$this->cachekey = $cachekey;
 		//// debugging
 		// Cache::flush();
