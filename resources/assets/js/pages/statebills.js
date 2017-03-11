@@ -1,73 +1,139 @@
-import { LOADING_ICON, NETWORK_FAILURE_ALERT, formatDate, getParameterByName, getTableObject } from '../utils';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Alert } from 'react-bootstrap';
 
-$(() => {
-	const $results = $('#results');
-	const $form = $('#statebills-form');
-	const state = getParameterByName('state');
+import { formatDate, getParameterByName, LoadingIcon, Table } from '../utils';
 
-	const $stateDropdown = $('#state');
-	const statemap = {};
 
-	fetch('/api/statebills')
-		.then(response => response.json())
-		.then(json => {
-			json.forEach(state => {
-				statemap[state.abbreviation] = state.name;
-				$stateDropdown.append($(`<option value="${state.abbreviation}">${state.name}</option>`));
-			});
-			$stateDropdown.val(state);
-		})
-		.catch(error => console.error('Error in floorupdates', error));	
+const statemap = {};
+const statecache = {};
 
-	const getAndDisplayState = state => {
-		$results.html(`Loading results for ${statemap[state]} ${LOADING_ICON}`);
-		fetch(`/api/statebills/${state}`)
+const StateForm = ({selected='', states=[], onChange=e => e}) =>  (
+	<form action="" method="get" id="statebills-form" onSubmit={e => e.preventDefault()}>
+		<label htmlFor="state">Select a state:</label>
+		<select id="state" name="state" onChange={onChange} defaultValue={selected}>
+			<option value=""></option>
+			{
+				states.map(state => (
+					<option key={state.abbreviation} value={state.abbreviation}>{state.name}</option> 
+				))
+			}
+		</select>
+	</form>
+);
+
+const StateBills = ({selected='', data=[]}) => {
+	if (selected === '') {
+		return null;
+	} else if (data.length === 0) {
+		return (<p> Loading results for {statemap[selected]} <LoadingIcon /></p>);
+	} else {
+		const headers = ['Bill', 'Created', 'Updated', 'Type', 'Subjects'];
+		return (
+			<div>
+				<p>Showing {data.length} results for <a href={`?state=${selected}`}>{statemap[selected]}</a>:</p>
+				<Table data={data} headers={headers} />
+			</div>
+		);
+	}
+};
+
+class Page extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			data: [],									//// state bill data
+			error: '',									//// error to display, if any
+			states: [],									//// list of states for dropdown
+			selected: getParameterByName('state')		//// currently selected state
+		};
+
+		this._onChange = this._onChange.bind(this);
+		this._updateStateBills = this._updateStateBills.bind(this);
+	}
+	componentDidMount() {
+		//// populate state dropdown
+		fetch('/api/statebills')
 			.then(response => response.json())
 			.then(json => {
-				$results.html(`<p>Results for <a href="?state=${state}">${statemap[state]}</a>:</p>`);
-				const headers = ['Bill', 'Created', 'Updated', 'Type', 'Subjects'];
-				const { $tbody, $table } = getTableObject(headers);
-				$results.append($table);				
-				json.forEach(bill => {
-					const url = `http://openstates.org/${state}/bills/${bill.session}/${bill.bill_id.replace(' ', '')}`;
-					const title = bill.title.replace('"', '&quot;');
-					const bill_id = bill.bill_id.replace(' ', '&nbsp;');
-					const cells = [
-						`<a href="${url}" target="_blank" title="${title}" class="bill-link">${bill_id}</a>`,
-						formatDate(bill.created_at),
-						formatDate(bill.updated_at),
-						title,
-						bill.type.join(', '),
-					];
-					const $tr = $('<tr />');
-					cells.forEach(cell => $tr.append(`<td>${cell}</td>`));
-					$tbody.append($tr);
+				this.setState({
+					states: json
 				});
+				json.forEach(state => {
+					statemap[state.abbreviation] = state.name;
+				});
+				if (this.state.selected) {
+					this._updateStateBills(this.state.selected);
+				}
 			})
 			.catch(error => {
-				$results.append(NETWORK_FAILURE_ALERT);
-				console.error('Error in floorupdates', error);
-			});	
-	};
+				this.setState({
+					error: 'Error trying to retrieve state data'
+				});
+				console.error('Error in floorupdates', error)
+			});			
+	}
+	//// update results for selected state
+	_updateStateBills(selected) {
+		if (selected in statecache) {
+			this.setState({
+				error: '',
+				data: statecache[selected],
+				selected
+			});
+		} else {
+			this.setState({
+				error: '',
+				data: [],
+				selected
+			});
+			fetch(`/api/statebills/${selected}`)
+				.then(response => response.json())
+				.then(json => {
+					const data = json.map(bill => {
+						const url = `http://openstates.org/${selected}/bills/${bill.session}/${bill.bill_id.replace(' ', '')}`;
+						const title = bill.title.replace('"', '&quot;');
+						const bill_id = bill.bill_id.replace(' ', '\u00a0');
+						return [
+							<a href={url} target="_blank" title={bill.title} className="bill-link">{bill_id}</a>,
+							formatDate(bill.created_at),
+							formatDate(bill.updated_at),
+							title,
+							bill.type.join(', '),
+						];
+					});
+					this.setState({
+						data
+					});
+					statecache[selected] = data;
+				})
+				.catch(error => {
+					this.setState({
+						error: `Error trying to get data for ${statemap[selected]}`
+					});
+					console.error('Error in floorupdates', error);
+				});
+		}		
+	}
+	//// change handler for state dropdown
+	_onChange(e) {
+		const selected = e.target.value;
+		this._updateStateBills(selected);
 
+	}
+	render() {
+		return (
+			<div>
+				<h2>State Bills</h2>
+				<StateForm states={this.state.states} selected={this.state.selected} onChange={this._onChange} />
+				{ this.state.error && <Alert bsStyle="danger">{this.state.error}</Alert> }
+				{ !this.state.error && <StateBills selected={this.state.selected} data={this.state.data} /> }
+			</div>
+		)		
+	}
+};
 
-	if (state) {
-		$stateDropdown.val(state);
-		getAndDisplayState(state);
-	}	
-
-
-
-	$form.submit(e => {
-		e.preventDefault();
-		const state = $stateDropdown.val();
-		if (state === '') {
-			return;
-		}
-		getAndDisplayState(state);
-	});
-
-	$stateDropdown.change(e => {
-		$form.submit();
-	});
-});
+//// start the party
+ReactDOM.render(
+	React.createElement(Page), document.getElementById('root')
+);
