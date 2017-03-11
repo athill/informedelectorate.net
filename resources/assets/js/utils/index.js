@@ -1,13 +1,14 @@
 import moment from 'moment';
 import React from 'react';
-import { Table as BsTable} from 'react-bootstrap';
 import $ from 'jquery';
 
 export const NETWORK_FAILURE_ALERT = '<div class="alert alert-danger" role="alert">Something went wrong, please try again later.</div>';
 export const LOADING_ICON = '<i class="fa fa-cog fa-spin fa-2x fa-fw"></i>';
 
+export const DATE_DISPLAY_FORMAT = "MMMM Do YYYY, h:mm:ss a";
+
 export const formatDate = date => {
-	return moment(date).format("MMMM Do YYYY, h:mm:ss a");
+	return moment(date).format(DATE_DISPLAY_FORMAT);
 }
 
 export const LoadingIcon = () => (
@@ -42,36 +43,6 @@ export function getTableObject(headers) {
         $tbody
     };
 }
-
-export const Table = ({headers, data=[]}) => {
-    if (data.length) {
-        return (
-            <BsTable responsive hover>
-                <thead>
-                    <tr>
-                        {
-                            headers.map(header => <th key={header}>{header}</th>)
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        data.map((row, i) => (
-                            <tr key={i}>
-                                {
-                                    row.map((cell, j) => <td key={j}>{cell}</td>)
-                                }
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </BsTable>
-        );
-    } else {
-        return null;
-    }
-
-};
 
 export const getTableRowObject = (tds, rowAtts={})  => {
     const $row = $(`<tr ${$.param(rowAtts)} />`);

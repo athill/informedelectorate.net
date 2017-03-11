@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Alert } from 'react-bootstrap';
 
-import { formatDate, getParameterByName, LoadingIcon, Table } from '../utils';
+import { formatDate, getParameterByName, LoadingIcon } from '../utils';
+import Table from '../utils/Table';
 
 
 const statemap = {};
