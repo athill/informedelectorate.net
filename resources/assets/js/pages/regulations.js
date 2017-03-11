@@ -32,7 +32,6 @@ title
 			// console.log(json);
 			//// populate table with data
 			json.documents.forEach(entry => {
-				console.log('looping')
 				const $tr = getTableRowObject([
 					`${entry.documentId}|${entry.title}`,
 					entry.agencyAcronym,
