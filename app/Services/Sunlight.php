@@ -5,7 +5,7 @@ namespace App\Services;
 class Sunlight extends Api {
 
 	public function __construct() {
-		parent::__construct(config('api.sunlight'));
+		parent::__construct(config('services.api.sunlight.key'));
 	}
 
 	public function getData($collection, $method, $params=array()) {

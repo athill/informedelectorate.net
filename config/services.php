@@ -35,4 +35,16 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+
+    //// my services
+    'api' => [
+        'datagov' => [
+            'key' => env('API_DATA_GOV_KEY')
+        ],
+
+        'sunlight' => [
+            'key' => env('SUNLIGHT_KEY')
+        ],
+    ]
+
 ];

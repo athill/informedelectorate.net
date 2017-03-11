@@ -23,7 +23,7 @@ class DataGovApi extends Api {
 
 
 	public function __construct($cachekey = 'datagov') {
-		parent::__construct(config('api.datagov'));
+		parent::__construct(config('services.api.datagov.key'));
 		$this->cachekey = $cachekey;
 		//// debugging
 		// Cache::flush();
