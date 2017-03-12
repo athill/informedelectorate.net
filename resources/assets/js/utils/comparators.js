@@ -23,6 +23,8 @@ export const sortByText = (key, ascending=true) => {
 	}
 };
 
+export const getSortByDate = format => (key, ascending=true) => sortByDate(key, format, ascending);
+
 export const sortByDate = (key, format, ascending=true) => {
 	return (a, b) => {
 		const nameA = moment(a[key], format).toDate();

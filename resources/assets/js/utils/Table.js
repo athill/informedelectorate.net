@@ -4,28 +4,18 @@ import { Table as BsTable } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 
 import { DATE_DISPLAY_FORMAT } from './';
-import { sortByDate, sortByLink, sortByText } from './comparators';
-
-// const Header = ({title, onClick=e => e, ascending=null}) => {
-//     const icon = ascending === null ? 
-//         null :
-//         ascending ? <Icon name="chevron-down" />
-//             : <Icon name="chevron-up" />;
-//     return (
-//         <th>
-//             {/* <a href="" onClick={e => { e.preventDefault(); onClick(e); }}>{ title }</a>
-
-//             {{ icon }}
-//         */}
-//         </th>
-//     );
-// };
-
+import { getSortByDate, sortByLink, sortByText } from './comparators';
 
 export const ColumnTypes = {
     TEXT: 'TEXT',
     DATE: 'DATE',
     LINK: 'LINK'
+};
+
+const typeFuncMap = {
+    [ColumnTypes.TEXT]: sortByText,
+    [ColumnTypes.DATE]: getSortByDate(DATE_DISPLAY_FORMAT),
+    [ColumnTypes.LINK]: sortByLink
 };
 
 export class Column {
@@ -52,8 +42,6 @@ const Header = ({title, onClick=e => e, ascending=null}) => {
     );
 };
 
-// <Header key={i} title={header} ascending={true} onClick={ e => e } />
-
 export default class Table extends React.Component {
     constructor(props) {
         super(props);
@@ -68,30 +56,45 @@ export default class Table extends React.Component {
     }
 
     componentDidMount() {
-        this._sort(3);
+        const {sortIndex, sortDirection} = this.state;
+        this._sort(sortIndex, sortDirection === 'asc');
     }
 
     _sort(index, ascending=true) {
+        const { columns } = this.props;
+        const sortFunc = typeFuncMap[columns[index].type]
         this.setState({
-            data: this.state.data.slice().sort(sortByText(index, false))
+            data: this.state.data.slice().sort(sortFunc(index, ascending)),
+            sortIndex: index,
+            sortDirection: ascending ? 'asc' : 'desc'
         });
     }
 
     _click(index) {
         return e => {
-            console.log(index);
+            if (index === this.state.sortIndex) {
+                this._sort(index, !(this.state.sortDirection === 'asc'));
+            } else {
+                this._sort(index, true);
+            }
         };
     }
 
     render() {
-        const {headers} = this.props;
+        const {columns} = this.props;
         if (this.state.data.length) {
             return (
                 <BsTable responsive hover>
                     <thead>
                         <tr>
                             {
-                                headers.map((header, i) => <Header key={i} title={header} onClick={this._click(i)} ascending={true} />)
+                                columns.map((column, i) => {
+                                    let ascending = null;
+                                    if (i === this.state.sortIndex) {
+                                        ascending = this.state.sortDirection === 'asc';
+                                    }
+                                    return <Header key={i} title={column.title} onClick={this._click(i)} ascending={ascending} />;
+                                })
                             }
                         </tr>
                     </thead>

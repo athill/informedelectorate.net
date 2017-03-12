@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Alert } from 'react-bootstrap';
 
 import { formatDate, getParameterByName, LoadingIcon } from '../utils';
-import Table from '../utils/Table';
+import Table, { Column, ColumnTypes } from '../utils/Table';
 
 
 const statemap = {};
@@ -22,6 +22,15 @@ const StateForm = ({selected='', states=[], onChange=e => e}) =>  (
 		</select>
 	</form>
 );
+const columns = [
+	new Column('Bill', ColumnTypes.LINK),
+	new Column('Created', ColumnTypes.DATE),
+	new Column('Updated', ColumnTypes.DATE),
+	new Column('Type', ColumnTypes.TEXT),
+	new Column('Subjects', ColumnTypes.TEXT)
+
+];
+		// , 'Created', 'Updated', 'Type', 'Subjects'
 
 const StateBills = ({selected='', data=[]}) => {
 	if (!selected) {
@@ -29,11 +38,11 @@ const StateBills = ({selected='', data=[]}) => {
 	} else if (data.length === 0) {
 		return (<p> Loading results for {statemap[selected]} <LoadingIcon /></p>);
 	} else {
-		const headers = ['Bill', 'Created', 'Updated', 'Type', 'Subjects'];
+		// const headers = ['Bills', 'Created', 'Updated', 'Type', 'Subjects']
 		return (
 			<div>
 				<p>Showing {data.length} results for <a href={`?state=${selected}`}>{statemap[selected]}</a>:</p>
-				<Table data={data} headers={headers} />
+				<Table data={data} columns={columns} />
 			</div>
 		);
 	}
