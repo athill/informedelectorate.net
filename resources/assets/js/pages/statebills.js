@@ -24,7 +24,7 @@ const StateForm = ({selected='', states=[], onChange=e => e}) =>  (
 );
 
 const StateBills = ({selected='', data=[]}) => {
-	if (selected === '') {
+	if (!selected) {
 		return null;
 	} else if (data.length === 0) {
 		return (<p> Loading results for {statemap[selected]} <LoadingIcon /></p>);
