@@ -6,18 +6,21 @@ import Icon from 'react-fontawesome';
 import { DATE_DISPLAY_FORMAT } from './';
 import { getSortByDate, sortByLink, sortByText } from './comparators';
 
+//// valid column types for sorting
 export const ColumnTypes = {
     TEXT: 'TEXT',
     DATE: 'DATE',
     LINK: 'LINK'
 };
 
+//// map column types to sorting algorithms
 const typeFuncMap = {
     [ColumnTypes.TEXT]: sortByText,
     [ColumnTypes.DATE]: getSortByDate(DATE_DISPLAY_FORMAT),
     [ColumnTypes.LINK]: sortByLink
 };
 
+//// encapsulates table column metadata
 export class Column {
     constructor(title, type) {
         this.title = title;
@@ -26,8 +29,9 @@ export class Column {
         }
         this.type = type;
     }
-}
+};
 
+//// components
 const Header = ({title, onClick=e => e, ascending=null}) => {
     const icon = ascending === null ? 
         null :
@@ -78,7 +82,9 @@ export default class Table extends React.Component {
         this.setState({
             sortedData: this.props.data.slice().sort(sortFunc(index, ascending)),
             sortIndex: index,
-            sortDirection: ascending ? 'asc' : 'desc'
+            sortDirection: ascending ? 'asc' : 'desc',
+            offset: 0,
+            activePage: 1
         });
     }
 
@@ -99,7 +105,7 @@ export default class Table extends React.Component {
 
     _navigate(pageNum) {
         const offset = (pageNum  * this.pageSize);
-        console.log(pageNum, offset, Math.min(offset + this.pageSize, this.props.data.length));
+        // console.log(pageNum, offset, Math.min(offset + this.pageSize, this.props.data.length));
         this.setState({
             activePage: pageNum,
             offset
@@ -124,10 +130,10 @@ export default class Table extends React.Component {
             const displayData = sortedData.slice(offset, last);
             return (
                 <div>
-                    <nav>
+                    <div>
                         <div>Showing {offset + 1} to {last} of {data.length} for { queryLink }</div>
-                        <div>{ this._paginator() }</div> 
-                    </nav>
+                        <nav>{ this._paginator() }</nav> 
+                    </div>
                     <BsTable responsive hover>
                         <thead>
                             <tr>
