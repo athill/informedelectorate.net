@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { Table as BsTable } from 'react-bootstrap';
+import { Table as BsTable, Pagination  } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 
 import { DATE_DISPLAY_FORMAT } from './';
@@ -31,8 +31,9 @@ export class Column {
 const Header = ({title, onClick=e => e, ascending=null}) => {
     const icon = ascending === null ? 
         null :
-        ascending ? <Icon name="chevron-down" />
-            : <Icon name="chevron-up" />;   
+        ascending ? 
+            <Icon name="chevron-down" /> :
+            <Icon name="chevron-up" />;   
     return (
         <th onClick={onClick} style={{ cursor: 'pointer' }}>
             { title }
@@ -46,13 +47,24 @@ export default class Table extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: this.props.data,
+            //// sorting
+            sortedData: this.props.data || [],
             sortIndex: this.props.sortIndex || 0,
-            sortDirection: this.props.sortDirection || 'asc'
+            sortDirection: this.props.sortDirection || 'asc',
+            //// pagination
+            activePage: 1,
+            offset: 0
         };
 
+        //// move these into state if page page size becomes changable
+        this.pageSize = this.props.pageSize || 50;
+        this.numPages = Math.floor(this.props.data.length / this.pageSize);
+
+        //// bind 'this' to custom methods
         this._sort = this._sort.bind(this);
-        this._click = this._click.bind(this);
+        this._sortClick = this._sortClick.bind(this);
+        this._navigate = this._navigate.bind(this);
+        this._paginator = this._paginator.bind(this);
     }
 
     componentDidMount() {
@@ -64,13 +76,37 @@ export default class Table extends React.Component {
         const { columns } = this.props;
         const sortFunc = typeFuncMap[columns[index].type]
         this.setState({
-            data: this.state.data.slice().sort(sortFunc(index, ascending)),
+            sortedData: this.props.data.slice().sort(sortFunc(index, ascending)),
             sortIndex: index,
             sortDirection: ascending ? 'asc' : 'desc'
         });
     }
 
-    _click(index) {
+    _paginator() {
+        return (
+            <Pagination
+                first
+                last
+                next
+                prev
+                boundaryLinks
+                maxButtons={5}
+                items={this.numPages}
+                activePage={this.state.activePage}
+                onSelect={this._navigate} />
+        );
+    }    
+
+    _navigate(pageNum) {
+        const offset = (pageNum  * this.pageSize);
+        console.log(pageNum, offset, Math.min(offset + this.pageSize, this.props.data.length));
+        this.setState({
+            activePage: pageNum,
+            offset
+        });
+    }
+
+    _sortClick(index) {
         return e => {
             if (index === this.state.sortIndex) {
                 this._sort(index, !(this.state.sortDirection === 'asc'));
@@ -81,35 +117,44 @@ export default class Table extends React.Component {
     }
 
     render() {
-        const {columns} = this.props;
-        if (this.state.data.length) {
+        const { columns, data, queryLink } = this.props;
+        const { offset, sortedData, sortDirection, sortIndex } = this.state;
+        if (data.length) {
+            const last = Math.min(offset + this.pageSize, data.length);
+            const displayData = sortedData.slice(offset, last);
             return (
-                <BsTable responsive hover>
-                    <thead>
-                        <tr>
+                <div>
+                    <nav>
+                        <div>Showing {offset + 1} to {last} of {data.length} for { queryLink }</div>
+                        <div>{ this._paginator() }</div> 
+                    </nav>
+                    <BsTable responsive hover>
+                        <thead>
+                            <tr>
+                                {
+                                    columns.map((column, i) => {
+                                        let ascending = null;
+                                        if (i === sortIndex) {
+                                            ascending = sortDirection === 'asc';
+                                        }
+                                        return <Header key={i} title={column.title} onClick={this._sortClick(i)} ascending={ascending} />;
+                                    })
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
                             {
-                                columns.map((column, i) => {
-                                    let ascending = null;
-                                    if (i === this.state.sortIndex) {
-                                        ascending = this.state.sortDirection === 'asc';
-                                    }
-                                    return <Header key={i} title={column.title} onClick={this._click(i)} ascending={ascending} />;
-                                })
+                                displayData.map((row, i) => (
+                                    <tr key={i}>
+                                        {
+                                            row.map((cell, j) => <td key={j}>{cell}</td>)
+                                        }
+                                    </tr>
+                                ))
                             }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            this.state.data.map((row, i) => (
-                                <tr key={i}>
-                                    {
-                                        row.map((cell, j) => <td key={j}>{cell}</td>)
-                                    }
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </BsTable>
+                        </tbody>
+                    </BsTable>
+                </div>
             );
         } else {
             return null;

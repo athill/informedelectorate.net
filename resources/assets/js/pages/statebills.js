@@ -40,10 +40,7 @@ const StateBills = ({selected='', data=[]}) => {
 	} else {
 		// const headers = ['Bills', 'Created', 'Updated', 'Type', 'Subjects']
 		return (
-			<div>
-				<p>Showing {data.length} results for <a href={`?state=${selected}`}>{statemap[selected]}</a>:</p>
-				<Table data={data} columns={columns} />
-			</div>
+				<Table data={data} columns={columns} queryLink={<a href={`?state=${selected}`}>{statemap[selected]}</a>} />
 		);
 	}
 };
