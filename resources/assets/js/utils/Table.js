@@ -60,7 +60,7 @@ export default class Table extends React.Component {
             offset: 0
         };
 
-        //// move these into state if page page size becomes changable
+        //// move these into state if page size becomes changable
         this.pageSize = this.props.pageSize || 50;
         this.numPages = Math.floor(this.props.data.length / this.pageSize);
 

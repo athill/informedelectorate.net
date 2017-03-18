@@ -1,39 +1,86 @@
 import { ucFirst } from 'change-case';
-import moment from 'moment';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Alert } from 'react-bootstrap';
 
-import { NETWORK_FAILURE_ALERT, LOADING_ICON, getTableObject } from '../utils';
+import { formatDate, getParameterByName, LoadingIcon } from '../utils';
+import Table, { Column, ColumnTypes } from '../utils/Table';
 
-$(() => {
-	const $results = $('#results');
-	$results.html('Loading results '+LOADING_ICON);
-	fetch('/api/floorupdates')
-		.then(response => response.json())
-		.then(json => {
-			//// build table structure
-			const headers = ['Date', 'Chamber', 'Event', 'Bills'];
-			const { $tbody, $table } = getTableObject(headers);
-			$results.html($table);
-			//// populate table with data
-			json.forEach(update => {
-				const $tr = $('<tr />');
-				$tr.append('<td>'+moment(update.timestamp).format("MMMM Do YYYY, h:mm:ss a")+'</td>');
-				$tr.append('<td>'+ucFirst(update.chamber)+'</td>');
-				$tr.append('<td>'+update.update+'</td>');
-				let $bills = '';
-				if (update.bill_ids.length) {
-					$bills = $('<ul />');
-					update.bill_ids.forEach(bill_id => {
-						$bills.append($(`<li><a href="http://www.opencongress.org/bill/${bill_id}/show" target="_blank">${bill_id}</li>`));
-					});
-				}
-				const $td = $('<td />');
-				$td.append($bills);
-				$tr.append($td);
-				$tbody.append($tr);
-			});
-		})
-		.catch(error => {
-			$results.html(NETWORK_FAILURE_ALERT);
-			console.error('Error in floorupdates', error)
-		});
-});
+
+const columns = [
+	new Column('Date', ColumnTypes.DATE),
+	new Column('Chamber', ColumnTypes.TEXT),
+	new Column('Event', ColumnTypes.TEXT),
+	new Column('Bills', ColumnTypes.TEXT),
+];
+
+const FloorUpdates = ({ data=[] }) => {
+	if (data.length === 0) {
+		return <p> Loading results <LoadingIcon /></p>;
+	} else {
+		return <Table data={data} columns={columns} />;
+	}
+};
+
+class Page extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			data: [],									//// state bill data
+			error: '',									//// error to display, if any
+		};
+	}
+
+	componentDidMount() {
+		//// populate state dropdown
+		fetch('/api/floorupdates')
+			.then(response => response.json())
+			.then(json => {
+				const data = json.map(update => {
+					let bills = null;
+					if (update.bill_ids.length) {
+						bills = (
+							<ul>
+							{
+								update.bill_ids.map(bill_id => (
+									<li key={bill_id}>
+										<a href={`http://www.opencongress.org/bill/${bill_id}/show`} target="_blank">{bill_id}</a>
+									</li>
+								))
+							}
+							</ul>
+						);
+					}				
+					return [
+						formatDate(update.timestamp),
+						ucFirst(update.chamber),
+						update.update,
+						bills
+					];
+				});
+				this.setState({
+					data
+				});
+			})
+			.catch(error => {
+				this.setState({
+					error: 'Error trying to retrieve Floor Updates'
+				});
+				console.error('Error in floorupdates', error)
+			});			
+	}
+	render() {
+		return (
+			<div>
+				<h2>Floor Updates</h2>
+				{ this.state.error && <Alert bsStyle="danger">{this.state.error}</Alert> }
+				{ !this.state.error && <FloorUpdates data={this.state.data} /> }
+			</div>
+		)		
+	}
+};
+
+//// start the party
+ReactDOM.render(
+	React.createElement(Page), document.getElementById('root')
+);
