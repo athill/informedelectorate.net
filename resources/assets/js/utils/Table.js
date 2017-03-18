@@ -96,6 +96,7 @@ export default class Table extends React.Component {
                 next
                 prev
                 boundaryLinks
+                bsSize="small"
                 maxButtons={5}
                 items={this.numPages}
                 activePage={this.state.activePage}
@@ -130,9 +131,9 @@ export default class Table extends React.Component {
             const displayData = sortedData.slice(offset, last);
             return (
                 <div>
-                    <div>
-                        <div>Showing {offset + 1} to {last} of {data.length} for { queryLink }</div>
-                        <nav>{ this._paginator() }</nav> 
+                    <div className="clearfix">
+                        <div className="pull-left">Showing {offset + 1} to {last} of {data.length} { queryLink && ['results for ', queryLink] }</div>
+                        <nav className="pull-right">{ this._paginator() }</nav> 
                     </div>
                     <BsTable responsive hover>
                         <thead>
@@ -160,6 +161,9 @@ export default class Table extends React.Component {
                             }
                         </tbody>
                     </BsTable>
+                    <div className="pull-right">
+                        { this._paginator() }
+                    </div>
                 </div>
             );
         } else {

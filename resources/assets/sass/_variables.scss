@@ -1,3 +1,9 @@
+
+$red : darkred;
+$white: white;
+$blue: #004;
+
+//// from laravel
 $fa-font-path:   "../fonts";
 // Body
 $body-bg: #f5f8fa;
@@ -10,11 +16,11 @@ $panel-default-border: $laravel-border-color;
 $panel-inner-border: $laravel-border-color;
 
 // Brands
-$brand-primary: #3097D1;
+$brand-primary: $blue;
 $brand-info: #8eb4cb;
 $brand-success: #2ab27b;
 $brand-warning: #cbb956;
-$brand-danger: #bf5329;
+$brand-danger: $red;
 
 // Typography
 $font-family-sans-serif: "Raleway", sans-serif;
@@ -35,3 +41,9 @@ $input-color-placeholder: lighten($text-color, 30%);
 
 // Panels
 $panel-default-heading-bg: #fff;
+
+
+
+///// my overrides
+$link-color: $red;
+$link-hover-color: $blue;

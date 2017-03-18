@@ -11,10 +11,6 @@
 
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
-$red : darkred;
-$white: white;
-$blue: #004;
-
  body {
   margin: 0;
   padding: 0;
@@ -100,6 +96,8 @@ h3 {
 }
 
 
+
+
 /// http://stackoverflow.com/questions/18529274/change-navbar-color-in-twitter-bootstrap-3
 $bgDefault      : $red;
 $bgHighlight    : $blue;
@@ -163,6 +161,10 @@ div.tooltip {
   border: 0px;
   border-radius: 8px;
   pointer-events: none;
+}
+
+.pagination {
+  margin: 0;
 }
 
 
