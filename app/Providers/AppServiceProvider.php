@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
             [ 'href'=>'/statetax', 'display'=>'State Taxes' ],
             // [ 'href'=>'/regulations', 'display'=>'Regulations' ]
         ]);
+        View::share('google_analytics_key', config('services.analytics.google.key'));
     }
 
     /**
