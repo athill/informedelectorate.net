@@ -12,12 +12,23 @@
 
 <meta property="og:image" content="https://informedelectorate.net/images/informedelectorate-header-short.png" />
 <meta property="og:title" content="InformedElectorate.net" />
-<meta property="og:description" content="The idea of this site is to use technology to enable a more politically informed populace. " />
+<meta property="og:description" content="The idea of this site is to use technology to enable a more politically informed United States populace. " />
 
 <link rel="stylesheet" type="text/css" href="{{ asset('/css/app.css') }}" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=UnifrakturMaguntia" />
 </head>
 <body id="default" class="default">
+@if ($google_analytics_key)
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', '{{ $google_analytics_key }}', 'auto');
+      ga('send', 'pageview');
+    </script>
+@endif
 <div id="skip" class="hide">
     <p>Skip to:</p>
     <ul>
