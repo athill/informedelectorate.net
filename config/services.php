@@ -45,6 +45,12 @@ return [
         'sunlight' => [
             'key' => env('SUNLIGHT_KEY')
         ],
+    ],
+
+    'analytics' => [
+        'google' => [
+            'key' => env('GOOGLE_ANALYTICS_KEY', null)
+        ],
     ]
 
 ];
