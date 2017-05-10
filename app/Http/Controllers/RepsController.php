@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\Cache;
 class RepsController extends Controller {
 
 	protected $sunlight;
+	protected $openstates;
 
 	const CACHE_PREFIX = 'reps:';
 	const CACHE_TIMEOUT = 3600;	
 
 	public function __construct() {
 		$this->sunlight = new \App\Services\Sunlight();
+		$this->openstates = new \App\Services\OpenStates();
 	}
 
 	public function index(Request $request) {
@@ -53,7 +55,7 @@ class RepsController extends Controller {
 		});
 
 
-		$stateResponse = $this->sunlight->getStateLegislatorsByLatLong($lat, $long);
+		$stateResponse = $this->openstates->getStateLegislatorsByLatLong($lat, $long);
 
 		$state = collect($stateResponse)->map(function($item) {
 			return $this->getStateLegislator($item);

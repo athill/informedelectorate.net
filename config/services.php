@@ -45,6 +45,9 @@ return [
         'sunlight' => [
             'key' => env('SUNLIGHT_KEY')
         ],
+        'openstates' => [
+            'key' => env('OPEN_STATES_KEY')
+        ]
     ],
 
     'analytics' => [
