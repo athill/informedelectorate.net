@@ -9,39 +9,67 @@ use Illuminate\Support\Facades\Cache;
 class RepsController extends Controller {
 
 	protected $sunlight;
+	protected $openstates;
 
 	const CACHE_PREFIX = 'reps:';
-	const CACHE_TIMEOUT = 3600;	
+	const CACHE_TIMEOUT = 3600;
 
 	public function __construct() {
+		Cache::flush();
 		$this->sunlight = new \App\Services\Sunlight();
+		$this->openstates = new \App\Services\OpenStates;
+		$this->civicinfo = new \App\Services\GoogleCivicInfo;
+
 	}
 
 	public function index(Request $request) {
 		$lat = null;
 		$long = null;
 		if ($request->get('addr')) {
-			$addr = $request->get('addr');
-			return $this->getRepresentativesByAddr($addr);
-			$cachekey = self::CACHE_PREFIX.':addr:'.$addr;
+			$address = $request->get('addr');
+			// return $this->getRepresentativesByAddress($address);
+			$cachekey = self::CACHE_PREFIX.':address:'.$address;
 			if (!Cache::get($cachekey)) {
-				Cache::put($cachekey, $this->getRepresentativesByAddr($addr), self::CACHE_TIMEOUT);
+				Cache::put($cachekey, $this->getRepresentativesByAddress($address), self::CACHE_TIMEOUT);
 			}
 			return Cache::get($cachekey);
 		}
-		return ['error' => 'No addr parameter provided'];
+		return ['error' => 'No address parameter provided'];
 
 	}
 
-	protected function getRepresentativesByAddr($addr) {
-		$json = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($addr).'&sensor=false');
-		$result = json_decode($json, true);
-		if ($result['status'] === 'ZERO_RESULTS') {
-			return ['error' => 'Cannot find address ['.$addr.']'];
-		}		
-		// return $result;
-		$location = $result['results'][0]['geometry']['location'];
-		return $this->getRepresentatives($location['lat'], $location['lng']);
+	protected function getRepresentativesByAddress($address) {
+		$result = $this->civicinfo->getRepresentatives($address);
+		$response = collect($result['offices'])->map(function($office) use ($result) {
+			return [
+				'title' => $office['name'],
+				'reps' => isset($office['officialIndices']) ? 
+					collect($office['officialIndices'])->map(function($index) use ($result) {
+						return $result['officials'][$index];
+					}) : 
+					[]
+			];
+		});
+		// foreach ($result['offices'] as $office) {
+		// 	// dd($office);
+		// 	$response[] = [
+		// 		'title' => $office['name'],
+		// 		'reps' => isset($office['officialIndices']) ? 
+		// 			collect($office['officialIndices'])->map(function($index) use ($result) {
+		// 				return $result['officials'][$index];
+		// 			}) : 
+		// 			[]
+		// 	];
+		// }
+		return $response;
+		// $json = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($addr).'&sensor=false');
+		// $result = json_decode($json, true);
+		// if ($result['status'] === 'ZERO_RESULTS') {
+		// 	return ['error' => 'Cannot find address ['.$addr.']'];
+		// }		
+		// // return $result;
+		// $location = $result['results'][0]['geometry']['location'];
+		// return $this->getRepresentatives($location['lat'], $location['lng']);
 	}
 
 	protected function getRepresentatives($lat, $long) {
@@ -53,7 +81,7 @@ class RepsController extends Controller {
 		});
 
 
-		$stateResponse = $this->sunlight->getStateLegislatorsByLatLong($lat, $long);
+		$stateResponse = $this->openstates->getStateLegislatorsByLatLong($lat, $long);
 
 		$state = collect($stateResponse)->map(function($item) {
 			return $this->getStateLegislator($item);

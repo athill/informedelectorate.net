@@ -19,24 +19,12 @@ class Sunlight extends Api {
 		$data = $this->getData('congress3', '/legislators/locate', array('latitude'=>$lat,'longitude'=>$long));
 		return $data;
 	}
-	public function getStateLegislatorsByLatLong($lat, $long) {
-		$data = $this->getData('openstates', '/legislators/geo', array('lat'=>$lat,'long'=>$long));
-		return $data;
-	}
 
 	public function getCurrentFederalFloorUpdates() {
 		$data = $this->getData('congress3', '/floor_updates', array());
 		return $data;
 	}
-	public function getStateMetadata() {
-		$data = $this->getData('openstates', '/metadata', array());		
-		return $data;
-	}
 
-	public function getBillsByState($stateabbrev) {
-		$data = $this->getData('openstates', '/bills', array('state'=>$stateabbrev, 'search_window'=>'term'));
-		return $data;
-	}
 
 	public function getLegislatorData($legislators) {
 		$this->setBaseUrl('congress3');
