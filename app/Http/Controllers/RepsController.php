@@ -15,8 +15,8 @@ class RepsController extends Controller {
 	const CACHE_TIMEOUT = 3600;
 
 	public function __construct() {
-		Cache::flush();
-		$this->sunlight = new \App\Services\Sunlight();
+		// Cache::flush();
+		// $this->sunlight = new \App\Services\Sunlight();
 		$this->openstates = new \App\Services\OpenStates;
 		$this->civicinfo = new \App\Services\GoogleCivicInfo;
 

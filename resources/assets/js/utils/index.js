@@ -15,6 +15,23 @@ export const LoadingIcon = () => (
     <i className="fa fa-cog fa-spin fa-2x fa-fw"></i>
 );
 
+export const Phone = ({number}) => (
+    <a href={`tel:${number.replace(/[^0-9]/g, '')}`}>{number}</a>
+);
+
+export const DefinitionList = ({items}) => (
+    <dl className="dl-horizontal">
+        {
+            items.map(item => (
+                <div key={item.key}>
+                    <dt>{item.key}:</dt>
+                    <dd>{item.value}</dd>
+                </div>
+            ))
+        }
+    </dl>
+);
+
 export function getParameterByName(name, query) {
     if (!query) {
       query = window.location.search;
