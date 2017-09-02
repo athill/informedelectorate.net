@@ -14,13 +14,13 @@ class StatebillsController extends Controller {
 	protected $sunlight;
 
 	public function __construct() {
-		$this->sunlight = new \App\Services\Sunlight();
+		$this->openstates = new \App\Services\OpenStates;
 	}
 
 	public function index(Request $request) {
 		$cachekey = self::CACHE_PREFIX.'metadata';
 		if (!Cache::get($cachekey)) {
-			Cache::put($cachekey, $this->sunlight->getStateMetadata(), self::CACHE_TIMEOUT);
+			Cache::put($cachekey, $this->openstates->getStateMetadata(), self::CACHE_TIMEOUT);
 		}
 		return Cache::get($cachekey);
 	}
@@ -28,7 +28,7 @@ class StatebillsController extends Controller {
 	public function show(Request $request, $id) {
 		$cachekey = self::CACHE_PREFIX.$id;
 		if (!Cache::get($cachekey)) {	
-			Cache::put($cachekey, $this->sunlight->getBillsByState($id), self::CACHE_TIMEOUT);
+			Cache::put($cachekey, $this->openstates->getBillsByState($id), self::CACHE_TIMEOUT);
 		}	
 		return Cache::get($cachekey);	
 	}
