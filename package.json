@@ -35,5 +35,8 @@
     "vue": "^2.0.1",
     "vue-resource": "^1.0.3",
     "webpack": "^2.2.1"
+  },
+  "dependencies": {
+    "cross-env": "^3.2.4"
   }
 }
