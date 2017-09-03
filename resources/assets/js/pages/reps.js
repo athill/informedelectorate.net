@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Alert, Button } from 'react-bootstrap';
 
-import { DefinitionList, NETWORK_FAILURE_ALERT, LoadingIcon, getParameterByName, Phone } from '../utils';
+import { Address, DefinitionList, NETWORK_FAILURE_ALERT, LoadingIcon, getParameterByName, Phone } from '../utils';
 
 const AddressForm = ({address='', onSubmit=e => e}) =>  (
 	<form action="" method="get" id="address-form" onSubmit={e => {e.preventDefault(); onSubmit(e)}}>
@@ -12,22 +12,6 @@ const AddressForm = ({address='', onSubmit=e => e}) =>  (
 		<Button bsSize="small" bsStyle="primary" type="submit">Search</Button>
 	</form>
 );
-
-const Address = ({ addrs }) => (
-	<div>
-		{
-			addrs.map((addr, i) => (
-				<p key={i}>
-					{ addr.line1 }<br />
-					{ addr.line2 && <span>{ addr.line2 }<br /></span> }
-					{addr.city}, {addr.state} {addr.zip}
-				</p>
-			))
-		}
-	</div>
-);
-
-
 
 const channelMap = {
 	'GooglePlus': 'https://plus.google.com/',
@@ -54,7 +38,6 @@ const getRepChannels = channels => {
 			map[channel.type] = [channelLink(channel, i)];
 		}
 	});
-	console.log(map);
 	const result = [];
 	for (let type in map) {
 		if (map.hasOwnProperty(type)) {
@@ -72,14 +55,10 @@ const getRepItems = rep => {
 	rep.emails && rep.emails.length && items.push({ key: 'Email', value: rep.emails.map((email, i) => <span key={email}><a href={`mailto:${email}`}>{email}</a> { i > 0 ? ' ' : '' }</span> ) });
 	rep.urls && rep.urls.length && items.push({ key: 'URL', value: rep.urls.map((url, i) => <span key={url}><a href={url} target="_blank">{url}</a> { i > 0 ? ' ' : '' }</span> ) });
 	items.push({key: 'Address', value: <Address addrs={rep.address} />});
-	// rep.channels && rep.channels.forEach(channel => items.push({ key: channel.type, value: <a href={channelMap[channel.id]} target="_blank">{channel.id}<a> }));
-	// const channels = rep.channels && getRepChannels(rep.channels);
-	// console.log(channels);
 	rep.channels && getRepChannels(rep.channels).forEach(channel => items.push({
 		key: channel.type, 
 		value: channel.url.map((url, i) => <span key={i}>{url} { i > 0 ? ' ' : '' }</span>)
 	}));
-	// ) 
 	return items;
 };
 
@@ -138,21 +117,8 @@ class Page extends React.Component {
 					this.setState({ error: json.error });
 					return;
 				}
-				const data = json;
-				// const data = json.map(bill => {
-				// 	const url = `http://openstates.org/${selected}/bills/${bill.session}/${bill.bill_id.replace(' ', '')}`;
-				// 	const title = bill.title.replace('"', '&quot;');
-				// 	const bill_id = bill.bill_id.replace(' ', '\u00a0');
-				// 	return [
-				// 		<a href={url} target="_blank" title={bill.title} className="bill-link">{bill_id}</a>,
-				// 		formatDate(bill.created_at),
-				// 		formatDate(bill.updated_at),
-				// 		title,
-				// 		bill.type.join(', '),
-				// 	];
-				// });
 				this.setState({
-					data
+					data: json
 				});
 			})
 			.catch(error => {
@@ -185,72 +151,3 @@ class Page extends React.Component {
 ReactDOM.render(
 	React.createElement(Page), document.getElementById('root')
 );
-
-
-
-// $(() => {
-// 	const $results = $('#results');
-
-// 	$('#address-form').submit(e => {
-// 		e.preventDefault();
-// 		var value = $('#addr').val();
-// 		if (value.trim() !== '') {
-// 			$results.html(`Loading results for ${value} ${LOADING_ICON}`);
-// 			fetch('/api/reps?addr='+encodeURIComponent(value))
-// 				.then(response => response.json())
-// 				.then(json => {
-// 					$results.html(`<p>Displaying results for <a href="/reps/?addr=${encodeURIComponent(value)}">${value}</a></p>`);
-// 					if (json.error) {
-// 						$results.append(`<div class="alert alert-warning" role="alert">${json.error}</div>`);
-// 					} else {
-// 						$results.append(renderReps(json));
-// 					}
-// 				})
-// 				.catch(error => {
-// 					console.log('error', error);
-// 					$results.append(NETWORK_FAILURE_ALERT);
-// 				});
-// 		}
-// 	});
-
-// 	const query = getParameterByName('addr');
-// 	if (query) {
-// 		$('#addr').val(query);
-// 		$('#address-form').submit();
-// 	}	
-
-// 	const getReps = results => {
-// 		console.log('in getReps');
-// 		fetch(`/api/reps?lat=${results.geometry.location.lat}&long=${results.geometry.location.lng}`)
-// 			.then(response => response.json())
-// 			.then(json => renderReps(json))
-// 			.catch(error => console.log('error', error));
-// 	};
-
-// 	const renderReps = ({ fed, state }) => {
-// 		const $response = $('<div />');
-// 		$response.append('<h2>Your federal representatives:</h2>');
-// 		fed.forEach(items => {
-// 			for (let item in items) {
-// 				const $row = $('<div class="row" />');
-// 				$row.append('<div class="col-md-2"><strong>'+item+'</strong></div>');
-// 				const value = /^https?:\/\/.*/.test(items[item]) ? `<a href="${items[item]}" target="_blank">${items[item]}<a>` : items[item];
-// 				$row.append('<div class="col-md-10">'+value+'</div>');
-// 				$response.append($row);
-// 			}
-// 			$response.append('<hr />');
-// 		});
-// 		$response.append('<h2>Your state representatives:</h2>');
-// 		state.forEach(items => {
-// 			for (let item in items) {
-// 				const $row = $('<div class="row" />');
-// 				$row.append('<div class="col-md-2"><strong>'+item+'</strong></div>');
-// 				const value = /^https?:\/\/.*/.test(items[item]) ? `<a href="${items[item]}" target="_blank">${items[item]}<a>` : items[item];
-// 				$row.append('<div class="col-md-10">'+value+'</div>');
-// 				$response.append($row);
-// 			}
-// 			$response.append('<hr />');
-// 		});		
-// 		return $response;
-// 	}
-// });

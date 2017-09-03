@@ -19,4 +19,13 @@ class GoogleCivicInfo extends Api {
 		$data = $this->getData('/representatives', ['address'=>$address]);
 		return $data;
 	}
+
+	public function getUpcomingElections() {
+		return $this->getData('/elections');
+	}
+
+	public function getElectionInfoByAddress($address) {
+		$result = $this->getData('/voterinfo', ['address' => $address]);
+		return $result;
+	}
 }

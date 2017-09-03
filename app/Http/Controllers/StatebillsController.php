@@ -11,7 +11,7 @@ class StatebillsController extends Controller {
 	const CACHE_PREFIX = 'statebills:';
 	const CACHE_TIMEOUT = 3600;
 
-	protected $sunlight;
+	protected $openstates;
 
 	public function __construct() {
 		$this->openstates = new \App\Services\OpenStates;

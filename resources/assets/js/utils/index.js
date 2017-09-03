@@ -5,11 +5,31 @@ import $ from 'jquery';
 export const NETWORK_FAILURE_ALERT = '<div class="alert alert-danger" role="alert">Something went wrong, please try again later.</div>';
 export const LOADING_ICON = '<i class="fa fa-cog fa-spin fa-2x fa-fw"></i>';
 
-export const DATE_DISPLAY_FORMAT = "MMMM Do YYYY, h:mm:ss a";
+export const DATE_DISPLAY_FORMAT = "MMMM Do, YYYY, h:mm:ss a";
+export const DATE_ONLY_DISPLAY_FORMAT = "MMMM Do, YYYY";
 
 export const formatDate = date => {
 	return moment(date).format(DATE_DISPLAY_FORMAT);
-}
+};
+
+export const formatDateOnly = date => {
+    return moment(date).format(DATE_ONLY_DISPLAY_FORMAT);
+};
+
+export const Address = ({ addrs }) => (
+    <div>
+        {
+            addrs.map((addr, i) => (
+                <p key={i}>
+                    { addr.locationName && <span>{ addr.locationName }<br /></span>}
+                    { addr.line1 }<br />
+                    { addr.line2 && <span>{ addr.line2 }<br /></span> }
+                    {addr.city}, {addr.state} {addr.zip}
+                </p>
+            ))
+        }
+    </div>
+);
 
 export const LoadingIcon = () => (
     <i className="fa fa-cog fa-spin fa-2x fa-fw"></i>
@@ -17,6 +37,11 @@ export const LoadingIcon = () => (
 
 export const Phone = ({number}) => (
     <a href={`tel:${number.replace(/[^0-9]/g, '')}`}>{number}</a>
+);
+
+export const Email = ({email}) => (
+    //// todo, obfuscate
+    <a href={`mailto:${email}`}>{email}</a>
 );
 
 export const DefinitionList = ({items}) => (
