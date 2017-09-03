@@ -1,6 +1,7 @@
 <?php 
-
 namespace App\Services;
+
+use Log;
 
 class Api {
 	protected $url = '';
@@ -17,6 +18,7 @@ class Api {
 
 	public function getUrl($method, $params=[]) {
 		$url = $this->url.$method.$this->separator.'?'.$this->getQueryString($params);
+		Log::info($url);
 		return $url;
 	}
 

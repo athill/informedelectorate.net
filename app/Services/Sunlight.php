@@ -25,6 +25,7 @@ class Sunlight extends Api {
 		return $data;
 	}
 
+
 	public function getLegislatorData($legislators) {
 		$this->setBaseUrl('congress3');
 		$urls = [];
@@ -49,9 +50,19 @@ class Sunlight extends Api {
 
 	protected function setBaseUrl($collection) {
 		switch ($collection) {
+			//// deprecated
+			case 'congress':
+				$this->url = 'http://services.sunlightlabs.com/api/';
+				////http://services.sunlightlabs.com/api/api.method.format?apikey=YOUR_API_KEY&<params>
+				break;
 			case 'congress3':
 				$this->url = 'https://congress.api.sunlightfoundation.com';
 				$this->separator = '/';
+				break;
+			case 'openstates':
+				$this->url = 'https://openstates.org/api/v1';
+				$this->separator = '/';
+				////http://openstates.org/api/v1/bills/?{SEARCH-PARAMS}&apikey={YOUR_API_KEY}
 				break;
 			case 'capitolwords':
 				$this->url = 'https://capitolwords.org/api/';

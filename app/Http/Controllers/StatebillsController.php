@@ -14,7 +14,7 @@ class StatebillsController extends Controller {
 	protected $openstates;
 
 	public function __construct() {
-		$this->openstates = new \App\Services\OpenStates();
+		$this->openstates = new \App\Services\OpenStates;
 	}
 
 	public function index(Request $request) {
