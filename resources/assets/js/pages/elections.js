@@ -11,8 +11,6 @@ const columns = [
 	new Column('Name', ColumnTypes.TEXT)
 ];
 
-// 3406 Tramore Court Clemmons, NC 27102
-
 const AddressForm = ({address='', onSubmit=e => e}) =>  (
 	<form action="" method="get" id="address-form" onSubmit={e => {e.preventDefault(); onSubmit(e)}}>
 		<label htmlFor="addr">Search by address:</label>
@@ -179,7 +177,12 @@ class Page extends React.Component {
 		fetch(`/api/elections/?addr=${address}`)
 			.then(response => response.json())
 			.then(json => {
-				console.log(json);
+				if (json.error) {
+					this.setState({
+						error: json.error.message
+					});
+					return;
+				}
 				this.setState({
 					electionData: json
 				});
