@@ -17,7 +17,8 @@ class AppServiceProvider extends ServiceProvider
         View::share('tabs', [
             [ 'href'=>'/', 'display'=>'Home' ],
             [ 'href'=>'/reps', 'display'=>'Representatives' ],
-            [ 'href'=>'/words', 'display'=>'Words' ],
+            // [ 'href'=>'/words', 'display'=>'Words' ],
+            [ 'href'=>'/elections', 'display'=>'Elections' ],
             [ 'href'=>'/floorupdates', 'display'=>'Floor Updates' ],
             [ 'href'=>'/statebills', 'display'=>'State Bills' ],
             [ 'href'=>'/statetax', 'display'=>'State Taxes' ],
