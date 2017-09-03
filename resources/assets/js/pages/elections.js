@@ -20,7 +20,6 @@ const AddressForm = ({address='', onSubmit=e => e}) =>  (
 );
 
 const getContestData = contest => {
-	console.log('in getContestData', contest);
 	const data = [
 		{ key: 'Type', value: contest.type },
 		{ key: 'Office', value: contest.office },
@@ -72,7 +71,6 @@ const EarlyVoteSite = ({data}) => (
 const getState = state => {
 	const electionAdministrativeBodyKeys = ['electionInfoUrl', 'electionRegistrationUrl', 'electionRegistrationConfirmationUrl', 'absenteeVotingInfoUrl', 'votingLocationFinderUrl', 'ballotInfoUrl', 'electionRulesUrl', 	];
 	const titles = electionAdministrativeBodyKeys.map(key => changeCase.title(changeCase.sentence(key)));
-	console.log(titles);
 	const data = [{ key: 'Name', value: state.name  }];
 	electionAdministrativeBodyKeys.forEach(key => {
 		const label = changeCase.title(changeCase.sentence(key));
@@ -141,15 +139,19 @@ class Page extends React.Component {
 		this.state = {
 			data: [],									//// representative data
 			error: '',									//// error to display, if any
-			address: getParameterByName('address'),		//// current address
+			address: getParameterByName('addr'),		//// current address
 			electionData: {}
 		};
 
 		this._onSubmit = this._onSubmit.bind(this);
 		this._updateElectionInfo = this._updateElectionInfo.bind(this);
+
 	}
 	componentDidMount() {
-		//// populate state dropdown
+		//// query string param
+		if (this.state.address) {
+			this._updateElectionInfo(this.state.address);
+		}
 		fetch('/api/elections')
 			.then(response => response.json())
 			.then(json => {
