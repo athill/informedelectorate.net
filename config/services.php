@@ -52,7 +52,10 @@ return [
 
         'google' => [
             'key' => env('GOOGLE_KEY')
-        ],                
+        ], 
+        'propublica' => [
+            'key' => env('PROPUBLICA_KEY')
+        ],                        
     ],
 
     'analytics' => [

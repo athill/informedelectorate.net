@@ -132,6 +132,7 @@ class Page extends React.Component {
 		return (
 			<div>
 				<h2>State Bills</h2>
+				<p>Data from <a href="http://docs.openstates.org/en/latest/api/" target="_blank">Open States API</a></p>
 				<StateForm states={this.state.states} selected={this.state.selected} onChange={this._onChange} />
 				{ this.state.error && <Alert bsStyle="danger">{this.state.error}</Alert> }
 				{ !this.state.error && <StateBills selected={this.state.selected} data={this.state.data} /> }
