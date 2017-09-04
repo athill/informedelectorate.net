@@ -18,6 +18,8 @@ Route::group(['middleware' => 'api'], function () {
 
 	Route::resource('elections', 'ElectionsController', ['only' => ['index', 'show']]);
 
+	Route::resource('federalbills', 'FederalBillsController', ['only' => ['index']]);
+
 	Route::resource('floorupdates', 'FloorupdatesController', ['only' => ['index']]);
 
 	Route::resource('statebills', 'StatebillsController', ['only' => ['index', 'show']]);

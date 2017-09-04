@@ -7,18 +7,25 @@ use Illuminate\Support\Facades\Log;
 class Curl {
 
 
-	public function get($url) {
+	public function get($url, $headers=[]) {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_HEADER, false);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_VERBOSE, true);
+		if (count($headers) > 0) {
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);	
+		}
+
+		// curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+		
 		// curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, 'TLSv1');
 		// curl_setopt($ch, CURLOPT_SSLVERSION, 6);
 		//CURLOPT_SSLVERSION 4, 5, 6
 		// CURLOPT_SSL_CIPHER_LIST => 'TLSv1' 
 		
 		$content = curl_exec($ch);
+
 		if ($content === false) {
 			Log::info('fail: '.$url.': '.curl_error($ch));
 		}
@@ -30,7 +37,7 @@ class Curl {
 	//// from http://www.phpied.com/simultaneuos-http-requests-in-php-with-curl/
 	//// handles get request as [<url1>, <url2>, ...] or post request as 
 	//// [[ 'url'=><url1>, 'post'=>[<postvars]], ...]
-	public function getMulti($data, $options = array()) {
+	public function getMulti($data, $options = []) {
 	 
 	  // array of curl handles
 	  $curly = array();
@@ -49,6 +56,10 @@ class Curl {
 	    curl_setopt($curly[$id], CURLOPT_URL,            $url);
 	    curl_setopt($curly[$id], CURLOPT_HEADER,         0);
 	    curl_setopt($curly[$id], CURLOPT_RETURNTRANSFER, 1);
+
+	    if (isset($options['headers'])) {
+	    	curl_setopt($ch, CURLOPT_HTTPHEADER, $options['headers']);
+	    }
 
 	    //CURLOPT_SSL_CIPHER_LIST => 'TLSv1' 
 	 

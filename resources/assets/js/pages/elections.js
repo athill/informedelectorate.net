@@ -165,12 +165,12 @@ class Page extends React.Component {
 			})
 			.catch(error => {
 				this.setState({
-					error: 'Error trying to retrieve state data'
+					error: 'Error trying to retrieve election data'
 				});
 				console.error('Error in floorupdates', error)
 			});			
 	}
-	//// update results for selected state
+	//// update results for address
 	_updateElectionInfo(address) {
 		this.setState({
 			error: '',
@@ -196,7 +196,7 @@ class Page extends React.Component {
 				console.error('Error in elections', error);
 			});	
 	}
-	//// change handler for state dropdown
+	//// change handler 
 	_onSubmit(e) {
 		const address = document.getElementById('addr').value;
 		this._updateElectionInfo(address);

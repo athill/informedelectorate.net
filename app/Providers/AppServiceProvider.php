@@ -19,7 +19,8 @@ class AppServiceProvider extends ServiceProvider
             [ 'href'=>'/reps', 'display'=>'Representatives' ],
             // [ 'href'=>'/words', 'display'=>'Words' ],
             [ 'href'=>'/elections', 'display'=>'Elections' ],
-            [ 'href'=>'/floorupdates', 'display'=>'Floor Updates' ],
+            // [ 'href'=>'/floorupdates', 'display'=>'Floor Updates' ],
+            [ 'href'=>'/federalbills', 'display'=>'Federal Bills' ],
             [ 'href'=>'/statebills', 'display'=>'State Bills' ],
             [ 'href'=>'/statetax', 'display'=>'State Taxes' ],
             // [ 'href'=>'/regulations', 'display'=>'Regulations' ]
