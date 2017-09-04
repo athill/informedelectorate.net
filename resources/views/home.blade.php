@@ -15,8 +15,8 @@ Type in a term and see which representatives are using the term and how often. B
 <h3><a href="/elections/">Election Information</a></h3>
 View upcoming elections and view election information for your address.
 
-<h3><a href="/floorupdates/">The Federal Congressional Record</a></h3>
-Find out what the House and Senate recorded recently. Includes links to <a href="http://www.opencongress.org/" target="_blank">Open Congress</a> for related bills.
+<h3><a href="/federalbills/">Current Federal Bills</a></h3>
+Recently updated federal bills. Also includes search.
 
 <h3><a href="/statebills/">Current State Bills</a></h3>
 Current bills in selected state. Includes links to <a href="http://openstates.org/" target="_blank">Open States</a>
