@@ -25,7 +25,10 @@ const dollars = format('$00');		//// format function for dollars
 const app = (data) => {
 	const $link = $('#link');
 	const $stateMap = $('#state_map');
+	
 	const max = {};		//// maximum values for primary areas
+	const min = {};
+	const rgbs = {};
 	const scales = {};	//// scaling functions by area
 	const colorcode = {	//// color multipliers
 		r: 0.2,
@@ -50,6 +53,9 @@ const app = (data) => {
 			if (!(type in max) || parseInt(data[state][type]) > parseInt(max[type])) {
 				max[type] = data[state][type];
 			}
+			if (!(type in min) || parseInt(data[state][type]) < parseInt(min[type])) {
+				min[type] = data[state][type];
+			}			
 		});
 	});
 
@@ -60,9 +66,9 @@ const app = (data) => {
 			.range([255, 0])
 	});
 
-	const getArea = () => $('input[name=option]:checked').val();
+	const getAreas = () => $('input[name=option]:checked').map(function() { return $(this).val(); }).get();
 
-	const area = getArea();
+	const areas = getAreas();
 
 	//// set up tooltip
 	const tooltip = d3.select("body").append("div")
@@ -74,9 +80,9 @@ const app = (data) => {
          .duration(100)
          .style("opacity", .9);
        tooltip.html(function() {
-	  		const area = getArea();
+	  		const areas = getAreas();
 	  		const name = d.properties.NAME;
-	    	return getTooltip(name, area);
+	    	return getTooltip(name, areas);
 		})
         .style("left", (currentEvent.pageX) + "px")
         .style("top", (currentEvent.pageY - 28) + "px");
@@ -97,12 +103,25 @@ const app = (data) => {
 	const path = geoPath()
 		.projection(projection);	
 	
-	const updateLink = area => $link.html(`Showing results for <a href="/statetax?option=${area}">${area}</a>`);
+	const updateLink = areas => {
+		if (!areas || !areas.length) {
+			$link.html(`Select at least one checkbox to see state tax comparisons.`);
+			return;
+		}		
+		const $container = $('#options-container');
+		let query = $container.serialize();
+		if (areas.includes('total')) {
+			areas = ['total'];
+			query = 'option=total';
+		}
+		$link.html(`Showing results for <a href="/statetax?${query}">${areas.join('+')}</a>`);	
+	};
 
 	//Load in GeoJSON data
 	json('/data/statetax/states.min.json', function(json) {	
 		$stateMap.html('');
-		updateLink(area);
+		const areas = getAreas();
+		updateLink(areas);
 		//Create SVG element
 		const svg = select("#state_map")
 					.append("svg")
@@ -117,7 +136,7 @@ const app = (data) => {
 		   .attr('class', 'state')
 		   .attr('id', function(d) { return d.properties.NAME; })
 		   .style('fill', datum => {
-		   		return getRgb(datum.properties.NAME, area);
+		   		return getRgb(datum.properties.NAME, areas);
 		   })
 		   .on('click', function(data, i) {
 		   		const key = data.properties.NAME;
@@ -129,44 +148,60 @@ const app = (data) => {
 
 	//// Change option
 	$('#interface-container').on('click', 'input[name=option]', function(e)  {
-		const area = $('input[name=option]:checked').val();
-		updateLink(area);
+		const areas = getAreas();
+		updateLink(areas);
 		const $states = $states || $('.state');
 		$states.each(function(i, elem) {
 			const name = $(this).attr('id');
-			$(this).css('fill', getRgb(name, area));
+			$(this).css('fill', getRgb(name, areas));
 		});
 	});	
 
-	const getRgb = (name, area)  => {
-		if (!(name in data)) return {};
-		const rgb = {};
-		const areas = area.toLowerCase().split('+');
-		//// create area in scales if it doesn't exist
-		if (!(area in scales)) {
+	const getScale = (areas, key)  => {
+		if (!scales[key]) {
 			var mx = areas.reduce(function(p, c) { 
 				return p + parseInt(max[c]); 
 			}, 0);
-			scales[area] = scaleLinear()	
-								.domain([0, mx])
-								.range([255, 0]);
+			var mn = areas.reduce(function(p, c) { 
+				return p + parseInt(min[c]); 
+			}, 0);			
+			scales[key] = scaleLinear()	
+								.domain([mn, mx])
+								.range([255, 0]);	
 		}
-		//// build rgb
-		var value = areas.reduce(function(p, c) {
-			return p + parseInt(data[name][c]);
-		}, 0);
-		for (var color in colorcode) {
-			rgb[color] = Math.floor(scales[area](value)*colorcode[color]);
+		return scales[key];
+	}
+
+	const getRgb = (name, area)  => {
+		const key = area.join(':');
+		if (!(name in data)) return {};
+		const rgb = {};
+		const areas = getAreas();
+		//// create area in scales if it doesn't exist
+		const scale = getScale(areas, key);
+		////  rgb
+		if (name in rgbs && key in rgbs[name]) {
+			return rgbs[name][key];
+		} else {
+			var value = areas.reduce(function(p, c) {
+				return p + parseInt(data[name][c]);
+			}, 0);
+			for (var color in colorcode) {
+				rgb[color] = Math.floor(scale(value)*colorcode[color]);
+			}
+			var rgbstr = 'rgb('+rgb.r+','+rgb.g+','+rgb.b+')';
+			if (!rgbs[name]) {
+				rgbs[name] = {};
+			}
+			rgbs[name][key] = rgbstr;
+			return rgbstr;
 		}
-		var rgbstr = 'rgb('+rgb.r+','+rgb.g+','+rgb.b+')';
-		return rgbstr;
 	};
 
-	const getTooltip = (name, area) => {
-		var value = name;
+	const getTooltip = (name, areas) => {
+		let value = name;
 		if (name in data) {
-			var areas = area.toLowerCase().split('+');
-			var total = areas.reduce(function(p, c) {
+			const total = areas.reduce(function(p, c) {
 				return p + parseInt(data[name][c]);
 			}, 0);
 			value += ' - ' + dollars(total);
@@ -176,58 +211,20 @@ const app = (data) => {
 }
 
 const renderOptions = () => {
-	//// radio buttons
-	const areas = ['Corporate', 'Income', 'Property', 'Sales'];
-	const combos = [];
-	for (let i = 0; i < areas.length; i++) {
-		const area1 = areas[i];
-		combos.push(area1);
-		for (let j = i+1; j < areas.length; j++) {
-			combos.push(area1+'+'+areas[j]);
-			if (j < areas.length) {
-				for (let k = j+1; k < areas.length; k++) {
-					combos.push(area1+'+'+areas[j]+'+'+areas[k]);
-					if (k < areas.length) {
-						for (let m = k+1; m < areas.length; m++) {
-							combos.push(area1+'+'+areas[j]+'+'+areas[k]+'+'+areas[m]);
-						}
-					}
-				}
-
-			}
-		}
-	}
-	combos.push('Total');
-
+	//// check boxes
+	const areas = ['Corporate', 'Income', 'Property', 'Sales', 'Total*'];
 	const $container = $('#options-container');
-	const middle = Math.ceil(combos.length / 2);
-	const left = combos.slice(0, middle);
-	const right = combos.slice(middle, combos.length);
 	
-
-	[left, right].forEach(function(column) {
-		const $column = $('<div class="col-md-6 col-xs-12" />');
-		column.forEach(function(combo) {
-			const $row = $('<div class="row" />');
-			const id = 'option_'+combo.replace(/\+/g, '-');
-			// const display = combo.replace(/\+/g, '+\u200B');
-			const display = combo;
-			$row.append('<div class="col-xs-1"><input type="radio" name="option" value="'+combo+'" id="'+id+'" /></div>');
-			$row.append('<div class="col-xs-10"><label for="'+id+'">'+display+'</label></div>');
-			$column.append($row);
-		});
-		$container.append($column);
+	areas.forEach(area => {
+		const $row = $('<div class="row" />');
+		const id = area.replace(/[^a-zA-Z]/g, '').toLowerCase();
+		const display = area;
+		$row.append('<div class="col-xs-1"><input type="checkbox" name="option" value="'+id+'" id="'+id+'" /></div>');
+		$row.append('<div class="col-xs-10"><label for="'+id+'">'+display+'</label></div>');
+		$container.append($row);
 	});
+
 	const option = getParameterByName('option');
-	let $selected;
-	if (option) {
-
-		$selected = $(`input[value="${option.replace(/ /g, '+')}"]`);
-	} else {
-		$selected = $('#option_'+areas.join('-'));
-	}
-	$selected.prop('checked', true);		
+	let options = option ? Array.isArray(option) ? option : [option] : areas.slice(0, 4);
+	options.forEach(area => $(`#${area.toLowerCase()}`).prop('checked', true));
 }
-
-
-
