@@ -9,7 +9,7 @@
     <div class="col-md-6 col-xs-12">
         <h5>Category</h5>
         <div id="link"></div>
-        <div class="row" id="options-container"></div>
+        <form id="options-container"></form>
     </div>
 </div>
 
