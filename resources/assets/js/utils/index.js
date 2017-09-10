@@ -57,16 +57,28 @@ export const DefinitionList = ({items}) => (
     </dl>
 );
 
-export function getParameterByName(name, query) {
+export const getQuerystringObject = query => {
     if (!query) {
       query = window.location.search;
     }
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(query);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
+    const params = {};
+    query = query.replace(/^\?/, '');
+    const args = query.split('&');
+    args.forEach(arg => {
+        const [name, val] = arg.split('=');
+        const value = decodeURIComponent(val);
+        params[name] = name in params ?
+            (Array.isArray(params[name]) ? 
+                             params[name].concat(value) : 
+                             [params[name]].concat(value)) :
+            value;
+    });
+    return params;    
+} 
+
+export const getParameterByName = (name, query) => {
+    const params = getQuerystringObject(query);
+    return name in params ? params[name] : '';
 };
 
 export function getTableObject(headers) {
