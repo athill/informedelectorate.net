@@ -173,6 +173,9 @@ const app = (data) => {
 	}
 
 	const getRgb = (name, area)  => {
+		if (area.includes('total')) {
+			area = ['total'];
+		}
 		const key = area.join(':');
 		if (!(name in data)) return {};
 		const rgb = {};
@@ -200,6 +203,9 @@ const app = (data) => {
 
 	const getTooltip = (name, areas) => {
 		let value = name;
+		if (areas.includes('total')) {
+			areas = ['total'];
+		}
 		if (name in data) {
 			const total = areas.reduce(function(p, c) {
 				return p + parseInt(data[name][c]);
