@@ -1,10 +1,9 @@
 /node_modules
 /public/css
 /public/fonts
-/public/images
+/public/images/informedelectorate-header-short.png
 /public/js
 /public/storage
-/public/
 /storage/*.key
 /storage/debugbar/
 /vendor
@@ -12,3 +11,4 @@
 Homestead.json
 Homestead.yaml
 .env
+.DS_Store
