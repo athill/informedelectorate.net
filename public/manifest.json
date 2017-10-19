@@ -1,0 +1,37 @@
+{
+  "name": "Informed Electorate",
+  "short_name": "Informed Electorate",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "Tools for voters to stay informed.",
+  "icons": [{
+    "src": "images/touch/informed_48x48.png",
+    "sizes": "48x48",
+    "type": "image/png"
+  }, {
+    "src": "images/touch/informed_72x72.png",
+    "sizes": "72x72",
+    "type": "image/png"
+  }, {
+    "src": "images/touch/informed_96x96.png",
+    "sizes": "96x96",
+    "type": "image/png"
+  }, {
+    "src": "images/touch/informed_144x144.png",
+    "sizes": "144x144",
+    "type": "image/png"
+  }, {
+    "src": "images/touch/informed_168x168.png",
+    "sizes": "168x168",
+    "type": "image/png"
+  }, {
+    "src": "images/touch/informed_192x192.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  }],
+  "related_applications": [{
+    "platform": "web",
+    "url": "https://informedelectorate.net"
+  }]
+}
