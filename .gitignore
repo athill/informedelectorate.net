@@ -13,3 +13,4 @@ Homestead.yaml
 .env
 .DS_Store
 npm-debug.log
+composer.lock
