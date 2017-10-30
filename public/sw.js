@@ -1,4 +1,4 @@
-var CACHE_NAME = 'informedelectorate.net-cache-v1';
+var CACHE_NAME = 'informedelectorate.net-cache-v2';
 var urlsToCache = [
   '/',
   '/css/app.css',
