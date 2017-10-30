@@ -9,6 +9,8 @@
 <meta name="author" content="Andy Hill"/>
 <meta name="copyright" content="2017, informedelectorate.net"/>
 <meta name="viewport" content="width=device-width"/>
+<link rel="manifest" href="/manifest.json"/>
+
 
 <meta property="og:image" content="https://informedelectorate.net/images/informedelectorate-header-short.png" />
 <meta property="og:title" content="InformedElectorate.net" />
