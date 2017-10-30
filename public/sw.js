@@ -1,6 +1,5 @@
-var CACHE_NAME = 'v3';
+var CACHE_NAME = 'v4';
 var urlsToCache = [
-  '/',
   '/css/app.css',
   '/js/app.js'
 ];
