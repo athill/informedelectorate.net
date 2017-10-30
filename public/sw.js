@@ -1,4 +1,4 @@
-var CACHE_NAME = 'informedelectorate.net-cache-v2';
+var CACHE_NAME = 'v3';
 var urlsToCache = [
   '/',
   '/css/app.css',
@@ -54,5 +54,20 @@ self.addEventListener('fetch', function(event) {
         );
       })
     );
+});
+
+//// remove old caches https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers
+this.addEventListener('activate', function(event) {
+  var cacheWhitelist = [CACHE_NAME];
+
+  event.waitUntil(
+    caches.keys().then(function(keyList) {
+      return Promise.all(keyList.map(function(key) {
+        if (cacheWhitelist.indexOf(key) === -1) {
+          return caches.delete(key);
+        }
+      }));
+    })
+  );
 });
 
