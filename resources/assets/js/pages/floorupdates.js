@@ -44,7 +44,7 @@ class Page extends React.Component {
 							{
 								update.bill_ids.map(bill_id => (
 									<li key={bill_id}>
-										<a href={`http://www.opencongress.org/bill/${bill_id}/show`} target="_blank">{bill_id}</a>
+										<a href={`http://www.opencongress.org/bill/${bill_id}/show`} target="_blank" rel="noopener">{bill_id}</a>
 									</li>
 								))
 							}

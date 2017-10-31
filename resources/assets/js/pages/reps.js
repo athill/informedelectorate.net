@@ -6,7 +6,7 @@ import { Address, DefinitionList, NETWORK_FAILURE_ALERT, LoadingIcon, getParamet
 
 const AddressForm = ({address='', onSubmit=e => e}) =>  (
 	<form action="" method="get" id="address-form" onSubmit={e => {e.preventDefault(); onSubmit(e)}}>
-		<p>Data is from <a href="https://developers.google.com/civic-information/" target="_blank">the Google Civic Information API.</a></p>
+		<p>Data is from <a href="https://developers.google.com/civic-information/" target="_blank" rel="noopener">the Google Civic Information API.</a></p>
 		<label htmlFor="addr">Search by address:</label>
 		<input id="addr" name="addr" defaultValue={address} autoFocus={true} autoComplete="on" />
 		<Button bsSize="small" bsStyle="primary" type="submit">Search</Button>
@@ -26,7 +26,7 @@ const channelLink = (channel, i) => {
 		url += (channel.id.length > 20) ? 'channel/' : 'user/';
 	}
 	url += channel.id;
-	return <a key={i} href={url} target="_blank">{url}</a>;
+	return <a key={i} href={url} target="_blank" rel="noopener">{url}</a>;
 };
 
 const getRepChannels = channels => {
@@ -53,7 +53,7 @@ const getRepItems = rep => {
 	rep.party && items.push({ key: 'Party', value: rep.party });
 	items.push({ key: 'Phone', value: rep.phones.map((phone, i) => <span key={phone}><Phone number={phone} /> { i > 0 ? ' ' : '' }</span> ) });
 	rep.emails && rep.emails.length && items.push({ key: 'Email', value: rep.emails.map((email, i) => <span key={email}><a href={`mailto:${email}`}>{email}</a> { i > 0 ? ' ' : '' }</span> ) });
-	rep.urls && rep.urls.length && items.push({ key: 'URL', value: rep.urls.map((url, i) => <span key={url}><a href={url} target="_blank">{url}</a> { i > 0 ? ' ' : '' }</span> ) });
+	rep.urls && rep.urls.length && items.push({ key: 'URL', value: rep.urls.map((url, i) => <span key={url}><a href={url} target="_blank" rel="noopener">{url}</a> { i > 0 ? ' ' : '' }</span> ) });
 	items.push({key: 'Address', value: <Address addrs={rep.address} />});
 	rep.channels && getRepChannels(rep.channels).forEach(channel => items.push({
 		key: channel.type, 
