@@ -1,4 +1,7 @@
-var STATIC_CACHE = 'informed-cache-v6';
+var STATIC_CACHE = 'informed-cache-v14';
+var DYNAMIC_CACHE = 'informed-static-cache-v1';
+
+//
 var urlsToCache = [
   '/',
   '/reps/',
@@ -74,7 +77,7 @@ function cacheFirstStrategy(request) {
 function onlineFirstStrategy(request) {
   return fetch(request)
     .then(function(response) {
-      caches.open(STATIC_CACHE).then(function(cache) {
+      caches.open(DYNAMIC_CACHE).then(function(cache) {
         cache.put(request, response.clone());
       });
       return response;
@@ -91,7 +94,7 @@ function onlineFirstStrategy(request) {
 
 //// remove old caches https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers
 this.addEventListener('activate', function(event) {
-  var cacheWhitelist = [STATIC_CACHE];
+  var cacheWhitelist = [STATIC_CACHE, DYNAMIC_CACHE];
 
   event.waitUntil(
     caches.keys().then(function(keyList) {
@@ -102,5 +105,11 @@ this.addEventListener('activate', function(event) {
       }));
     })
   );
+});
+
+self.addEventListener('message', function(event) {
+  if (event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
 });
 
