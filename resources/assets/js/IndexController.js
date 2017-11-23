@@ -51,13 +51,14 @@ IndexController.prototype._registerServiceWorker = function() {
 };
 
 IndexController.prototype._sendMessage = function(message) {
- if (!this._lostConnectionToast) {
-   var toast = this._toastsView.show(message, {
+ var indexController = this;
+ if (!indexController._lostConnectionToast) {
+   var toast = indexController._toastsView.show(message, {
       buttons: ['dismiss']
     });
-    this._lostConnectionToast = 1;
+    indexController._lostConnectionToast = 1;
     toast.answer.then(function(answer) {
-      this._lostConnectionToast = null;
+      indexController._lostConnectionToast = null;
       return;
     });  
   }
