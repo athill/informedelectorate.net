@@ -51,7 +51,7 @@ const getRepChannels = channels => {
 const getRepItems = rep => {
 	const items = [{ key: 'Name', value: rep.name }];
 	rep.party && items.push({ key: 'Party', value: rep.party });
-	items.push({ key: 'Phone', value: rep.phones.map((phone, i) => <span key={phone}><Phone number={phone} /> { i > 0 ? ' ' : '' }</span> ) });
+	rep.phones && items.push({ key: 'Phone', value: rep.phones.map((phone, i) => <span key={phone}><Phone number={phone} /> { i > 0 ? ' ' : '' }</span> ) });
 	rep.emails && rep.emails.length && items.push({ key: 'Email', value: rep.emails.map((email, i) => <span key={email}><a href={`mailto:${email}`}>{email}</a> { i > 0 ? ' ' : '' }</span> ) });
 	rep.urls && rep.urls.length && items.push({ key: 'URL', value: rep.urls.map((url, i) => <span key={url}><a href={url} target="_blank" rel="noopener">{url}</a> { i > 0 ? ' ' : '' }</span> ) });
 	items.push({key: 'Address', value: <Address addrs={rep.address} />});
@@ -83,8 +83,8 @@ const Representatives = ({address='', data=[]}) => {
 	} else if (data.length === 0) {
 		return (<p> Loading results for {address} <LoadingIcon /></p>);
 	} else {
-		console.log(data);
 		return <div>{ data.filter(office => office.reps.length).map(office => <Office key={office.title} office={office} />) }</div>;
+
 	}
 };
 
@@ -111,7 +111,9 @@ class Page extends React.Component {
 			address
 		});
 		fetch(`/api/reps/?addr=${address}`)
-			.then(response => response.json())
+			.then(response => {
+				return response.json()
+			})
 			.then(json => {
 				if (json.error) {
 					this.setState({ error: json.error });
@@ -122,10 +124,10 @@ class Page extends React.Component {
 				});
 			})
 			.catch(error => {
+				console.error('Error in representatives', error);
 				this.setState({
 					error: `Error trying to get data for ${address}`
 				});
-				console.error('Error in representatives', error);
 			});	
 	}
 	//// change handler for state dropdown

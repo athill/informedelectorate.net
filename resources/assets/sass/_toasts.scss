@@ -1,8 +1,12 @@
+@import "utils";
+
+$accent-color:         #FF5252;
+
 .toasts {
   position: absolute;
   z-index: 3;
 
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
 

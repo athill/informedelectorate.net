@@ -17,19 +17,16 @@ IndexController.prototype._registerServiceWorker = function() {
   var indexController = this;
 
   navigator.serviceWorker.register('/sw.js').then(function(reg) {
-    console.log('in _registerServiceWorker');
     if (!navigator.serviceWorker.controller) {
       return;
     }
 
     if (reg.waiting) {
-      console.log('in req.waiting')
       indexController._updateReady(reg.waiting);
       return;
     }
 
     if (reg.installing) {
-      console.log('in installing')
       indexController._trackInstalling(reg.installing);
       return;
     }
@@ -37,6 +34,10 @@ IndexController.prototype._registerServiceWorker = function() {
     reg.addEventListener('updatefound', function() {
       indexController._trackInstalling(reg.installing);
     });
+
+    navigator.serviceWorker.addEventListener('message', event => {
+      indexController._sendMessage(event.data.msg);
+    });    
   });
 
   // Ensure refresh is only called once.
@@ -48,6 +49,16 @@ IndexController.prototype._registerServiceWorker = function() {
     refreshing = true;
   });
 };
+
+IndexController.prototype._sendMessage = function(message) {
+ var toast = this._toastsView.show(message, {
+    buttons: ['dismiss']
+  });
+
+  toast.answer.then(function(answer) {
+    return;
+  });  
+}
 
 
 IndexController.prototype._trackInstalling = function(worker) {

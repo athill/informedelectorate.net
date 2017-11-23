@@ -1,14 +1,14 @@
-var STATIC_CACHE = 'informed-cache-v14';
-var DYNAMIC_CACHE = 'informed-static-cache-v1';
+var STATIC_CACHE = 'informed-cache-v9';
+var DYNAMIC_CACHE = 'informed-static-cache-v3';
+// foo
 
-//
 var urlsToCache = [
   '/',
-  '/reps/',
-  '/elections/',
-  '/federalbills/',
-  '/statebills/',
-  '/statetax/',
+  '/reps',
+  '/elections',
+  '/federalbills',
+  '/statebills',
+  '/statetax',
   '/css/app.css',
   '/js/app.js',
   '//fonts.googleapis.com/css?family=UnifrakturMaguntia',
@@ -29,15 +29,32 @@ self.addEventListener('install', function(event) {
 self.addEventListener('fetch', function(event) {
   const requestUrl = new URL(event.request.url);
   if (requestUrl.pathname.startsWith('/api/')) {
-    event.respondWith(onlineFirstStrategy(event.request));
+    event.respondWith(onlineFirstStrategy(event));
     return;
   }
 
-  event.respondWith(cacheFirstStrategy(event.request));
+  event.respondWith(cacheFirstStrategy(event));
 });
 
-function cacheFirstStrategy(request) {
-  return caches.match(request)
+function toast(event, message) {
+    // Exit early if we don't have access to the client.
+    // Eg, if it's cross-origin.
+    if (!event.clientId) return;
+
+    // Get the client.
+    clients.get(event.clientId)
+      .then(function(client) {
+        client.postMessage({
+          msg: message,
+        });       
+      })
+      .catch(function(err)  {
+        return;
+      });
+}
+
+function cacheFirstStrategy(event) {
+  return caches.match(event.request)
     .then(function(response) {
       // Cache hit - return response
       if (response) {
@@ -48,10 +65,10 @@ function cacheFirstStrategy(request) {
       // can only be consumed once. Since we are consuming this
       // once by cache and once by the browser for fetch, we need
       // to clone the response.
-      var fetchRequest = request.clone();
+      var fetchRequest = event.request.clone();
 
-      return fetch(fetchRequest).then(
-        function(response) {
+      return fetch(fetchRequest)
+        .then(function(response) {
           // Check if we received a valid response
           if(!response || response.status !== 200 || response.type !== 'basic') {
             return response;
@@ -65,30 +82,38 @@ function cacheFirstStrategy(request) {
 
           caches.open(STATIC_CACHE)
             .then(function(cache) {
-              cache.put(request, responseToCache);
+              cache.put(event.request, responseToCache);
             });
 
           return response;
-        }
-      )
+      })
+      .catch(function(err) {
+        toast(event, 'You appear to be offline. Please check your internet connection.');
+        return;
+      });
     }); 
 }
 
-function onlineFirstStrategy(request) {
-  return fetch(request)
+function onlineFirstStrategy(event) {
+  return fetch(event.request)
     .then(function(response) {
+      var responseToCache = response.clone();
       caches.open(DYNAMIC_CACHE).then(function(cache) {
-        cache.put(request, response.clone());
-      });
-      return response;
-    }).catch(function(err) {
-      caches.match(request).then(function(response) {
-        if (response) {
-          return response;
-        }
-        console.log('Cannot fetch resource');
-        return;
+         cache.put(event.request, responseToCache);
       })
+      return response;
+    })
+    .catch(function() {
+      return caches.match(event.request, { cacheName: DYNAMIC_CACHE })
+        .then(function(match) {
+          if (match) {
+            toast(event, 'You appear to be offline. Returning result from local cache.');
+            return match;            
+          } else {
+            toast(event, 'You appear to be offline. Please check your internet connection.');
+            return;              
+          }
+        })
     })
 }
 

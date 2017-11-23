@@ -25,7 +25,6 @@ $(() => {
         ids.push(id);
       }
       params.legislators = ids.join(',');
-      console.log(params);
       $.getJSON('/api/words/?', param(params), function (data) {
           var graph = {
             name: 'words',
