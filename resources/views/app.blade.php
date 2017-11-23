@@ -9,11 +9,11 @@
 <meta name="author" content="Andy Hill"/>
 <meta name="copyright" content="2017, informedelectorate.net"/>
 <meta name="viewport" content="width=device-width"/>
+<<<<<<< HEAD
 <!-- PWA -->
 <link rel="manifest" href="/manifest.json"/>
 <meta name="theme-color" content="#8B0000"/>
-
-
+<link href="/images/touch/informed_48x48.png" rel="shortcut icon" type="image/png"/>
 <!-- opengraph -->
 <meta property="og:image" content="https://informedelectorate.net/images/informedelectorate-header-short.png" />
 <meta property="og:title" content="InformedElectorate.net" />
