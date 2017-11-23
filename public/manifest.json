@@ -3,7 +3,8 @@
   "short_name": "Informed Electorate",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#fff",
+  "background_color": "#000044",
+  "theme_color": "#8B0000",
   "description": "Tools for voters to stay informed.",
   "icons": [{
     "src": "images/touch/informed_48x48.png",

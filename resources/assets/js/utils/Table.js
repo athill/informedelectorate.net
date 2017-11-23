@@ -106,7 +106,6 @@ export default class Table extends React.Component {
 
     _navigate(pageNum) {
         const offset = (pageNum  * this.pageSize);
-        // console.log(pageNum, offset, Math.min(offset + this.pageSize, this.props.data.length));
         this.setState({
             activePage: pageNum,
             offset
