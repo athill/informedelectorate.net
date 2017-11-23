@@ -19,8 +19,7 @@
 <meta property="og:title" content="InformedElectorate.net" />
 <meta property="og:description" content="The idea of this site is to use technology to enable a more politically informed United States populace. " />
 
-<link rel="stylesheet" type="text/css" href="{{ asset('/css/app.css') }}" />
-<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=UnifrakturMaguntia" />
+<link rel="stylesheet" type="text/css"  href="{{ asset('/css/app.css') }}" />
 </head>
 <body id="default" class="default">
 @if ($google_analytics_key)
@@ -81,6 +80,7 @@
     &copy;InformedElectorate.net  {{ date('Y') }}
     </footer>
 </div>
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=UnifrakturMaguntia" />
 <script src="{{ asset('/js/app.js') }}"></script>
 </body>
 </html>

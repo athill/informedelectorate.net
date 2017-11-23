@@ -1,4 +1,4 @@
-var STATIC_CACHE = 'informed-cache-v9';
+var STATIC_CACHE = 'informed-cache-v10';
 var DYNAMIC_CACHE = 'informed-static-cache-v3';
 // foo
 
@@ -12,7 +12,7 @@ var urlsToCache = [
   '/css/app.css',
   '/js/app.js',
   '//fonts.googleapis.com/css?family=UnifrakturMaguntia',
-  'http://fonts.gstatic.com/s/unifrakturmaguntia/v8/7KWy3ymCVR_xfAvvcIXm33xeO3Ru8xeVcoZnah1CFiM.woff2'
+  '//fonts.gstatic.com/s/unifrakturmaguntia/v8/7KWy3ymCVR_xfAvvcIXm33xeO3Ru8xeVcoZnah1CFiM.woff2'
 ];
 
 self.addEventListener('install', function(event) {
