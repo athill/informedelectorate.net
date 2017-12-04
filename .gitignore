@@ -12,3 +12,7 @@ Homestead.json
 Homestead.yaml
 .env
 .DS_Store
+npm-debug.log
+composer.lock
+laradock
+package-lock.json

@@ -75,7 +75,7 @@ const getState = state => {
 	electionAdministrativeBodyKeys.forEach(key => {
 		const label = changeCase.title(changeCase.sentence(key));
 		const url = state.electionAdministrationBody[key];
-		const value = <a href={url} target="_blank">{url}</a>;
+		const value = <a href={url} target="_blank" rel="noopener">{url}</a>;
 		data.push({
 			key: label, 
 			value
@@ -83,7 +83,7 @@ const getState = state => {
 	});
 	data.push({ key: 'Jurisdiction', value: state.local_jurisdiction.name });
 	const body = state.local_jurisdiction.electionAdministrationBody;
-	data.push({key: 'URL', value: <a href={body.electionInfoUrl} target="_blank">{body.electionInfoUrl}</a>});
+	data.push({key: 'URL', value: <a href={body.electionInfoUrl} target="_blank" rel="noopener">{body.electionInfoUrl}</a>});
 	data.push({key: 'Address', value: <Address addrs={[body.physicalAddress]} />});
 	data.push({key: 'Phone', value: <Phone number={body.electionOfficials[0].officePhoneNumber} /> });
 	data.push({key: 'Email', value: <Email email={body.electionOfficials[0].emailAddress} /> });
@@ -207,7 +207,7 @@ class Page extends React.Component {
 		return (
 			<div>
 				<h2>Elections</h2>
-				<p>Data is from <a href="https://developers.google.com/civic-information/" target="_blank">the Google Civic Information API.</a></p>
+				<p>Data is from <a href="https://developers.google.com/civic-information/" target="_blank" rel="noopener">the Google Civic Information API.</a></p>
 				<Elections data={data} />
 				<p>If your state is in the list above, you can get election information by address.</p>
 				<AddressForm address={address} onSubmit={this._onSubmit} />

@@ -15,11 +15,11 @@ const OptionForm = ({search='', states=[], onSubmit=e => e}) =>  (
 
 const BillLinks = ({data}) => (
 	<span>
-		<a href={data.gpo_pdf_uri} target="_blank">gpo.gov</a>,  
+		<a href={data.gpo_pdf_uri} target="_blank" rel="noopener">gpo.gov</a>,  
 
-		<a href={data.congressdotgov_url} target="_blank">congress.gov</a>, 
+		<a href={data.congressdotgov_url} target="_blank" rel="noopener">congress.gov</a>, 
 
-		<a href={data.govtrack_url} target="_blank">govtrack</a>
+		<a href={data.govtrack_url} target="_blank" rel="noopener">govtrack</a>
 	</span>
 );
 
@@ -155,7 +155,7 @@ class Page extends React.Component {
 		return (
 			<div>
 				<h2>Federal Bills</h2>
-				<p>Data is from the <a href="https://projects.propublica.org/api-docs/congress-api/" target="_blank">Propublica Congress API</a></p>
+				<p>Data is from the <a href="https://projects.propublica.org/api-docs/congress-api/" target="_blank" rel="noopener">Propublica Congress API</a></p>
 				<OptionForm search={search} onSubmit={this._onSubmit} />
 				<p>{title}</p>
 				{ error && <Alert bsStyle="danger">{error}</Alert> }

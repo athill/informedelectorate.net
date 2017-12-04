@@ -9,13 +9,16 @@
 <meta name="author" content="Andy Hill"/>
 <meta name="copyright" content="2017, informedelectorate.net"/>
 <meta name="viewport" content="width=device-width"/>
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json"/>
+<meta name="theme-color" content="#8B0000"/>
 <link href="/images/touch/informed_48x48.png" rel="shortcut icon" type="image/png"/>
+<!-- opengraph -->
 <meta property="og:image" content="https://informedelectorate.net/images/informedelectorate-header-short.png" />
 <meta property="og:title" content="InformedElectorate.net" />
 <meta property="og:description" content="The idea of this site is to use technology to enable a more politically informed United States populace. " />
 
-<link rel="stylesheet" type="text/css" href="{{ asset('/css/app.css') }}" />
-<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=UnifrakturMaguntia" />
+<link rel="stylesheet" type="text/css"  href="{{ asset('/css/app.css') }}" />
 </head>
 <body id="default" class="default">
 @if ($google_analytics_key)
@@ -69,12 +72,14 @@
             <main id="content">
             @yield('content')
         </main> <!-- /#content -->
+        <!-- <div id="toast"></div> -->
         </div> <!-- /#content-wrapper -->
     </div> <!-- ./row -->
     <footer>
     &copy;InformedElectorate.net  {{ date('Y') }}
     </footer>
 </div>
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=UnifrakturMaguntia" />
 <script src="{{ asset('/js/app.js') }}"></script>
 </body>
 </html>

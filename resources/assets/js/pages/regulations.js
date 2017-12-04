@@ -14,7 +14,6 @@ $(() => {
 		fetch('/api/regulations')
 		.then(response => response.json())
 		.then(json => {
-			console.log(json);
 			$results.html(`Displaying at most 25 of ${json.totalNumRecords}`);
 
 /*
@@ -29,7 +28,6 @@ title
 			const headers = ['Title', 'Agency', 'Docket Type', 'Docket', 'Posted'];
 			const { $tbody, $table } = getTableObject(headers);
 			$results.html($table);
-			// console.log(json);
 			//// populate table with data
 			json.documents.forEach(entry => {
 				const $tr = getTableRowObject([
@@ -62,7 +60,6 @@ title
 		.then(json => {
 			$form.html('');
 			let $row;
-			// console.log(JSON.stringify(Object.keys(json)));
 			fieldSequence.forEach((key, index) => {
 				const cols = 3;
 				const colClass  = `col-md-${(12/cols)/2}`;

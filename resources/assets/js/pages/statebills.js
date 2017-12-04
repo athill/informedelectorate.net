@@ -102,7 +102,7 @@ class Page extends React.Component {
 						const title = bill.title.replace('"', '&quot;');
 						const bill_id = bill.bill_id.replace(' ', '\u00a0');
 						return [
-							<a href={url} target="_blank" title={bill.title} className="bill-link">{bill_id}</a>,
+							<a href={url} target="_blank" rel="noopener" title={bill.title} className="bill-link">{bill_id}</a>,
 							formatDate(bill.created_at),
 							formatDate(bill.updated_at),
 							title,
@@ -132,7 +132,7 @@ class Page extends React.Component {
 		return (
 			<div>
 				<h2>State Bills</h2>
-				<p>Data from <a href="http://docs.openstates.org/en/latest/api/" target="_blank">Open States API</a></p>
+				<p>Data from <a href="http://docs.openstates.org/en/latest/api/" target="_blank" rel="noopener">Open States API</a></p>
 				<StateForm states={this.state.states} selected={this.state.selected} onChange={this._onChange} />
 				{ this.state.error && <Alert bsStyle="danger">{this.state.error}</Alert> }
 				{ !this.state.error && <StateBills selected={this.state.selected} data={this.state.data} /> }
