@@ -27,8 +27,8 @@ const getContestData = contest => {
 		{ key: 'Scope', value: contest.district.scope },
 		{ key: 'Number Elected', value: contest.numberElected },
 		{ key: 'Ballot Placement', value: contest.ballotPlacement },
-		{ key: 'Candidates', value: contest.candidates.map(candidate => candidate.name).join(', ') },
-		{ key: 'Sources', value: contest.sources.map(source => `${source.name} -- ${source.official ? 'Official' : 'Unofficial'}`) },
+		{ key: 'Candidates', value: contest.candidats && contest.candidates.map(candidate => candidate.name).join(', ') },
+		{ key: 'Sources', value: contest.sources && contest.sources.map(source => `${source.name} -- ${source.official ? 'Official' : 'Unofficial'}`) },
 	];
 	return data;
 
@@ -83,10 +83,27 @@ const getState = state => {
 	});
 	data.push({ key: 'Jurisdiction', value: state.local_jurisdiction.name });
 	const body = state.local_jurisdiction.electionAdministrationBody;
-	data.push({key: 'URL', value: <a href={body.electionInfoUrl} target="_blank" rel="noopener">{body.electionInfoUrl}</a>});
-	data.push({key: 'Address', value: <Address addrs={[body.physicalAddress]} />});
-	data.push({key: 'Phone', value: <Phone number={body.electionOfficials[0].officePhoneNumber} /> });
-	data.push({key: 'Email', value: <Email email={body.electionOfficials[0].emailAddress} /> });
+	// if (body.electionInfoUrl) {
+	// 	data.push({key: changeCase.title(key), value: <a href={body[key]} target="_blank" rel="noopener">{body[key]}</a>});	
+	// }
+
+	const urlKeys = ['absenteeVotingInfoUrl', 'ballotInfoUrl', 'electionInfoUrl', 'electionRegistrationConfirmationUrl', 'electionRegistrationUrl', 
+		'electionRulesUrl'];
+	urlKeys.forEach(key => {
+		const title = changeCase.title(key);
+		if (body[key]) {
+			data.push({key: title , value: <a href={body[key]} target="_blank" rel="noopener">{body[key]}</a>});
+		}
+	});
+	if (body.physicalAddress) {
+		data.push({key: 'Address', value: <Address addrs={[body.physicalAddress]} />});	
+	}
+	if (body.electionOfficials && body.electionOfficials.length) {
+		data.push({key: 'Phone', value: <Phone number={body.electionOfficials[0].officePhoneNumber} /> });
+		data.push({key: 'Email', value: <Email email={body.electionOfficials[0].emailAddress} /> });
+	}
+	
+
 
 	return data;
 };
@@ -110,12 +127,24 @@ const Election = ({ address, data }) => {
 	<div>
 		<p>Results for {address}</p>
 		<h3>{data.election.name} on {formatDateOnly(data.election.electionDay)}</h3>
-		<h4>Contests</h4>
-		{ data.contests.map(contest => <Contest key={contest.office} data={contest} />) }
-		<h4>Polling Locations</h4>
-		{ data.pollingLocations.map((pollingLocation, i) => <PollingLocation  key={i} data={pollingLocation} /> )}
-		<h4>Early Voting Sites</h4>
-		{ data.earlyVoteSites.map((earlyVoteSite, i) => <EarlyVoteSite  key={i} data={earlyVoteSite} /> )}
+		{ data.contests && (
+			<div>
+				<h4>Contests</h4>
+				{ data.contests.map(contest => <Contest key={contest.office} data={contest} />) }
+			</div>
+		)}
+		{ data.pollingLocation && (
+			<div>
+				<h4>Polling Locations</h4>
+				{ data.pollingLocations.map((pollingLocation, i) => <PollingLocation  key={i} data={pollingLocation} /> )}
+			</div>
+		)}
+		{ data.earlyVoteSite && (
+			<div>
+				<h4>Early Voting Sites</h4>
+				{ data.earlyVoteSites.map((earlyVoteSite, i) => <EarlyVoteSite  key={i} data={earlyVoteSite} /> )}
+			</div>
+		)}
 		<h3>State</h3>
 		{ data.state.map((state, i) => <State key={i} data={state} />) }		
 	</div>

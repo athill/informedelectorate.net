@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use Cache;
 
 class ElectionsController extends Controller
 {
 	const CACHE_PREFIX = 'elections:';
-	const CACHE_TIMEOUT = 3600;
+	const CACHE_TIMEOUT = 1440;
 
 	protected $civicinfo;
 
@@ -20,18 +20,17 @@ class ElectionsController extends Controller
 		if ($request->get('addr')) {
 			return $this->getElectionInfo($request->get('addr'));
 		}
+
 		$cachekey = self::CACHE_PREFIX.'metadata';
-		if (!Cache::get($cachekey)) {
-			Cache::put($cachekey, $this->civicinfo->getUpcomingElections(), self::CACHE_TIMEOUT);
-		}
-		return Cache::get($cachekey);
+		return Cache::remember($cachekey, self::CACHE_TIMEOUT, function() {
+			return $this->civicinfo->getUpcomingElections();
+		});
 	}
 
 	protected function getElectionInfo($address) {
 		$cachekey = self::CACHE_PREFIX.$address;
-		if (!Cache::get($cachekey)) {	
-			Cache::put($cachekey, $this->civicinfo->getElectionInfoByAddress($address), self::CACHE_TIMEOUT);
-		}	
-		return Cache::get($cachekey);
+		return Cache::remember($cachekey, self::CACHE_TIMEOUT, function() use ($address) {
+			return $this->civicinfo->getElectionInfoByAddress($address);
+		});
 	}
 }
