@@ -27,7 +27,7 @@ const getContestData = contest => {
 		{ key: 'Scope', value: contest.district.scope },
 		{ key: 'Number Elected', value: contest.numberElected },
 		{ key: 'Ballot Placement', value: contest.ballotPlacement },
-		{ key: 'Candidates', value: contest.candidats && contest.candidates.map(candidate => candidate.name).join(', ') },
+		{ key: 'Candidates', value: contest.candidates && contest.candidates.map(candidate => candidate.name).join(', ') },
 		{ key: 'Sources', value: contest.sources && contest.sources.map(source => `${source.name} -- ${source.official ? 'Official' : 'Unofficial'}`) },
 	];
 	return data;
@@ -133,13 +133,13 @@ const Election = ({ address, data }) => {
 				{ data.contests.map(contest => <Contest key={contest.office} data={contest} />) }
 			</div>
 		)}
-		{ data.pollingLocation && (
+		{ data.pollingLocations && (
 			<div>
 				<h4>Polling Locations</h4>
 				{ data.pollingLocations.map((pollingLocation, i) => <PollingLocation  key={i} data={pollingLocation} /> )}
 			</div>
 		)}
-		{ data.earlyVoteSite && (
+		{ data.earlyVoteSites && (
 			<div>
 				<h4>Early Voting Sites</h4>
 				{ data.earlyVoteSites.map((earlyVoteSite, i) => <EarlyVoteSite  key={i} data={earlyVoteSite} /> )}
