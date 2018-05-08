@@ -151,4 +151,37 @@ queries:
 	}
 }
 
+{
+  jurisdictions {
+    edges {
+      node {
+        name
+        legislativeSessions {
+          edges {
+            node {
+              name startDate endDate
+            }
+          }
+        }
+        legislature: organizations(classification: "legislature", first: 1) {
+          edges {
+            node {
+              name
+              classification
+              children(first: 5) {
+                edges {
+                  node {
+                    name
+                    classification
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 */
