@@ -40,11 +40,6 @@ class OpenStates2 {
 	}
 
 	public function getState(string $state) {
-
-
-	}
-
-	public function getState(string $state) {
 		$query = '{
 		  jurisdiction(name: "' . $state . '") {
 		    name
@@ -81,7 +76,11 @@ class OpenStates2 {
 
 	public function getBills(string $state, string $sessionId) {
 		// headers: Bill	Created	Updated	Type	Subjects
+		$query = $this->getBillQuery($state, $sessionId);
+		$response = $this->request($query);
+		$data = $response['data']['bills']['edges'];
 
+		return $data;
 	}
 	//// current bill data
 	/*
@@ -120,5 +119,83 @@ class OpenStates2 {
 	            return $handler($request, $options);
 	        };
 	    };
+	}
+
+	private function getBillQuery(string $state, string $sessionId) {
+		return '{
+			bills(jurisdiction: "' . $state . '" , session: "' . $sessionId . '", first: 1) { 
+				pageInfo {
+					endCursor
+				}
+				edges {
+					node {
+						abstracts {
+							abstract
+						}
+						actions {
+							organization {
+								name
+							}
+							description
+							date
+							classification
+						}
+						classification
+						createdAt
+						documents {
+							note
+							date
+						}
+						extras
+						fromOrganization {
+							name
+						}
+						id
+						identifier
+						legislativeSession {
+							name
+						}
+						otherIdentifiers {
+							identifier
+						}
+						otherTitles {
+							title
+						}
+						relatedBills {
+							identifier
+							relatedBill {
+								title
+							}
+						}
+						sources {
+							url
+						}
+						sponsorships {
+							person {
+								name
+							}
+						}
+						subject
+						title
+						updatedAt
+						versions {
+							
+							date
+						}
+						votes {
+							edges {
+								node {
+									billAction {
+										vote {
+											identifier
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}';
 	}	
 }
