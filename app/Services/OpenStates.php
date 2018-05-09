@@ -10,22 +10,22 @@ class OpenStates extends Api {
 		$this->separator = '/';		
 	}
 
-	public function getData($method, $params=array()) {
-		return parent::get($method, $params);
-	}	
+	// public function getData($method, $params=array()) {
+	// 	return parent::get($method, $params);
+	// }	
 
-	public function getStateLegislatorsByLatLong($lat, $long) {
-		$data = $this->getData('/legislators/geo', array('lat'=>$lat,'long'=>$long));
-		return $data;
-	}
+	// public function getStateLegislatorsByLatLong($lat, $long) {
+	// 	$data = $this->getData('/legislators/geo', array('lat'=>$lat,'long'=>$long));
+	// 	return $data;
+	// }
 
 	public function getStateMetadata() {
-		$data = $this->getData('/metadata', array());		
+		$data = $this->get('/metadata', array());		
 		return $data;
 	}
 
 	public function getBillsByState($stateabbrev) {
-		$data = $this->getData('/bills', array('state'=>$stateabbrev, 'search_window'=>'term'));
+		$data = $this->get('/bills', array('state'=>$stateabbrev, 'search_window'=>'term'));
 		return $data;
 	}	
 }

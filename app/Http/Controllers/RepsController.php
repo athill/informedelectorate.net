@@ -8,15 +8,13 @@ use Illuminate\Support\Facades\Cache;
 
 class RepsController extends Controller {
 
-	protected $sunlight;
-	protected $openstates;
+	protected $civicinfo;
 
 	const CACHE_PREFIX = 'reps:';
 	const CACHE_TIMEOUT = 3600;
 
 	public function __construct() {
 		// Cache::flush();
-		$this->openstates = new \App\Services\OpenStates;
 		$this->civicinfo = new \App\Services\GoogleCivicInfo;
 
 	}
