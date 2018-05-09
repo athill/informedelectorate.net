@@ -39,6 +39,71 @@ class OpenStates2 {
 		return $states;
 	}
 
+	public function getState(string $state) {
+
+
+	}
+
+	public function getState(string $state) {
+		$query = '{
+		  jurisdiction(name: "' . $state . '") {
+		    name
+		    url
+		    legislativeSessions {
+		      edges {
+		        node {
+		          name
+		          identifier
+		        }
+		      }
+		    }
+			}
+		}';
+		$response = $this->request($query);
+		$data = $response['data']['jurisdiction'];
+		// return $response;
+		$state = [
+			'name' => $data['name'],
+			'url' => $data['url'],
+			'sessions' => []
+		];
+		foreach ($data['legislativeSessions']['edges'] as $value) {
+			$state['sessions'][] = [
+				'name' => $value['node']['name'],
+				'id' => $value['node']['identifier']
+			];
+		}	
+		$state['sessions'] = array_values(array_sort($state['sessions'], function ($value) {
+		    return $value['id'];
+		}));		
+		return $state;	
+	}
+
+	public function getBills(string $state, string $sessionId) {
+		// headers: Bill	Created	Updated	Type	Subjects
+
+	}
+	//// current bill data
+	/*
+		[
+		     "title" => "A BILL FOR AN ACT to amend the Indiana Code concerning health.",
+		     "created_at" => "2018-01-23 07:00:58",
+		     "updated_at" => "2018-03-24 07:41:11",
+		     "id" => "INB00009851",
+		     "chamber" => "lower",
+		     "state" => "in",
+		     "session" => "2018",
+		     "type" => [
+		       "bill",
+		     ],
+		     "subjects" => [
+		       "Drugs",
+		       "Health",
+		     ],
+		     "bill_id" => "HB 1007",
+		   ]
+	*/
+
 	private function request($query) {
 		$response = $this->client->post('', ['json' => ['query' => $query]]);
 		return json_decode($response->getBody()->getContents(), true);	
