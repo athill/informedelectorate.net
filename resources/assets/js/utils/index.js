@@ -47,9 +47,9 @@ export const Email = ({email}) => (
 export const DefinitionList = ({items}) => (
     <dl className="dl-horizontal">
         {
-            items.map(item => (
-                <div key={item.key}>
-                    <dt>{item.key}:</dt>
+            items.map((item, i) => (
+                <div key={`${item.key}-${i}`}>
+                    <dt title={item.key}>{item.key}:</dt>
                     <dd>{item.value}</dd>
                 </div>
             ))

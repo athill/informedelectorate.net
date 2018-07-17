@@ -128,11 +128,13 @@ export default class Table extends React.Component {
         if (data.length) {
             const last = Math.min(offset + this.pageSize, data.length);
             const displayData = sortedData.slice(offset, last);
+            const showPaginator = this.pageSize < data.length;
+            console.log(this.pageSize, data.length, showPaginator);
             return (
                 <div>
                     <div className="clearfix">
                         <div className="pull-left">Showing {offset + 1} to {last} of {data.length} { queryLink && ['results for ', queryLink] }</div>
-                        <nav className="pull-right">{ this._paginator() }</nav> 
+                        <nav className="pull-right">{ showPaginator && this._paginator() }</nav> 
                     </div>
                     <BsTable responsive hover>
                         <thead>

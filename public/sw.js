@@ -1,4 +1,4 @@
-var STATIC_CACHE = 'informed-cache-v11';
+var STATIC_CACHE = 'informed-cache-v13';
 var DYNAMIC_CACHE = 'informed-static-cache-v3';
 // foo
 
