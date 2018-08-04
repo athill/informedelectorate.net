@@ -30,5 +30,6 @@ Route::group(['middleware' => 'api'], function () {
 
 	Route::resource('regulationoptions', 'RegulationOptionsController', ['only' => ['index']]);
 	
+	Route::get('health', 'HealthController@index');
 });
 
